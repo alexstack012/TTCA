@@ -1,0 +1,1450 @@
+{
+  "schemaVersion": 1,
+  "campaign": {
+    "id": "curse-of-strahd",
+    "name": "Curse of Strahd"
+  },
+  "normalizationNotes": [
+    "Repeated entries for Fiona Wachter and Izek are represented as single entities with multiple section entries.",
+    "Slash-separated alternate names are represented in the aliases array.",
+    "The original status wording is retained as free text so uncertain campaign outcomes are not lost."
+  ],
+  "sections": [
+    {
+      "id": "closest-allies",
+      "name": "The Party's Closest Allies",
+      "order": 1
+    },
+    {
+      "id": "central-supernatural-figures",
+      "name": "Central Supernatural Figures",
+      "order": 2
+    },
+    {
+      "id": "zarovich-family-and-historical-figures",
+      "name": "The Zarovich Family and Historical Figures",
+      "order": 3
+    },
+    {
+      "id": "village-of-barovia",
+      "name": "Village of Barovia",
+      "order": 4
+    },
+    {
+      "id": "vallaki-and-residents",
+      "name": "Vallaki and Its Residents",
+      "order": 5
+    },
+    {
+      "id": "vistani",
+      "name": "Vistani",
+      "order": 6
+    },
+    {
+      "id": "krezk-and-abbey",
+      "name": "Krezk and the Abbey",
+      "order": 7
+    },
+    {
+      "id": "major-enemies",
+      "name": "Major Enemies",
+      "order": 8
+    },
+    {
+      "id": "strahds-consorts",
+      "name": "Strahd's Consorts",
+      "order": 9
+    },
+    {
+      "id": "argynvostholt-and-silver-dragon",
+      "name": "Argynvostholt and the Order of the Silver Dragon",
+      "order": 10
+    },
+    {
+      "id": "other-named-and-historical-figures",
+      "name": "Other Named / Historical Figures",
+      "order": 11
+    }
+  ],
+  "entities": [
+    {
+      "id": "ireena-kolyana",
+      "name": "Ireena Kolyana",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "closest-allies",
+          "details": {
+            "type": "notableEvents",
+            "value": "Adopted daughter of Kolyan and sister of Ismark. Strahd believed she was Tatyana reincarnated. Abducted from Vallaki, later rescued from Castle Ravenloft by Umecan and Ezmerelda. Accompanied the party against Harker, was badly injured, and later helped lead the expedition into the fallen castle."
+          },
+          "status": "Alive. Saw sunlight for the first time after Barovia's liberation.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Church in the Village of Barovia"
+          }
+        }
+      ]
+    },
+    {
+      "id": "rudolf-van-richten",
+      "name": "Rudolf van Richten",
+      "aliases": ["Rictavio"],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "closest-allies",
+          "details": {
+            "type": "notableEvents",
+            "value": "Initially posed as a carnival performer. Helped investigate missing children, fought the hags, rescued Arabelle with the party, provided Van Richten's tower as a base, helped plan Ireena's rescue, raided Ravenloft, fought Harker, and entered the crypts during the final battle."
+          },
+          "status": "Alive and present when Mordenkainen rescued the party.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Blue Water Inn, Vallaki"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ezmerelda",
+      "name": "Ezmerelda",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "closest-allies",
+          "details": {
+            "type": "notableEvents",
+            "value": "Rudolf's protégé. Helped plan and execute Ireena's rescue, infiltrated Castle Ravenloft, dispelled the necrotic barrier protecting the Rod fragment, fought Harker, and participated in the final campaign against Strahd."
+          },
+          "status": "Alive at the end of the campaign.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Formally joined the group at the Blue Water Inn"
+          }
+        }
+      ]
+    },
+    {
+      "id": "mister-fluffykins",
+      "name": "Mister Fluffykins",
+      "aliases": [],
+      "entityType": "creature",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "closest-allies",
+          "details": {
+            "type": "notableEvents",
+            "value": "Rudolf's armored saber-toothed tiger. Helped track missing children and repeatedly accompanied the party into dangerous battles."
+          },
+          "status": "Alive at the beginning of the final battle; no later injury recorded.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Revealed by Rudolf after his identity was exposed"
+          }
+        }
+      ]
+    },
+    {
+      "id": "urwin-martikov",
+      "name": "Urwin Martikov",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "closest-allies",
+          "details": {
+            "type": "notableEvents",
+            "value": "Innkeeper and wereraven. Revealed the Keepers of the Feather after Umecan accidentally injured him with an Ice Knife. Became a major source of intelligence, fought at the winery and Berez, warned the party that Krezk was burning, and helped protect the Rod fragment."
+          },
+          "status": "Alive. Among those who saw the open sky after Strahd's defeat.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Blue Water Inn, Vallaki"
+          }
+        }
+      ]
+    },
+    {
+      "id": "danika-martikov",
+      "name": "Danika Martikov",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "closest-allies",
+          "details": {
+            "type": "notableEvents",
+            "value": "Urwin's wife and fellow wereraven. Present when the Martikov family revealed themselves to the party."
+          },
+          "status": "Presumed alive; no later casualty recorded.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Blue Water Inn"
+          }
+        }
+      ]
+    },
+    {
+      "id": "davian-martikov",
+      "name": "Davian Martikov",
+      "aliases": ["Davion Martikov"],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "closest-allies",
+          "details": {
+            "type": "notableEvents",
+            "value": "Senior Martikov and leader within the Keepers of the Feather. Assisted in the winery's defense and later came to Van Richten's tower to explain the Raven Queen's mission involving the Rod fragment."
+          },
+          "status": "Alive; helped command nineteen surviving wereravens during the final campaign.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Wizard of Wines winery"
+          }
+        }
+      ]
+    },
+    {
+      "id": "william-corvenus",
+      "name": "William Corvenus",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "closest-allies",
+          "details": {
+            "type": "notableEvents",
+            "value": "Werewolf descended from the first werewolf and a member of a royal bloodline. Claimed Vampyr was his uncle. Wanted to reunite the divided werewolf packs, took Baba Lysaga's head as a symbol of victory, and led the loyal werewolves against Strahd."
+          },
+          "status": "Alive as far as recorded. Led approximately nineteen or twenty loyal werewolves in the final battle.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Blue Water Inn, after scouting Ravenloft"
+          }
+        }
+      ]
+    },
+    {
+      "id": "avernos-kael-thamir",
+      "name": "Avernos Kael'Thamir",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "closest-allies",
+          "details": {
+            "type": "notableEvents",
+            "value": "The Magus of Markovia. Once killed Strahd during Saint Markovia's rebellion, but Vampyr resurrected Strahd and fractured Avernos's mind across possible timelines. Warned the party about Vampyr and the Amber Temple, helped raid Ravenloft, and guided them toward Harker's catacombs."
+          },
+          "status": "Alive. Reunited with his master, Mordenkainen, after Barovia's liberation.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Svalich Woods as the legendary \"Mad Mage\""
+          }
+        }
+      ]
+    },
+    {
+      "id": "mumdahkis",
+      "name": "Mumdahkis",
+      "aliases": [],
+      "entityType": "creature",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "closest-allies",
+          "details": {
+            "type": "notableEvents",
+            "value": "Vampiric dragon who commanded nine revenant knights. Agreed to help if the party restored Argynvostholt's skull. Swore to assist in Strahd's death after the revenants were released. Vampyr later removed his vampirism and restored his silver nature."
+          },
+          "status": "Alive, cured, and indebted to Umecan for restoring his soul.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Near Argynvostholt"
+          }
+        }
+      ]
+    },
+    {
+      "id": "mordenkainen",
+      "name": "Mordenkainen",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "closest-allies",
+          "details": {
+            "type": "notableEvents",
+            "value": "Avernos's master and a member or leader associated with the Circle of Eight. Teleported Umecan, Fellmorn, and Rudolf out of the collapsing castle. Told them that Boccob was waiting and instructed them to find him in Neverwinter afterward."
+          },
+          "status": "Alive. Major connection to the next campaign.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Appeared during the collapse of Castle Ravenloft"
+          }
+        }
+      ]
+    },
+    {
+      "id": "boccob",
+      "name": "Boccob",
+      "aliases": [],
+      "entityType": "deity",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "closest-allies",
+          "details": {
+            "type": "notableEvents",
+            "value": "Sent Umecan and Fellmorn to investigate the hidden land, determine the cause of the mists, help its people, and return with what they learned."
+          },
+          "status": "Awaiting the party following Barovia's liberation.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Before the party entered Barovia"
+          }
+        }
+      ]
+    },
+    {
+      "id": "strahd-von-zarovich",
+      "name": "Strahd von Zarovich",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "central-supernatural-figures",
+          "details": {
+            "type": "notableEvents",
+            "value": "Killed Father Lucian, abducted Ireena, and invited the party to Ravenloft. Presented himself as Barovia's unwilling protector. Gave the party the Tome of Strahd and attempted to use them against Harker and the vampiric dragon. Later recruited Izek, Fiona, Vistani, and werewolves. Ambushed the party during the final assault."
+          },
+          "status": "Presumed defeated. The mists broke after he was struck and his coffin was burned, but no remains were confirmed.",
+          "context": {
+            "type": "firstAppearance",
+            "value": "Church of Saint Andral, Vallaki"
+          }
+        }
+      ]
+    },
+    {
+      "id": "vampyr",
+      "name": "Vampyr",
+      "aliases": [],
+      "entityType": "deity",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "central-supernatural-figures",
+          "details": {
+            "type": "notableEvents",
+            "value": "Blood god imprisoned beneath Barovia. Created and manipulated Strahd's curse. Offered the party a pact involving Kas, gave them the Sword of Kas's pommel, marked their wrists, cured Mumdahkis, and announced plans to claim Castle Ravenloft."
+          },
+          "status": "Active. The party remains bound to the pact and must locate Kas.",
+          "context": {
+            "type": "firstAppearance",
+            "value": "Revealed through the Obsidian Ocular and later appeared at Van Richten's tower"
+          }
+        }
+      ]
+    },
+    {
+      "id": "the-obsidian-ocular",
+      "name": "The Obsidian Ocular",
+      "aliases": [],
+      "entityType": "artifact",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "central-supernatural-figures",
+          "details": {
+            "type": "notableEvents",
+            "value": "Replaced Umecan's left eye after contact with a soul crystal. Granted truesight and forbidden knowledge, identified Harker's phylactery ritual, reacted to Kas, revealed Vampyr's manipulation of Strahd, and temporarily took control during the final battle."
+          },
+          "status": "Still attached to Umecan. Possesses a will of its own and remains a major unresolved danger.",
+          "context": {
+            "type": "firstAppearance",
+            "value": "Installed in Umecan at Van Richten's tower"
+          }
+        }
+      ]
+    },
+    {
+      "id": "the-raven-queen",
+      "name": "The Raven Queen",
+      "aliases": [],
+      "entityType": "deity",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "central-supernatural-figures",
+          "details": {
+            "type": "notableEvents",
+            "value": "Sovereign with a large domain in the Shadowfell. Ordered the Keepers of the Feather to recover a piece of an artifact capable of planar destruction."
+          },
+          "status": "Not directly encountered. Her agents secured the artifact fragment beneath the Blue Water Inn.",
+          "context": {
+            "type": "firstAppearance",
+            "value": "Communicated indirectly through Urwin and Davian"
+          }
+        }
+      ]
+    },
+    {
+      "id": "kas",
+      "name": "Kas",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "central-supernatural-figures",
+          "details": {
+            "type": "notableEvents",
+            "value": "Figure in the Shadowfell whose name caused the obsidian ocular to react. The party received the Sword of Kas's pommel to locate him. Their wrist marks will incapacitate him and summon Vampyr once he is brought to the Material Plane."
+          },
+          "status": "Not yet encountered. Central objective of the next campaign.",
+          "context": {
+            "type": "firstAppearance",
+            "value": "Mentioned by Vampyr"
+          }
+        }
+      ]
+    },
+    {
+      "id": "miska-the-spider-demon",
+      "name": "Miska, the Spider Demon",
+      "aliases": ["Miska, the spider demon"],
+      "entityType": "supernaturalEntity",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "central-supernatural-figures",
+          "details": {
+            "type": "notableEvents",
+            "value": "The artifact recovered from Ravenloft showed a spider demon and was later identified in the DM notes as part of the Rod of Seven Parts."
+          },
+          "status": "Not physically encountered. Connected to the Rod of Seven Parts storyline.",
+          "context": {
+            "type": "firstAppearance",
+            "value": "Seen through the recovered artifact"
+          }
+        }
+      ]
+    },
+    {
+      "id": "madam-eva",
+      "name": "Madam Eva",
+      "aliases": ["Queen Ravenovia van Roeyen"],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "zarovich-family-and-historical-figures",
+          "details": {
+            "type": "notableInformation",
+            "value": "Rescued by the Vistani after her carriage was attacked centuries ago. Became a powerful fortune-teller and concealed her identity from Strahd. Gave the party their Tarokka reading and originally guarded the Holy Symbol of Ravenkind. Later united her Vistani with Vallaki and the Village of Barovia."
+          },
+          "status": "Alive. Her identity remains a dangerous secret known to the party and their allies.",
+          "context": {
+            "type": "connection",
+            "value": "Strahd's mother"
+          }
+        }
+      ]
+    },
+    {
+      "id": "king-barov",
+      "name": "King Barov",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "zarovich-family-and-historical-figures",
+          "details": {
+            "type": "notableInformation",
+            "value": "Father of Strahd and Sergei. Strahd spent much of his mortal life conquering lands in service to his father and kingdom."
+          },
+          "status": "Historical; deceased.",
+          "context": {
+            "type": "connection",
+            "value": "Strahd's father"
+          }
+        }
+      ]
+    },
+    {
+      "id": "sergei-von-zarovich",
+      "name": "Sergei von Zarovich",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "zarovich-family-and-historical-figures",
+          "details": {
+            "type": "notableInformation",
+            "value": "Loved by Tatyana. Murdered by Strahd on his wedding day. Strahd drank Sergei's blood, completing the conditions of Vampyr's curse."
+          },
+          "status": "Deceased.",
+          "context": {
+            "type": "connection",
+            "value": "Strahd's younger brother"
+          }
+        }
+      ]
+    },
+    {
+      "id": "tatyana",
+      "name": "Tatyana",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "zarovich-family-and-historical-figures",
+          "details": {
+            "type": "notableInformation",
+            "value": "Threw herself from Castle Ravenloft after Sergei's murder. The Eye later revealed that Vampyr had manipulated the events surrounding Sergei and Tatyana."
+          },
+          "status": "Historical; deceased, with Ireena believed to carry her soul or identity.",
+          "context": {
+            "type": "connection",
+            "value": "Sergei's beloved; believed by Strahd to be reincarnated as Ireena"
+          }
+        }
+      ]
+    },
+    {
+      "id": "baba-lysaga",
+      "name": "Baba Lysaga",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "zarovich-family-and-historical-figures",
+          "details": {
+            "type": "notableInformation",
+            "value": "Secretly cast protective magic over Strahd as an infant and later introduced him to knowledge of the Amber Temple. Commanded the druids and scarecrow forces at Berez."
+          },
+          "status": "Killed by the party. William took her head as a trophy.",
+          "context": {
+            "type": "connection",
+            "value": "Strahd's former midwife and self-proclaimed \"true mother\""
+          }
+        }
+      ]
+    },
+    {
+      "id": "saint-markovia",
+      "name": "Saint Markovia",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "zarovich-family-and-historical-figures",
+          "details": {
+            "type": "notableInformation",
+            "value": "Joined Avernos in a rebellion that temporarily killed Strahd. Her forces were destroyed after Vampyr restored him."
+          },
+          "status": "Historical; deceased.",
+          "context": {
+            "type": "connection",
+            "value": "Leader of the historic rebellion against Strahd"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ismark-kolyanovich",
+      "name": "Ismark Kolyanovich",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "village-of-barovia",
+          "details": {
+            "type": "notableEvents",
+            "value": "Son of Kolyan and brother of Ireena. Denied that his father wrote the party's invitation. Killed Doru after the failed interrogation and remained in the village when Ireena left."
+          },
+          "status": "Last known among the people of the Village of Barovia, who were later teleported to Vallaki.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Village of Barovia"
+          }
+        }
+      ]
+    },
+    {
+      "id": "istvan",
+      "name": "Istvan",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "village-of-barovia",
+          "details": {
+            "type": "notableEvents",
+            "value": "Described in the session notes as the new burgomaster after his father's death. This may be a name discrepancy involving Ismark, although both names appear in the notes."
+          },
+          "status": "Identity requires confirmation.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Entrance to the Village of Barovia"
+          }
+        }
+      ]
+    },
+    {
+      "id": "kolyan-indirovich",
+      "name": "Kolyan Indirovich",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "village-of-barovia",
+          "details": {
+            "type": "notableEvents",
+            "value": "Former burgomaster and father of Ismark, as well as Ireena's adoptive father. His death began the party's involvement with Ireena."
+          },
+          "status": "Deceased. His coffin was transported with the party toward Vallaki.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Deceased before the party's arrival"
+          }
+        }
+      ]
+    },
+    {
+      "id": "father-donavich",
+      "name": "Father Donavich",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "village-of-barovia",
+          "details": {
+            "type": "notableEvents",
+            "value": "Kept his vampire-spawn son chained beneath the church. Ireena knocked him unconscious after learning he had concealed a vampire beneath the town. The rescued children from the hag coven were later sent to him."
+          },
+          "status": "Alive at last confirmed appearance.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Church in the Village of Barovia"
+          }
+        }
+      ]
+    },
+    {
+      "id": "doru",
+      "name": "Doru",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "village-of-barovia",
+          "details": {
+            "type": "notableEvents",
+            "value": "Donavich's son and a vampire spawn. Tried to kill himself after being questioned about his master."
+          },
+          "status": "Killed by Ismark.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Church undercroft"
+          }
+        }
+      ]
+    },
+    {
+      "id": "izek",
+      "name": "Izek",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "vallaki-and-residents",
+          "details": {
+            "type": "notableEvents",
+            "value": "Initially hostile but reacted intensely to Ireena and claimed she was his long-lost sister. Later disappeared from Vallaki and became one of Strahd's new vampire consorts. Led or participated in the raid against an allied Vistani caravan."
+          },
+          "status": "Final status unresolved after the siege.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Vallaki gate"
+          }
+        },
+        {
+          "sectionId": "strahds-consorts",
+          "details": {
+            "type": "notableEvents",
+            "value": "Became one of Strahd's newest consorts, participated in attacks against the alliance, and had a coffin in Ravenloft."
+          },
+          "status": "Unresolved."
+        }
+      ]
+    },
+    {
+      "id": "fiona-wachter",
+      "name": "Fiona Wachter",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "vallaki-and-residents",
+          "details": {
+            "type": "notableEvents",
+            "value": "Invited the party to discuss a proposal and was known as a Strahd sympathizer. Her household later vanished, and she became one of Strahd's new consorts. Participated in the defenses of Castle Ravenloft."
+          },
+          "status": "Final status unresolved.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Vallaki, after the party's first dealings with Strahd"
+          }
+        },
+        {
+          "sectionId": "strahds-consorts",
+          "details": {
+            "type": "notableEvents",
+            "value": "Became one of Strahd's newest consorts and participated in the castle's defense."
+          },
+          "status": "Unresolved."
+        }
+      ]
+    },
+    {
+      "id": "vargas-vallakovich",
+      "name": "Vargas Vallakovich",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "vallaki-and-residents",
+          "details": {
+            "type": "notableEvents",
+            "value": "Burgomaster obsessed with forced happiness and festivals. Gave the party the task of recovering the Bones of Saint Andral."
+          },
+          "status": "No confirmed fate in the current session summaries.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Burgomaster's residence, Vallaki"
+          }
+        }
+      ]
+    },
+    {
+      "id": "father-lucian-petrovich",
+      "name": "Father Lucian Petrovich",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "vallaki-and-residents",
+          "details": {
+            "type": "notableEvents",
+            "value": "Asked the party to recover the stolen bones that protected the church."
+          },
+          "status": "Killed by Strahd, who collected a vial of his blessed blood.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Church of Saint Andral"
+          }
+        }
+      ]
+    },
+    {
+      "id": "yeska",
+      "name": "Yeska",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "vallaki-and-residents",
+          "details": {
+            "type": "notableEvents",
+            "value": "One of the few people who knew of the bones. Revealed that he had told Milivoj about them."
+          },
+          "status": "Alive at last appearance.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Church of Saint Andral"
+          }
+        }
+      ]
+    },
+    {
+      "id": "milivoj",
+      "name": "Milivoj",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "vallaki-and-residents",
+          "details": {
+            "type": "notableEvents",
+            "value": "Stole the Bones of Saint Andral after being paid by Henrik van der Voort."
+          },
+          "status": "Taken to the guards by Ireena.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Vallaki church"
+          }
+        }
+      ]
+    },
+    {
+      "id": "henrik-van-der-voort",
+      "name": "Henrik van der Voort",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "vallaki-and-residents",
+          "details": {
+            "type": "notableEvents",
+            "value": "Coerced into facilitating the theft of the bones and housed a nest of vampire spawn."
+          },
+          "status": "Taken to the guards by Ireena.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Coffin maker's shop"
+          }
+        }
+      ]
+    },
+    {
+      "id": "mo",
+      "name": "Mo",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "vallaki-and-residents",
+          "details": {
+            "type": "notableEvents",
+            "value": "Sold fraudulent products but possessed useful alchemical ingredients. Supplied ingredients for healing and invisibility potions in exchange for the party's discretion and payment."
+          },
+          "status": "Alive at last appearance.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Mo's magic and potion shop"
+          }
+        }
+      ]
+    },
+    {
+      "id": "disa",
+      "name": "Disa",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "vallaki-and-residents",
+          "details": {
+            "type": "notableEvents",
+            "value": "Dwarven seamstress who created the dress requested by Krezk's burgomaster. Also had a personal encounter with Fellmorn."
+          },
+          "status": "Alive at last appearance.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Vallaki"
+          }
+        }
+      ]
+    },
+    {
+      "id": "bluto-krogarov",
+      "name": "Bluto Krogarov",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "vallaki-and-residents",
+          "details": {
+            "type": "notableEvents",
+            "value": "Attempted to drown Arabelle as a sacrifice to improve his fishing luck."
+          },
+          "status": "Killed by Rudolf during Arabelle's rescue.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Lake Zarovich"
+          }
+        }
+      ]
+    },
+    {
+      "id": "blinsky",
+      "name": "Blinsky",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "vallaki-and-residents",
+          "details": {
+            "type": "notableEvents",
+            "value": "Vallaki toy maker who was caring for Rictavio's monkey, Piccolo."
+          },
+          "status": "Not directly encountered in the recorded sessions.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Mentioned through Rictavio"
+          }
+        }
+      ]
+    },
+    {
+      "id": "piccolo",
+      "name": "Piccolo",
+      "aliases": [],
+      "entityType": "creature",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "vallaki-and-residents",
+          "details": {
+            "type": "notableEvents",
+            "value": "Rictavio's monkey and one of the clues from Madam Eva's reading."
+          },
+          "status": "Not directly encountered.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Mentioned at the Blue Water Inn"
+          }
+        }
+      ]
+    },
+    {
+      "id": "gorek",
+      "name": "Gorek",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "vistani",
+          "details": {
+            "type": "notableEvents",
+            "value": "Leader of the camp. Thanked the party for rescuing Arabelle but refused Madam Eva's request to return peacefully to Tser Pool. Later blamed the party for his sister's death, joined the ambush against them, and retreated. Later records connect this hostility to Volenta's death."
+          },
+          "status": "Alive unless killed off-screen. Hostile to the party at the end of the campaign.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Vistani camp near Vallaki"
+          }
+        }
+      ]
+    },
+    {
+      "id": "kasimir-velikov",
+      "name": "Kasimir Velikov",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "vistani",
+          "details": {
+            "type": "notableEvents",
+            "value": "Camp leader or senior figure who thanked the party for rescuing Arabelle. Later participated in the hostile Vistani encounter and retreated with Gorek."
+          },
+          "status": "Alive and hostile at last appearance.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Vistani camp near Vallaki"
+          }
+        }
+      ]
+    },
+    {
+      "id": "arabelle",
+      "name": "Arabelle",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "vistani",
+          "details": {
+            "type": "notableEvents",
+            "value": "Vistani child tied in a sack and being drowned by Bluto. Rescued by the party and Rudolf and returned safely to the camp."
+          },
+          "status": "Alive.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Lake Zarovich"
+          }
+        }
+      ]
+    },
+    {
+      "id": "or-eli",
+      "name": "Or'eli",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "vistani",
+          "details": {
+            "type": "notableEvents",
+            "value": "Intended or possibly used as the rider who approached the party concerning Madam Eva."
+          },
+          "status": "Exact on-screen use is uncertain.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Vistani rider noted in DM preparation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "arrigal",
+      "name": "Arrigal",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "vistani",
+          "details": {
+            "type": "notableEvents",
+            "value": "Vistani assassin and messenger dressed in purple and gold who may have delivered the original invitation to Barovia."
+          },
+          "status": "Not confirmed in the current played-session summaries.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Reference notes only"
+          }
+        }
+      ]
+    },
+    {
+      "id": "luvash",
+      "name": "Luvash",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "vistani",
+          "details": {
+            "type": "notableEvents",
+            "value": "Listed as Arabelle's father in the older material, although the active campaign notes primarily identify Gorek and Kasimir as the camp's leaders."
+          },
+          "status": "Exact role in the current campaign is uncertain.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Older NPC reference only"
+          }
+        }
+      ]
+    },
+    {
+      "id": "the-burgomaster-of-krezk",
+      "name": "The Burgomaster of Krezk",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "krezk-and-abbey",
+          "details": {
+            "type": "notableEvents",
+            "value": "Asked the party to obtain a dress and accompanied them to deliver it to the Abbey of Saint Markovia."
+          },
+          "status": "Fate uncertain. Most or all inhabitants of Krezk were later killed by Harker.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Krezk"
+          }
+        }
+      ]
+    },
+    {
+      "id": "the-abbot",
+      "name": "The Abbot",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "krezk-and-abbey",
+          "details": {
+            "type": "notableEvents",
+            "value": "A powerful celestial who had become dangerously detached. Asked the party to bring him Ireena's head or face for a flesh golem intended as Strahd's wedding gift."
+          },
+          "status": "Killed by Jonathan Harker, who removed his celestial heart for the lichdom ritual.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Abbey of Saint Markovia"
+          }
+        }
+      ]
+    },
+    {
+      "id": "the-mongrelfolk",
+      "name": "The Mongrelfolk",
+      "aliases": [],
+      "entityType": "group",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "krezk-and-abbey",
+          "details": {
+            "type": "notableEvents",
+            "value": "Served the Abbot. Several were found surgically dissected before the attack on Krezk. The remaining mongrelfolk at the abbey were killed by Harker but were not animated."
+          },
+          "status": "Effectively destroyed as a community.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Abbey of Saint Markovia"
+          }
+        }
+      ]
+    },
+    {
+      "id": "jonathan-harker",
+      "name": "Jonathan Harker",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "major-enemies",
+          "details": {
+            "type": "notableEvents",
+            "value": "Former medical genius driven to necromancy after the death of his wife, Mina. Murdered Krezk, harvested souls, stole the Holy Symbol of Ravenkind, and removed the Abbot's heart to create a phylactery. Commanded undead beholders and invited the party to stop or join him."
+          },
+          "status": "Killed in the undead catacombs by Umecan's disintegration spells before becoming a full lich.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Krezk, although Strahd had previously warned the party about him"
+          }
+        }
+      ]
+    },
+    {
+      "id": "mina-harker",
+      "name": "Mina Harker",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "major-enemies",
+          "details": {
+            "type": "notableEvents",
+            "value": "Jonathan's deceased wife, a devout healer whose death and failed resurrection drove him toward lichdom."
+          },
+          "status": "Deceased before the campaign.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Mentioned by Jonathan"
+          }
+        }
+      ]
+    },
+    {
+      "id": "morgantha",
+      "name": "Morgantha",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "major-enemies",
+          "details": {
+            "type": "notableEvents",
+            "value": "Night hag who sold enchanted pies and abducted children with her daughters."
+          },
+          "status": "Killed by the party.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Vallaki and the Old Bonegrinder mill"
+          }
+        }
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "major-enemies",
+          "details": {
+            "type": "notableEvents",
+            "value": "One of Morgantha's hag daughters."
+          },
+          "status": "Killed by the party.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Old Bonegrinder"
+          }
+        }
+      ]
+    },
+    {
+      "id": "offalia",
+      "name": "Offalia",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "major-enemies",
+          "details": {
+            "type": "notableEvents",
+            "value": "One of Morgantha's hag daughters."
+          },
+          "status": "Killed by the party.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Old Bonegrinder"
+          }
+        }
+      ]
+    },
+    {
+      "id": "rahadin",
+      "name": "Rahadin",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "major-enemies",
+          "details": {
+            "type": "notableEvents",
+            "value": "Strahd's dusk elf chamberlain and military servant. Supported Strahd throughout the campaign and fought in the final crypt battle."
+          },
+          "status": "Hurled into a spike trap by Umecan's tidal wave. Dead.",
+          "context": {
+            "type": "firstMeeting",
+            "value": "Castle Ravenloft"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ludmilla",
+      "name": "Ludmilla",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "strahds-consorts",
+          "details": {
+            "type": "notableEvents",
+            "value": "Assisted Strahd, recruited nineteen werewolves after the fall of Krezk, and nearly intercepted the party during their dungeon raid."
+          },
+          "status": "Final status unrecorded."
+        }
+      ]
+    },
+    {
+      "id": "escher",
+      "name": "Escher",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "strahds-consorts",
+          "details": {
+            "type": "notableEvents",
+            "value": "Accompanied Strahd's forces and was sent with Volenta and Anastrasya to follow the party toward Krezk. Detailed encounter notes proposed that Harker would kill him, but the shared session summary does not confirm whether this occurred at the table."
+          },
+          "status": "Killed by Jonathan Harker."
+        }
+      ]
+    },
+    {
+      "id": "volenta",
+      "name": "Volenta",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "strahds-consorts",
+          "details": {
+            "type": "notableEvents",
+            "value": "One of Strahd's consorts and apparently related to the Vallaki Vistani leadership. Later troop records explicitly state that she had died, turning those Vistani against the party."
+          },
+          "status": "Killed by Jonathan Harker."
+        }
+      ]
+    },
+    {
+      "id": "anastrasya",
+      "name": "Anastrasya",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "strahds-consorts",
+          "details": {
+            "type": "notableEvents",
+            "value": "Followed the party toward Krezk under Strahd's orders and was available to intervene if needed."
+          },
+          "status": "Killed by Jonathan Harker."
+        }
+      ]
+    },
+    {
+      "id": "argynvost",
+      "name": "Argynvost",
+      "aliases": [],
+      "entityType": "creature",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "argynvostholt-and-silver-dragon",
+          "details": {
+            "type": "notableEvents",
+            "value": "The revered dragon associated with Argynvostholt. His skull had been taken and displayed as a trophy in Castle Ravenloft."
+          },
+          "status": "Historical; deceased. His skull was returned to the shrine."
+        }
+      ]
+    },
+    {
+      "id": "the-revenant-knights",
+      "name": "The Revenant Knights",
+      "aliases": [],
+      "entityType": "group",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "argynvostholt-and-silver-dragon",
+          "details": {
+            "type": "notableEvents",
+            "value": "Nine heavily armored revenants served under Mumdahkis and remained bound to Argynvostholt."
+          },
+          "status": "Released when the skull was restored. Their bodies burned with blue fire and crystallized into empty monuments of armor and weapons."
+        }
+      ]
+    },
+    {
+      "id": "vladamir-corchek",
+      "name": "Vladamir Corchek",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "other-named-and-historical-figures",
+          "details": {
+            "type": "relevance",
+            "value": "Architect or construction official whose plans and journal concerning Castle Ravenloft were hidden in Van Richten's tower. His writings described mortal Strahd as a demanding but compassionate ruler toward his workers."
+          },
+          "status": "Historical. The notes do not confirm whether the party found and read these particular documents."
+        }
+      ]
+    },
+    {
+      "id": "eugene",
+      "name": "Eugene",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "other-named-and-historical-figures",
+          "details": {
+            "type": "relevance",
+            "value": "Named in the DM notes as a possible leader of the druids serving Baba Lysaga."
+          },
+          "status": "No confirmed on-screen appearance."
+        }
+      ]
+    },
+    {
+      "id": "lars-kjurls",
+      "name": "Lars Kjurls",
+      "aliases": [],
+      "entityType": "npc",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "other-named-and-historical-figures",
+          "details": {
+            "type": "relevance",
+            "value": "Vallaki guard connected to the Festival of the Blazing Sun in the DM notes."
+          },
+          "status": "No confirmed role in the played-session summaries."
+        }
+      ]
+    },
+    {
+      "id": "andre-and-oni",
+      "name": "Andre and Oni",
+      "aliases": [],
+      "entityType": "group",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "other-named-and-historical-figures",
+          "details": {
+            "type": "relevance",
+            "value": "Adult and child associated with a Vallaki horse pasture in the DM notes."
+          },
+          "status": "No confirmed interaction recorded."
+        }
+      ]
+    },
+    {
+      "id": "death-bhaal-bane-and-myrkul",
+      "name": "Death, Bhaal, Bane, and Myrkul",
+      "aliases": [],
+      "entityType": "group",
+      "image": null,
+      "sectionEntries": [
+        {
+          "sectionId": "other-named-and-historical-figures",
+          "details": {
+            "type": "relevance",
+            "value": "Appeared symbolically or metaphysically in Umecan's vision concerning the creation of Barovia as a vault."
+          },
+          "status": "Not directly encountered."
+        }
+      ]
+    }
+  ]
+}

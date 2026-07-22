@@ -1,0 +1,1540 @@
+{
+  "schemaVersion": 1,
+  "collection": {
+    "id": "dnd-weapons-armor-reference",
+    "name": "D&D Weapons, Armor, and Ammunition Quick Reference",
+    "rulesEdition": "D&D 5e (2014 rules)"
+  },
+  "normalizationNotes": [
+    "Supplied weapon entries were normalized and completed with standard range, ammunition, property, and weight fields where applicable.",
+    "Missing standard 2014 weapons and the full standard armor table were added for campaign use.",
+    "Specialty arrows are retained but marked as homebrew or optional variants when they are not standard equipment rules.",
+    "Costs and weights include display strings for UI rendering and numeric values where a fixed amount is available.",
+    "No 2024 weapon mastery properties are included because this collection follows the 2014 rules used by the campaign reference."
+  ],
+  "magicWeaponEnhancements": [
+    {
+      "id": "plus-1-weapon",
+      "name": "+1 Weapon",
+      "enhancementBonus": 1,
+      "attackBonus": 1,
+      "damageBonus": 1,
+      "typicalRarity": "uncommon"
+    },
+    {
+      "id": "plus-2-weapon",
+      "name": "+2 Weapon",
+      "enhancementBonus": 2,
+      "attackBonus": 2,
+      "damageBonus": 2,
+      "typicalRarity": "rare"
+    },
+    {
+      "id": "plus-3-weapon",
+      "name": "+3 Weapon",
+      "enhancementBonus": 3,
+      "attackBonus": 3,
+      "damageBonus": 3,
+      "typicalRarity": "veryRare"
+    }
+  ],
+  "weaponProperties": [
+    {
+      "id": "ammunition",
+      "name": "Ammunition",
+      "summary": "Requires matching ammunition; one piece is expended with each ranged attack."
+    },
+    {
+      "id": "finesse",
+      "name": "Finesse",
+      "summary": "Use Strength or Dexterity for both attack and damage rolls."
+    },
+    {
+      "id": "heavy",
+      "name": "Heavy",
+      "summary": "Small or Tiny creatures have disadvantage on attack rolls with the weapon."
+    },
+    {
+      "id": "light",
+      "name": "Light",
+      "summary": "Suitable for two-weapon fighting."
+    },
+    {
+      "id": "loading",
+      "name": "Loading",
+      "summary": "Only one piece of ammunition can be fired per action, bonus action, or reaction, regardless of extra attacks."
+    },
+    {
+      "id": "reach",
+      "name": "Reach",
+      "summary": "Adds 5 feet to attack reach and opportunity-attack reach."
+    },
+    {
+      "id": "special",
+      "name": "Special",
+      "summary": "Uses an item-specific rule."
+    },
+    {
+      "id": "thrown",
+      "name": "Thrown",
+      "summary": "Can make a ranged attack using the same ability normally used for its melee attack."
+    },
+    {
+      "id": "two-handed",
+      "name": "Two-Handed",
+      "summary": "Requires two hands when making an attack."
+    },
+    {
+      "id": "versatile",
+      "name": "Versatile",
+      "summary": "Can be used one- or two-handed; two-handed damage is stored separately."
+    }
+  ],
+  "weapons": [
+    {
+      "id": "club",
+      "name": "Club",
+      "image": null,
+      "proficiency": "simple",
+      "category": "melee",
+      "cost": {
+        "display": "1 sp",
+        "amount": 1,
+        "currency": "sp"
+      },
+      "weight": {
+        "display": "2 lb",
+        "pounds": 2
+      },
+      "properties": ["light"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d4",
+        "type": "bludgeoning",
+        "display": "1d4 bludgeoning"
+      }
+    },
+    {
+      "id": "dagger",
+      "name": "Dagger",
+      "image": null,
+      "proficiency": "simple",
+      "category": "melee",
+      "cost": {
+        "display": "2 gp",
+        "amount": 2,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "1 lb",
+        "pounds": 1
+      },
+      "properties": ["finesse", "light", "thrown"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d4",
+        "type": "piercing",
+        "display": "1d4 piercing"
+      },
+      "range": {
+        "normalFeet": 20,
+        "longFeet": 60,
+        "display": "20/60 ft"
+      }
+    },
+    {
+      "id": "greatclub",
+      "name": "Greatclub",
+      "image": null,
+      "proficiency": "simple",
+      "category": "melee",
+      "cost": {
+        "display": "2 sp",
+        "amount": 2,
+        "currency": "sp"
+      },
+      "weight": {
+        "display": "10 lb",
+        "pounds": 10
+      },
+      "properties": ["two-handed"],
+      "origin": "standardReferenceAdded",
+      "damage": {
+        "dice": "1d8",
+        "type": "bludgeoning",
+        "display": "1d8 bludgeoning"
+      }
+    },
+    {
+      "id": "handaxe",
+      "name": "Handaxe",
+      "image": null,
+      "proficiency": "simple",
+      "category": "melee",
+      "cost": {
+        "display": "5 gp",
+        "amount": 5,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "2 lb",
+        "pounds": 2
+      },
+      "properties": ["light", "thrown"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d6",
+        "type": "slashing",
+        "display": "1d6 slashing"
+      },
+      "range": {
+        "normalFeet": 20,
+        "longFeet": 60,
+        "display": "20/60 ft"
+      }
+    },
+    {
+      "id": "javelin",
+      "name": "Javelin",
+      "image": null,
+      "proficiency": "simple",
+      "category": "melee",
+      "cost": {
+        "display": "5 sp",
+        "amount": 5,
+        "currency": "sp"
+      },
+      "weight": {
+        "display": "2 lb",
+        "pounds": 2
+      },
+      "properties": ["thrown"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d6",
+        "type": "piercing",
+        "display": "1d6 piercing"
+      },
+      "range": {
+        "normalFeet": 30,
+        "longFeet": 120,
+        "display": "30/120 ft"
+      }
+    },
+    {
+      "id": "light-hammer",
+      "name": "Light Hammer",
+      "image": null,
+      "proficiency": "simple",
+      "category": "melee",
+      "cost": {
+        "display": "2 gp",
+        "amount": 2,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "2 lb",
+        "pounds": 2
+      },
+      "properties": ["light", "thrown"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d4",
+        "type": "bludgeoning",
+        "display": "1d4 bludgeoning"
+      },
+      "range": {
+        "normalFeet": 20,
+        "longFeet": 60,
+        "display": "20/60 ft"
+      }
+    },
+    {
+      "id": "mace",
+      "name": "Mace",
+      "image": null,
+      "proficiency": "simple",
+      "category": "melee",
+      "cost": {
+        "display": "5 gp",
+        "amount": 5,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "4 lb",
+        "pounds": 4
+      },
+      "properties": [],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d6",
+        "type": "bludgeoning",
+        "display": "1d6 bludgeoning"
+      }
+    },
+    {
+      "id": "quarterstaff",
+      "name": "Quarterstaff",
+      "image": null,
+      "proficiency": "simple",
+      "category": "melee",
+      "cost": {
+        "display": "2 sp",
+        "amount": 2,
+        "currency": "sp"
+      },
+      "weight": {
+        "display": "4 lb",
+        "pounds": 4
+      },
+      "properties": ["versatile"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d6",
+        "type": "bludgeoning",
+        "display": "1d6 bludgeoning"
+      },
+      "versatileDamage": "1d8"
+    },
+    {
+      "id": "sickle",
+      "name": "Sickle",
+      "image": null,
+      "proficiency": "simple",
+      "category": "melee",
+      "cost": {
+        "display": "1 gp",
+        "amount": 1,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "2 lb",
+        "pounds": 2
+      },
+      "properties": ["light"],
+      "origin": "standardReferenceAdded",
+      "damage": {
+        "dice": "1d4",
+        "type": "slashing",
+        "display": "1d4 slashing"
+      }
+    },
+    {
+      "id": "spear",
+      "name": "Spear",
+      "image": null,
+      "proficiency": "simple",
+      "category": "melee",
+      "cost": {
+        "display": "1 gp",
+        "amount": 1,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "3 lb",
+        "pounds": 3
+      },
+      "properties": ["thrown", "versatile"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d6",
+        "type": "piercing",
+        "display": "1d6 piercing"
+      },
+      "range": {
+        "normalFeet": 20,
+        "longFeet": 60,
+        "display": "20/60 ft"
+      },
+      "versatileDamage": "1d8"
+    },
+    {
+      "id": "light-crossbow",
+      "name": "Light Crossbow",
+      "image": null,
+      "proficiency": "simple",
+      "category": "ranged",
+      "cost": {
+        "display": "25 gp",
+        "amount": 25,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "5 lb",
+        "pounds": 5
+      },
+      "properties": ["ammunition", "loading", "two-handed"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d8",
+        "type": "piercing",
+        "display": "1d8 piercing"
+      },
+      "range": {
+        "normalFeet": 80,
+        "longFeet": 320,
+        "display": "80/320 ft"
+      }
+    },
+    {
+      "id": "dart",
+      "name": "Dart",
+      "image": null,
+      "proficiency": "simple",
+      "category": "ranged",
+      "cost": {
+        "display": "5 cp",
+        "amount": 5,
+        "currency": "cp"
+      },
+      "weight": {
+        "display": "1/4 lb",
+        "pounds": 0.25
+      },
+      "properties": ["finesse", "thrown"],
+      "origin": "standardReferenceAdded",
+      "damage": {
+        "dice": "1d4",
+        "type": "piercing",
+        "display": "1d4 piercing"
+      },
+      "range": {
+        "normalFeet": 20,
+        "longFeet": 60,
+        "display": "20/60 ft"
+      }
+    },
+    {
+      "id": "shortbow",
+      "name": "Shortbow",
+      "image": null,
+      "proficiency": "simple",
+      "category": "ranged",
+      "cost": {
+        "display": "25 gp",
+        "amount": 25,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "2 lb",
+        "pounds": 2
+      },
+      "properties": ["ammunition", "two-handed"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d6",
+        "type": "piercing",
+        "display": "1d6 piercing"
+      },
+      "range": {
+        "normalFeet": 80,
+        "longFeet": 320,
+        "display": "80/320 ft"
+      }
+    },
+    {
+      "id": "sling",
+      "name": "Sling",
+      "image": null,
+      "proficiency": "simple",
+      "category": "ranged",
+      "cost": {
+        "display": "1 sp",
+        "amount": 1,
+        "currency": "sp"
+      },
+      "weight": {
+        "display": "—"
+      },
+      "properties": ["ammunition"],
+      "origin": "standardReferenceAdded",
+      "damage": {
+        "dice": "1d4",
+        "type": "bludgeoning",
+        "display": "1d4 bludgeoning"
+      },
+      "range": {
+        "normalFeet": 30,
+        "longFeet": 120,
+        "display": "30/120 ft"
+      }
+    },
+    {
+      "id": "battleaxe",
+      "name": "Battleaxe",
+      "image": null,
+      "proficiency": "martial",
+      "category": "melee",
+      "cost": {
+        "display": "10 gp",
+        "amount": 10,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "4 lb",
+        "pounds": 4
+      },
+      "properties": ["versatile"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d8",
+        "type": "slashing",
+        "display": "1d8 slashing"
+      },
+      "versatileDamage": "1d10"
+    },
+    {
+      "id": "flail",
+      "name": "Flail",
+      "image": null,
+      "proficiency": "martial",
+      "category": "melee",
+      "cost": {
+        "display": "10 gp",
+        "amount": 10,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "2 lb",
+        "pounds": 2
+      },
+      "properties": [],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d8",
+        "type": "bludgeoning",
+        "display": "1d8 bludgeoning"
+      }
+    },
+    {
+      "id": "glaive",
+      "name": "Glaive",
+      "image": null,
+      "proficiency": "martial",
+      "category": "melee",
+      "cost": {
+        "display": "20 gp",
+        "amount": 20,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "6 lb",
+        "pounds": 6
+      },
+      "properties": ["heavy", "reach", "two-handed"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d10",
+        "type": "slashing",
+        "display": "1d10 slashing"
+      }
+    },
+    {
+      "id": "greataxe",
+      "name": "Greataxe",
+      "image": null,
+      "proficiency": "martial",
+      "category": "melee",
+      "cost": {
+        "display": "30 gp",
+        "amount": 30,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "7 lb",
+        "pounds": 7
+      },
+      "properties": ["heavy", "two-handed"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d12",
+        "type": "slashing",
+        "display": "1d12 slashing"
+      }
+    },
+    {
+      "id": "greatsword",
+      "name": "Greatsword",
+      "image": null,
+      "proficiency": "martial",
+      "category": "melee",
+      "cost": {
+        "display": "50 gp",
+        "amount": 50,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "6 lb",
+        "pounds": 6
+      },
+      "properties": ["heavy", "two-handed"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "2d6",
+        "type": "slashing",
+        "display": "2d6 slashing"
+      }
+    },
+    {
+      "id": "halberd",
+      "name": "Halberd",
+      "image": null,
+      "proficiency": "martial",
+      "category": "melee",
+      "cost": {
+        "display": "20 gp",
+        "amount": 20,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "6 lb",
+        "pounds": 6
+      },
+      "properties": ["heavy", "reach", "two-handed"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d10",
+        "type": "slashing",
+        "display": "1d10 slashing"
+      }
+    },
+    {
+      "id": "lance",
+      "name": "Lance",
+      "image": null,
+      "proficiency": "martial",
+      "category": "melee",
+      "cost": {
+        "display": "10 gp",
+        "amount": 10,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "6 lb",
+        "pounds": 6
+      },
+      "properties": ["reach", "special"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d12",
+        "type": "piercing",
+        "display": "1d12 piercing"
+      },
+      "specialRule": "Attacks against targets within 5 feet have disadvantage. The lance requires two hands when the wielder is not mounted."
+    },
+    {
+      "id": "longsword",
+      "name": "Longsword",
+      "image": null,
+      "proficiency": "martial",
+      "category": "melee",
+      "cost": {
+        "display": "15 gp",
+        "amount": 15,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "3 lb",
+        "pounds": 3
+      },
+      "properties": ["versatile"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d8",
+        "type": "slashing",
+        "display": "1d8 slashing"
+      },
+      "versatileDamage": "1d10"
+    },
+    {
+      "id": "maul",
+      "name": "Maul",
+      "image": null,
+      "proficiency": "martial",
+      "category": "melee",
+      "cost": {
+        "display": "10 gp",
+        "amount": 10,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "10 lb",
+        "pounds": 10
+      },
+      "properties": ["heavy", "two-handed"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "2d6",
+        "type": "bludgeoning",
+        "display": "2d6 bludgeoning"
+      }
+    },
+    {
+      "id": "morningstar",
+      "name": "Morningstar",
+      "image": null,
+      "proficiency": "martial",
+      "category": "melee",
+      "cost": {
+        "display": "15 gp",
+        "amount": 15,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "4 lb",
+        "pounds": 4
+      },
+      "properties": [],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d8",
+        "type": "piercing",
+        "display": "1d8 piercing"
+      }
+    },
+    {
+      "id": "pike",
+      "name": "Pike",
+      "image": null,
+      "proficiency": "martial",
+      "category": "melee",
+      "cost": {
+        "display": "5 gp",
+        "amount": 5,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "18 lb",
+        "pounds": 18
+      },
+      "properties": ["heavy", "reach", "two-handed"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d10",
+        "type": "piercing",
+        "display": "1d10 piercing"
+      }
+    },
+    {
+      "id": "rapier",
+      "name": "Rapier",
+      "image": null,
+      "proficiency": "martial",
+      "category": "melee",
+      "cost": {
+        "display": "25 gp",
+        "amount": 25,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "2 lb",
+        "pounds": 2
+      },
+      "properties": ["finesse"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d8",
+        "type": "piercing",
+        "display": "1d8 piercing"
+      }
+    },
+    {
+      "id": "scimitar",
+      "name": "Scimitar",
+      "image": null,
+      "proficiency": "martial",
+      "category": "melee",
+      "cost": {
+        "display": "25 gp",
+        "amount": 25,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "3 lb",
+        "pounds": 3
+      },
+      "properties": ["finesse", "light"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d6",
+        "type": "slashing",
+        "display": "1d6 slashing"
+      }
+    },
+    {
+      "id": "shortsword",
+      "name": "Shortsword",
+      "image": null,
+      "proficiency": "martial",
+      "category": "melee",
+      "cost": {
+        "display": "10 gp",
+        "amount": 10,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "2 lb",
+        "pounds": 2
+      },
+      "properties": ["finesse", "light"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d6",
+        "type": "piercing",
+        "display": "1d6 piercing"
+      }
+    },
+    {
+      "id": "trident",
+      "name": "Trident",
+      "image": null,
+      "proficiency": "martial",
+      "category": "melee",
+      "cost": {
+        "display": "5 gp",
+        "amount": 5,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "4 lb",
+        "pounds": 4
+      },
+      "properties": ["thrown", "versatile"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d6",
+        "type": "piercing",
+        "display": "1d6 piercing"
+      },
+      "range": {
+        "normalFeet": 20,
+        "longFeet": 60,
+        "display": "20/60 ft"
+      },
+      "versatileDamage": "1d8"
+    },
+    {
+      "id": "war-pick",
+      "name": "War Pick",
+      "image": null,
+      "proficiency": "martial",
+      "category": "melee",
+      "cost": {
+        "display": "5 gp",
+        "amount": 5,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "2 lb",
+        "pounds": 2
+      },
+      "properties": [],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d8",
+        "type": "piercing",
+        "display": "1d8 piercing"
+      }
+    },
+    {
+      "id": "warhammer",
+      "name": "Warhammer",
+      "image": null,
+      "proficiency": "martial",
+      "category": "melee",
+      "cost": {
+        "display": "15 gp",
+        "amount": 15,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "2 lb",
+        "pounds": 2
+      },
+      "properties": ["versatile"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d8",
+        "type": "bludgeoning",
+        "display": "1d8 bludgeoning"
+      },
+      "versatileDamage": "1d10"
+    },
+    {
+      "id": "whip",
+      "name": "Whip",
+      "image": null,
+      "proficiency": "martial",
+      "category": "melee",
+      "cost": {
+        "display": "2 gp",
+        "amount": 2,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "3 lb",
+        "pounds": 3
+      },
+      "properties": ["finesse", "reach"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d4",
+        "type": "slashing",
+        "display": "1d4 slashing"
+      }
+    },
+    {
+      "id": "blowgun",
+      "name": "Blowgun",
+      "image": null,
+      "proficiency": "martial",
+      "category": "ranged",
+      "cost": {
+        "display": "10 gp",
+        "amount": 10,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "1 lb",
+        "pounds": 1
+      },
+      "properties": ["ammunition", "loading"],
+      "origin": "standardReferenceAdded",
+      "damage": {
+        "dice": "1",
+        "type": "piercing",
+        "display": "1 piercing"
+      },
+      "range": {
+        "normalFeet": 25,
+        "longFeet": 100,
+        "display": "25/100 ft"
+      }
+    },
+    {
+      "id": "hand-crossbow",
+      "name": "Hand Crossbow",
+      "image": null,
+      "proficiency": "martial",
+      "category": "ranged",
+      "cost": {
+        "display": "75 gp",
+        "amount": 75,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "3 lb",
+        "pounds": 3
+      },
+      "properties": ["ammunition", "light", "loading"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d6",
+        "type": "piercing",
+        "display": "1d6 piercing"
+      },
+      "range": {
+        "normalFeet": 30,
+        "longFeet": 120,
+        "display": "30/120 ft"
+      }
+    },
+    {
+      "id": "heavy-crossbow",
+      "name": "Heavy Crossbow",
+      "image": null,
+      "proficiency": "martial",
+      "category": "ranged",
+      "cost": {
+        "display": "50 gp",
+        "amount": 50,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "18 lb",
+        "pounds": 18
+      },
+      "properties": ["ammunition", "heavy", "loading", "two-handed"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d10",
+        "type": "piercing",
+        "display": "1d10 piercing"
+      },
+      "range": {
+        "normalFeet": 100,
+        "longFeet": 400,
+        "display": "100/400 ft"
+      }
+    },
+    {
+      "id": "longbow",
+      "name": "Longbow",
+      "image": null,
+      "proficiency": "martial",
+      "category": "ranged",
+      "cost": {
+        "display": "50 gp",
+        "amount": 50,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "2 lb",
+        "pounds": 2
+      },
+      "properties": ["ammunition", "heavy", "two-handed"],
+      "origin": "userProvided",
+      "damage": {
+        "dice": "1d8",
+        "type": "piercing",
+        "display": "1d8 piercing"
+      },
+      "range": {
+        "normalFeet": 150,
+        "longFeet": 600,
+        "display": "150/600 ft"
+      }
+    },
+    {
+      "id": "net",
+      "name": "Net",
+      "image": null,
+      "proficiency": "martial",
+      "category": "ranged",
+      "cost": {
+        "display": "1 gp",
+        "amount": 1,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "3 lb",
+        "pounds": 3
+      },
+      "properties": ["special", "thrown"],
+      "origin": "standardReferenceAdded",
+      "range": {
+        "normalFeet": 5,
+        "longFeet": 15,
+        "display": "5/15 ft"
+      },
+      "specialRule": "A Large or smaller non-formless creature hit by the net is restrained until freed. Escape requires a DC 10 Strength check, or the net can be destroyed by dealing 5 slashing damage to AC 10."
+    }
+  ],
+  "armor": [
+    {
+      "id": "padded",
+      "name": "Padded",
+      "image": null,
+      "category": "light",
+      "cost": {
+        "display": "5 gp",
+        "amount": 5,
+        "currency": "gp"
+      },
+      "armorClass": {
+        "base": 11,
+        "dexterityModifier": "full",
+        "display": "11 + DEX modifier"
+      },
+      "strengthRequirement": null,
+      "stealthDisadvantage": true,
+      "weight": {
+        "display": "8 lb",
+        "pounds": 8
+      },
+      "donTime": "1 minute",
+      "doffTime": "1 minute",
+      "origin": "standardReferenceAdded"
+    },
+    {
+      "id": "leather",
+      "name": "Leather",
+      "image": null,
+      "category": "light",
+      "cost": {
+        "display": "10 gp",
+        "amount": 10,
+        "currency": "gp"
+      },
+      "armorClass": {
+        "base": 11,
+        "dexterityModifier": "full",
+        "display": "11 + DEX modifier"
+      },
+      "strengthRequirement": null,
+      "stealthDisadvantage": false,
+      "weight": {
+        "display": "10 lb",
+        "pounds": 10
+      },
+      "donTime": "1 minute",
+      "doffTime": "1 minute",
+      "origin": "standardReferenceAdded"
+    },
+    {
+      "id": "studded-leather",
+      "name": "Studded Leather",
+      "image": null,
+      "category": "light",
+      "cost": {
+        "display": "45 gp",
+        "amount": 45,
+        "currency": "gp"
+      },
+      "armorClass": {
+        "base": 12,
+        "dexterityModifier": "full",
+        "display": "12 + DEX modifier"
+      },
+      "strengthRequirement": null,
+      "stealthDisadvantage": false,
+      "weight": {
+        "display": "13 lb",
+        "pounds": 13
+      },
+      "donTime": "1 minute",
+      "doffTime": "1 minute",
+      "origin": "standardReferenceAdded"
+    },
+    {
+      "id": "hide",
+      "name": "Hide",
+      "image": null,
+      "category": "medium",
+      "cost": {
+        "display": "10 gp",
+        "amount": 10,
+        "currency": "gp"
+      },
+      "armorClass": {
+        "base": 12,
+        "dexterityModifier": "capped",
+        "dexterityCap": 2,
+        "display": "12 + DEX modifier (max 2)"
+      },
+      "strengthRequirement": null,
+      "stealthDisadvantage": false,
+      "weight": {
+        "display": "12 lb",
+        "pounds": 12
+      },
+      "donTime": "5 minutes",
+      "doffTime": "1 minute",
+      "origin": "standardReferenceAdded"
+    },
+    {
+      "id": "chain-shirt",
+      "name": "Chain Shirt",
+      "image": null,
+      "category": "medium",
+      "cost": {
+        "display": "50 gp",
+        "amount": 50,
+        "currency": "gp"
+      },
+      "armorClass": {
+        "base": 13,
+        "dexterityModifier": "capped",
+        "dexterityCap": 2,
+        "display": "13 + DEX modifier (max 2)"
+      },
+      "strengthRequirement": null,
+      "stealthDisadvantage": false,
+      "weight": {
+        "display": "20 lb",
+        "pounds": 20
+      },
+      "donTime": "5 minutes",
+      "doffTime": "1 minute",
+      "origin": "standardReferenceAdded"
+    },
+    {
+      "id": "scale-mail",
+      "name": "Scale Mail",
+      "image": null,
+      "category": "medium",
+      "cost": {
+        "display": "50 gp",
+        "amount": 50,
+        "currency": "gp"
+      },
+      "armorClass": {
+        "base": 14,
+        "dexterityModifier": "capped",
+        "dexterityCap": 2,
+        "display": "14 + DEX modifier (max 2)"
+      },
+      "strengthRequirement": null,
+      "stealthDisadvantage": true,
+      "weight": {
+        "display": "45 lb",
+        "pounds": 45
+      },
+      "donTime": "5 minutes",
+      "doffTime": "1 minute",
+      "origin": "standardReferenceAdded"
+    },
+    {
+      "id": "breastplate",
+      "name": "Breastplate",
+      "image": null,
+      "category": "medium",
+      "cost": {
+        "display": "400 gp",
+        "amount": 400,
+        "currency": "gp"
+      },
+      "armorClass": {
+        "base": 14,
+        "dexterityModifier": "capped",
+        "dexterityCap": 2,
+        "display": "14 + DEX modifier (max 2)"
+      },
+      "strengthRequirement": null,
+      "stealthDisadvantage": false,
+      "weight": {
+        "display": "20 lb",
+        "pounds": 20
+      },
+      "donTime": "5 minutes",
+      "doffTime": "1 minute",
+      "origin": "standardReferenceAdded"
+    },
+    {
+      "id": "half-plate",
+      "name": "Half Plate",
+      "image": null,
+      "category": "medium",
+      "cost": {
+        "display": "750 gp",
+        "amount": 750,
+        "currency": "gp"
+      },
+      "armorClass": {
+        "base": 15,
+        "dexterityModifier": "capped",
+        "dexterityCap": 2,
+        "display": "15 + DEX modifier (max 2)"
+      },
+      "strengthRequirement": null,
+      "stealthDisadvantage": true,
+      "weight": {
+        "display": "40 lb",
+        "pounds": 40
+      },
+      "donTime": "5 minutes",
+      "doffTime": "1 minute",
+      "origin": "standardReferenceAdded"
+    },
+    {
+      "id": "ring-mail",
+      "name": "Ring Mail",
+      "image": null,
+      "category": "heavy",
+      "cost": {
+        "display": "30 gp",
+        "amount": 30,
+        "currency": "gp"
+      },
+      "armorClass": {
+        "base": 14,
+        "dexterityModifier": "none",
+        "display": "14"
+      },
+      "strengthRequirement": null,
+      "stealthDisadvantage": true,
+      "weight": {
+        "display": "40 lb",
+        "pounds": 40
+      },
+      "donTime": "10 minutes",
+      "doffTime": "5 minutes",
+      "origin": "standardReferenceAdded"
+    },
+    {
+      "id": "chain-mail",
+      "name": "Chain Mail",
+      "image": null,
+      "category": "heavy",
+      "cost": {
+        "display": "75 gp",
+        "amount": 75,
+        "currency": "gp"
+      },
+      "armorClass": {
+        "base": 16,
+        "dexterityModifier": "none",
+        "display": "16"
+      },
+      "strengthRequirement": 13,
+      "stealthDisadvantage": true,
+      "weight": {
+        "display": "55 lb",
+        "pounds": 55
+      },
+      "donTime": "10 minutes",
+      "doffTime": "5 minutes",
+      "origin": "standardReferenceAdded"
+    },
+    {
+      "id": "splint",
+      "name": "Splint",
+      "image": null,
+      "category": "heavy",
+      "cost": {
+        "display": "200 gp",
+        "amount": 200,
+        "currency": "gp"
+      },
+      "armorClass": {
+        "base": 17,
+        "dexterityModifier": "none",
+        "display": "17"
+      },
+      "strengthRequirement": 15,
+      "stealthDisadvantage": true,
+      "weight": {
+        "display": "60 lb",
+        "pounds": 60
+      },
+      "donTime": "10 minutes",
+      "doffTime": "5 minutes",
+      "origin": "standardReferenceAdded"
+    },
+    {
+      "id": "plate",
+      "name": "Plate",
+      "image": null,
+      "category": "heavy",
+      "cost": {
+        "display": "1,500 gp",
+        "amount": 1500,
+        "currency": "gp"
+      },
+      "armorClass": {
+        "base": 18,
+        "dexterityModifier": "none",
+        "display": "18"
+      },
+      "strengthRequirement": 15,
+      "stealthDisadvantage": true,
+      "weight": {
+        "display": "65 lb",
+        "pounds": 65
+      },
+      "donTime": "10 minutes",
+      "doffTime": "5 minutes",
+      "origin": "standardReferenceAdded"
+    },
+    {
+      "id": "shield",
+      "name": "Shield",
+      "image": null,
+      "category": "shield",
+      "cost": {
+        "display": "10 gp",
+        "amount": 10,
+        "currency": "gp"
+      },
+      "armorClass": {
+        "bonus": 2,
+        "dexterityModifier": "none",
+        "display": "+2 AC"
+      },
+      "strengthRequirement": null,
+      "stealthDisadvantage": false,
+      "weight": {
+        "display": "6 lb",
+        "pounds": 6
+      },
+      "donTime": "1 action",
+      "doffTime": "1 action",
+      "origin": "standardReferenceAdded"
+    }
+  ],
+  "ammunition": [
+    {
+      "id": "arrows-20",
+      "name": "Arrows",
+      "image": null,
+      "quantity": 20,
+      "compatibleWeapons": ["shortbow", "longbow"],
+      "cost": {
+        "display": "1 gp",
+        "amount": 1,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "1 lb",
+        "pounds": 1
+      },
+      "rulesStatus": "standard",
+      "summary": "Standard bow ammunition.",
+      "origin": "userProvided"
+    },
+    {
+      "id": "crossbow-bolts-20",
+      "name": "Crossbow Bolts",
+      "image": null,
+      "quantity": 20,
+      "compatibleWeapons": ["light-crossbow", "hand-crossbow", "heavy-crossbow"],
+      "cost": {
+        "display": "1 gp",
+        "amount": 1,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "1 1/2 lb",
+        "pounds": 1.5
+      },
+      "rulesStatus": "standard",
+      "summary": "Standard crossbow ammunition.",
+      "origin": "userProvided"
+    },
+    {
+      "id": "blowgun-needles-50",
+      "name": "Blowgun Needles",
+      "image": null,
+      "quantity": 50,
+      "compatibleWeapons": ["blowgun"],
+      "cost": {
+        "display": "1 gp",
+        "amount": 1,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "1 lb",
+        "pounds": 1
+      },
+      "rulesStatus": "standard",
+      "summary": "Standard blowgun ammunition.",
+      "origin": "standardReferenceAdded"
+    },
+    {
+      "id": "sling-bullets-20",
+      "name": "Sling Bullets",
+      "image": null,
+      "quantity": 20,
+      "compatibleWeapons": ["sling"],
+      "cost": {
+        "display": "4 cp",
+        "amount": 4,
+        "currency": "cp"
+      },
+      "weight": {
+        "display": "1 1/2 lb",
+        "pounds": 1.5
+      },
+      "rulesStatus": "standard",
+      "summary": "Standard sling ammunition.",
+      "origin": "standardReferenceAdded"
+    },
+    {
+      "id": "silvered-arrows-10",
+      "name": "Silvered Arrows",
+      "image": null,
+      "quantity": 10,
+      "compatibleWeapons": ["shortbow", "longbow"],
+      "cost": {
+        "display": "100 gp",
+        "amount": 100,
+        "currency": "gp"
+      },
+      "weight": {
+        "display": "Not specified"
+      },
+      "rulesStatus": "standard",
+      "summary": "Silvered ammunition for creatures whose defenses specifically recognize silvered attacks.",
+      "origin": "userProvided"
+    },
+    {
+      "id": "fire-arrow",
+      "name": "Fire Arrow",
+      "image": null,
+      "quantity": 1,
+      "compatibleWeapons": ["shortbow", "longbow"],
+      "cost": {
+        "display": "5–10 gp each",
+        "currency": "gp",
+        "minAmount": 5,
+        "maxAmount": 10,
+        "perUnit": true
+      },
+      "weight": {
+        "display": "Not specified"
+      },
+      "rulesStatus": "homebrew",
+      "summary": "Deals an additional 1d4 fire damage under the supplied homebrew rule.",
+      "origin": "userProvided"
+    },
+    {
+      "id": "poison-arrow",
+      "name": "Poison Arrow",
+      "image": null,
+      "quantity": 1,
+      "compatibleWeapons": ["shortbow", "longbow"],
+      "cost": {
+        "display": "50–200 gp each",
+        "currency": "gp",
+        "minAmount": 50,
+        "maxAmount": 200,
+        "perUnit": true
+      },
+      "weight": {
+        "display": "Not specified"
+      },
+      "rulesStatus": "homebrew",
+      "summary": "Applies a poison effect determined by the poison used.",
+      "origin": "userProvided"
+    },
+    {
+      "id": "bodkin-arrow",
+      "name": "Bodkin Arrow",
+      "image": null,
+      "quantity": 1,
+      "compatibleWeapons": ["shortbow", "longbow"],
+      "cost": {
+        "display": "Not specified"
+      },
+      "weight": {
+        "display": "Not specified"
+      },
+      "rulesStatus": "optionalVariant",
+      "summary": "Optional armor-piercing arrow; exact mechanics are left to the DM.",
+      "origin": "userProvided"
+    },
+    {
+      "id": "broadhead-arrow",
+      "name": "Broadhead Arrow",
+      "image": null,
+      "quantity": 1,
+      "compatibleWeapons": ["shortbow", "longbow"],
+      "cost": {
+        "display": "Not specified"
+      },
+      "weight": {
+        "display": "Not specified"
+      },
+      "rulesStatus": "optionalVariant",
+      "summary": "Optional higher-damage arrow; exact mechanics are left to the DM.",
+      "origin": "userProvided"
+    }
+  ],
+  "referenceRules": {
+    "silvering": {
+      "cost": {
+        "display": "100 gp",
+        "amount": 100,
+        "currency": "gp"
+      },
+      "appliesTo": "One weapon or ten pieces of ammunition",
+      "summary": "Silvering can bypass defenses that specifically recognize silvered attacks."
+    },
+    "heavyArmorStrength": {
+      "summary": "A wearer below the listed Strength requirement has their speed reduced by 10 feet."
+    },
+    "armorProficiency": {
+      "summary": "Wearing armor without proficiency interferes with Strength- and Dexterity-based checks, saves, and attacks, and prevents spellcasting."
+    }
+  }
+}

@@ -1,0 +1,62 @@
+<div class="archive-shell">
+  <header class="topbar">
+    <button
+      class="menu-toggle"
+      type="button"
+      (click)="menuOpen.set(!menuOpen())"
+      [attr.aria-expanded]="menuOpen()"
+      aria-label="Toggle archive navigation"
+    >
+      <span></span><span></span>
+    </button>
+    <a class="brand" routerLink="/dashboard"
+      ><span class="brand-mark">&#9671;</span
+      ><span><small>The Ravenloft Continuum</small><strong>Shadow &amp; Secrets</strong></span></a
+    >
+    <div class="top-actions">
+      <button class="search" type="button" aria-label="Search the archive">
+        <span>&#8981;</span><span>Search archive</span><kbd>/</kbd></button
+      ><span class="access" [class.editor]="auth.user()?.canEdit">{{
+        auth.user()?.canEdit ? 'Chronicler' : 'Observer'
+      }}</span>
+    </div>
+  </header>
+
+  @if (menuOpen()) {
+    <button
+      class="backdrop"
+      type="button"
+      aria-label="Close navigation"
+      (click)="closeMenu()"
+    ></button>
+  }
+  <aside class="sidebar" [class.open]="menuOpen()">
+
+    <nav aria-label="Archive sections">
+      <p>The archive</p>
+      @for (item of navigation; track item.path) {
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeMenu()"
+          ><i>{{ item.glyph }}</i
+          ><span>{{ item.label }}</span></a
+        >
+      }
+    </nav>
+    <div class="sidebar-footer">
+      <div>
+        <span class="user-sigil">{{ auth.user()?.name?.charAt(0) }}</span
+        ><span
+          ><strong>{{ auth.user()?.name }}</strong
+          ><small>{{
+            auth.user()?.canEdit ? 'May alter the chronicle' : 'Read-only passage'
+          }}</small></span
+        >
+      </div>
+      <button type="button" (click)="logout()">Logout</button>
+    </div>
+  </aside>
+  <section class="content"><router-outlet /></section>
+</div>

@@ -1,0 +1,458 @@
+<main>
+  <header class="page-header">
+    <div>
+      <p>Dramatis personae</p>
+      <h1>Characters</h1>
+      <span
+        >Every ally, adversary, creature, and power encountered beneath Barovia's darkened
+        sky.</span
+      >
+    </div>
+    <div class="header-actions">
+      <div class="count">
+        <strong>{{ entities().length }}</strong
+        ><span>known entities</span>
+      </div>
+      @if (auth.user()?.canEdit) {
+        <button class="create-character" type="button" (click)="openCreate()">
+          <span>+</span> Create character
+        </button>
+      }
+    </div>
+  </header>
+
+  <section class="toolbar" aria-label="Character filters">
+    <label class="search"
+      ><span aria-hidden="true">&#8981;</span
+      ><input
+        type="search"
+        placeholder="Search names, histories, and status"
+        [value]="search()"
+        (input)="setSearch($event)"
+    /></label>
+    <label
+      ><span>Chapter</span
+      ><select [value]="sectionFilter()" (change)="setSection($event)">
+        <option value="all">All sections</option>
+        @for (section of sections(); track section.id) {
+          <option [value]="section.id">{{ section.name }}</option>
+        }
+      </select></label
+    >
+    <label
+      ><span>Kind</span
+      ><select [value]="typeFilter()" (change)="setType($event)">
+        <option value="all">All types</option>
+        @for (type of entityTypes(); track type) {
+          <option [value]="type">{{ typeLabel(type) }}</option>
+        }
+      </select></label
+    >
+  </section>
+
+  @if (loading()) {
+    <section class="state">
+      <span class="loader"></span>
+      <p>Unsealing the character ledger...</p>
+    </section>
+  } @else if (error()) {
+    <section class="state error">
+      <p>{{ error() }}</p>
+    </section>
+  } @else if (!visibleRecords().length) {
+    <section class="state">
+      <p>No soul in the archive answers that description.</p>
+      <button type="button" (click)="clearFilters()">Clear all filters</button>
+    </section>
+  } @else {
+    <div class="results">
+      <span>{{ visibleRecords().length }} entries revealed</span><i></i
+      ><span>{{ groupedRecords().length }} sections</span>
+    </div>
+    @for (group of groupedRecords(); track group.section.id) {
+      <section class="character-group">
+        <header>
+          <span>{{ group.section.order.toString().padStart(2, '0') }}</span>
+          <div>
+            <p>Archive section</p>
+            <h2>{{ group.section.name }}</h2>
+          </div>
+          <small
+            >{{ group.records.length }}
+            {{ group.records.length === 1 ? 'entry' : 'entries' }}</small
+          >
+        </header>
+        <div class="character-grid">
+          @for (record of group.records; track record.entity.id + record.entry.sectionId) {
+            <article
+              role="button"
+              tabindex="0"
+              (click)="openEntity(record.entity)"
+              (keydown.enter)="openEntity(record.entity)"
+            >
+              <div class="portrait">
+                @if (record.entity.imageUrl) {
+                  <img [src]="record.entity.imageUrl" [alt]="record.entity.name" />
+                } @else {
+                  <span>{{ initials(record.entity.name) }}</span>
+                }
+              </div>
+              <div class="card-body">
+                <div class="classification">
+                  <span>{{ typeLabel(record.entity.entityType) }}</span>
+                  @if (record.entity.aliases.length) {
+                    <small>Also known as {{ record.entity.aliases.join(', ') }}</small>
+                  }
+                </div>
+                <h3>{{ record.entity.name }}</h3>
+                @if (record.entry.context) {
+                  <p class="context">
+                    <b>{{ typeLabel(record.entry.context.type) }}</b
+                    >{{ record.entry.context.value }}
+                  </p>
+                }
+                <p class="details">{{ record.entry.details.value }}</p>
+                <div class="status">
+                  <span></span>
+                  <p><b>Status</b>{{ record.entry.status }}</p>
+                </div>
+              </div>
+              <span class="open-cue">View full record &#8594;</span>
+            </article>
+          }
+        </div>
+      </section>
+    }
+  }
+</main>
+
+@if (selectedEntity(); as selected) {
+  <div class="dialog-backdrop" (click)="closeDialog()">
+    <section
+      class="character-dialog"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-labelledby]="'character-title-' + selected.id"
+      (click)="$event.stopPropagation()"
+    >
+      <header class="dialog-header">
+        <div class="dialog-portrait">
+          @if (selected.imageUrl) {
+            <img [src]="selected.imageUrl" [alt]="selected.name" />
+          } @else {
+            <span>{{ initials(selected.name) }}</span>
+          }
+        </div>
+        <div>
+          <p>{{ typeLabel(selected.entityType) }} &nbsp;&bull;&nbsp; {{ selected.visibility }}</p>
+          <h2 [id]="'character-title-' + selected.id">{{ selected.name }}</h2>
+        </div>
+        <button type="button" (click)="closeDialog()" aria-label="Close character record">
+          &times;
+        </button>
+      </header>
+
+      @if (editing() && draft(); as draftEntity) {
+        <div class="dialog-content edit-form">
+          <div class="form-grid">
+            <label><span>Name</span><input [(ngModel)]="draftEntity.name" /></label>
+            <label
+              ><span>Entity type</span
+              ><select [(ngModel)]="draftEntity.entityType">
+                <option value="npc">NPC</option>
+                <option value="creature">Creature</option>
+                <option value="deity">Deity</option>
+                <option value="artifact">Artifact</option>
+                <option value="group">Group</option>
+                <option value="supernatural_entity">Supernatural entity</option>
+              </select></label
+            >
+            <label
+              ><span>Visibility</span
+              ><select [(ngModel)]="draftEntity.visibility">
+                <option value="public">Public</option>
+                <option value="party">Party</option>
+                <option value="dm_only">DM only</option>
+              </select></label
+            >
+            <label class="wide"
+              ><span>Aliases <small>comma separated</small></span
+              ><input [(ngModel)]="aliasesText"
+            /></label>
+            <label class="wide"
+              ><span>Image URL <small>for example /images/npcs/name.webp</small></span
+              ><input
+                [(ngModel)]="draftEntity.imageUrl"
+                placeholder="/images/npcs/name.webp"
+            /></label>
+            <label class="wide"
+              ><span>Character description</span
+              ><textarea
+                rows="4"
+                [(ngModel)]="draftEntity.description"
+                placeholder="Appearance, mannerisms, personality, and other non-session details"
+              ></textarea>
+            </label>
+          </div>
+          @if (draftEntity.imageUrl) {
+            <div class="image-preview">
+              <img [src]="draftEntity.imageUrl" alt="Portrait preview" />
+              <span>Portrait preview</span>
+            </div>
+          }
+          @for (entry of draftEntity.sectionEntries; track entry.id) {
+            <section class="entry-block">
+              <p>{{ entry.sectionName }}</p>
+              <label
+                ><span>{{ typeLabel(entry.details.type) }}</span
+                ><textarea rows="5" [(ngModel)]="entry.details.value"></textarea>
+              </label>
+              <label
+                ><span>Status</span><textarea rows="2" [(ngModel)]="entry.status"></textarea>
+              </label>
+              @if (entry.context) {
+                <div class="form-grid context-edit">
+                  <label
+                    ><span>Context type</span
+                    ><select [(ngModel)]="entry.context.type">
+                      <option value="firstMeeting">First meeting</option>
+                      <option value="firstAppearance">First appearance</option>
+                      <option value="connection">Connection</option>
+                      <option value="relevance">Relevance</option>
+                    </select></label
+                  ><label><span>Context</span><input [(ngModel)]="entry.context.value" /></label>
+                </div>
+              }
+            </section>
+          }
+        </div>
+        @if (dialogError()) {
+          <p class="dialog-error" role="alert">{{ dialogError() }}</p>
+        }
+        <footer class="dialog-actions">
+          <button type="button" class="secondary" (click)="cancelEditing()" [disabled]="saving()">
+            Cancel</button
+          ><button
+            type="button"
+            class="primary"
+            (click)="saveEntity()"
+            [disabled]="saving() || !draftEntity.name.trim()"
+          >
+            {{ saving() ? 'Saving...' : 'Save changes' }}
+          </button>
+        </footer>
+      } @else {
+        <div class="dialog-content">
+          @if (selected.aliases.length) {
+            <p class="aliases"><span>Known aliases</span>{{ selected.aliases.join(', ') }}</p>
+          }
+          <section class="profile-description">
+            <span>Character description</span>
+            <p>{{ selected.description || 'No character description has been recorded.' }}</p>
+          </section>
+          @for (entry of selected.sectionEntries; track entry.id) {
+            <section class="entry-block">
+              <p>{{ entry.sectionName }}</p>
+              @if (entry.context) {
+                <div class="detail-row">
+                  <span>{{ typeLabel(entry.context.type) }}</span
+                  ><strong>{{ entry.context.value }}</strong>
+                </div>
+              }
+              <div class="narrative">
+                <span>{{ typeLabel(entry.details.type) }}</span>
+                <p>{{ entry.details.value }}</p>
+              </div>
+              <div class="full-status">
+                <span>Status</span>
+                <p>{{ entry.status }}</p>
+              </div>
+            </section>
+          }
+        </div>
+        @if (confirmingDelete()) {
+          <section class="delete-confirmation" aria-labelledby="delete-confirmation-title">
+            <div>
+              <p id="delete-confirmation-title">Permanently delete {{ selected.name }}?</p>
+              <span
+                >This removes the character, aliases, and every campaign section entry. This action
+                cannot be undone.</span
+              >
+            </div>
+            <label
+              ><span>Type <strong>delete</strong> to confirm</span
+              ><input [(ngModel)]="deleteConfirmation" autocomplete="off" placeholder="delete"
+            /></label>
+            @if (deleteError()) {
+              <p class="delete-error" role="alert">{{ deleteError() }}</p>
+            }
+            <div>
+              <button
+                type="button"
+                class="secondary"
+                (click)="cancelDelete()"
+                [disabled]="deleting()"
+              >
+                Cancel</button
+              ><button
+                type="button"
+                class="danger"
+                (click)="deleteEntity()"
+                [disabled]="deleteConfirmation !== 'delete' || deleting()"
+              >
+                {{ deleting() ? 'Deleting...' : 'Delete permanently' }}
+              </button>
+            </div>
+          </section>
+        }
+        <footer class="dialog-actions">
+          <button type="button" class="secondary" (click)="closeDialog()">Close</button>
+          @if (auth.user()?.canEdit) {
+            @if (!confirmingDelete()) {
+              <button type="button" class="delete-link" (click)="beginDelete()">
+                Delete character
+              </button>
+            }
+            <button type="button" class="primary" (click)="startEditing()">Edit character</button>
+          }
+        </footer>
+      }
+    </section>
+  </div>
+}
+
+@if (creating()) {
+  <div class="dialog-backdrop" (click)="closeCreate()">
+    <section
+      class="character-dialog create-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="create-character-title"
+      (click)="$event.stopPropagation()"
+    >
+      <header class="dialog-header">
+        <div class="dialog-portrait"><span>+</span></div>
+        <div>
+          <p>New archive record</p>
+          <h2 id="create-character-title">Create a character</h2>
+        </div>
+        <button type="button" (click)="closeCreate()" aria-label="Close character creator">
+          &times;
+        </button>
+      </header>
+      <div class="dialog-content edit-form">
+        <div class="form-grid">
+          <label
+            ><span>Name</span><input [(ngModel)]="createDraft.name" placeholder="Character name"
+          /></label>
+          <label
+            ><span>Entity type</span
+            ><select [(ngModel)]="createDraft.entityType">
+              <option value="npc">NPC</option>
+              <option value="creature">Creature</option>
+              <option value="deity">Deity</option>
+              <option value="artifact">Artifact</option>
+              <option value="group">Group</option>
+              <option value="supernatural_entity">Supernatural entity</option>
+            </select></label
+          >
+          <label
+            ><span>Visibility</span
+            ><select [(ngModel)]="createDraft.visibility">
+              <option value="public">Public</option>
+              <option value="party">Party</option>
+              <option value="dm_only">DM only</option>
+            </select></label
+          >
+          <label
+            ><span>Campaign section</span
+            ><select [(ngModel)]="createDraft.sectionId">
+              @for (section of sections(); track section.id) {
+                <option [value]="section.id">{{ section.name }}</option>
+              }
+            </select></label
+          >
+          <label class="wide"
+            ><span>Aliases <small>comma separated</small></span
+            ><input [(ngModel)]="createAliasesText"
+          /></label>
+          <label class="wide"
+            ><span>Image URL <small>optional</small></span
+            ><input [(ngModel)]="createDraft.imageUrl" placeholder="/assets/images/characters/..."
+          /></label>
+          <label class="wide"
+            ><span>Character description <small>optional</small></span
+            ><textarea
+              rows="3"
+              [(ngModel)]="createDraft.description"
+              placeholder="Appearance, mannerisms, and personality"
+            ></textarea>
+          </label>
+        </div>
+        <section class="entry-block creation-entry">
+          <p>Initial campaign record</p>
+          <label
+            ><span>Record type</span
+            ><select [(ngModel)]="createDraft.details.type">
+              <option value="notableInformation">Notable information</option>
+              <option value="notableEvents">Notable events</option>
+              <option value="relevance">Relevance</option>
+            </select></label
+          >
+          <label
+            ><span>Details</span
+            ><textarea
+              rows="5"
+              [(ngModel)]="createDraft.details.value"
+              placeholder="What is known about this character?"
+            ></textarea>
+          </label>
+          <label><span>Status</span><input [(ngModel)]="createDraft.status" /></label>
+          <div class="form-grid context-edit">
+            <label
+              ><span>Context type <small>optional</small></span
+              ><select [(ngModel)]="createContextType">
+                <option value="firstMeeting">First meeting</option>
+                <option value="firstAppearance">First appearance</option>
+                <option value="connection">Connection</option>
+              </select></label
+            >
+            <label
+              ><span>Context <small>leave blank for none</small></span
+              ><input
+                [(ngModel)]="createContextValue"
+                placeholder="Where or how they were encountered"
+            /></label>
+          </div>
+        </section>
+        @if (createDraft.imageUrl) {
+          <div class="image-preview">
+            <img [src]="createDraft.imageUrl" alt="New character portrait preview" /><span
+              >Portrait preview</span
+            >
+          </div>
+        }
+      </div>
+      @if (createError()) {
+        <p class="dialog-error" role="alert">{{ createError() }}</p>
+      }
+      <footer class="dialog-actions">
+        <button type="button" class="secondary" (click)="closeCreate()" [disabled]="createSaving()">
+          Cancel</button
+        ><button
+          type="button"
+          class="primary"
+          (click)="saveCreatedEntity()"
+          [disabled]="
+            createSaving() ||
+            !createDraft.name.trim() ||
+            !createDraft.details.value.trim() ||
+            !createDraft.status.trim()
+          "
+        >
+          {{ createSaving() ? 'Creating...' : 'Create character' }}
+        </button>
+      </footer>
+    </section>
+  </div>
+}

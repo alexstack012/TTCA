@@ -1,0 +1,213 @@
+<main>
+  <header class="page-header">
+    <div>
+      <p>The remembered road</p>
+      <h1>Campaign Log</h1>
+      <span>A chronological record of sessions, discoveries, choices, and their cost.</span>
+    </div>
+    @if (auth.user()?.canEdit) {
+      <button type="button">+ &nbsp; Add session</button>
+    }
+  </header>
+
+  <section class="toolbar">
+    <label>
+      <span aria-hidden="true">&#8981;</span>
+      <input
+        type="search"
+        placeholder="Search sessions, locations, and figures"
+        [value]="search()"
+        (input)="setSearch($event)"
+      />
+    </label>
+    <div><button type="button">Session order</button></div>
+  </section>
+
+  @if (loading()) {
+    <section class="session-state" aria-live="polite">Opening the campaign chronicle...</section>
+  } @else if (error()) {
+    <section class="session-state error" role="alert">{{ error() }}</section>
+  } @else if (!sessions().length) {
+    <section class="session-state">No campaign sessions have been added yet.</section>
+  } @else if (!visibleSessions().length) {
+    <section class="session-state">No campaign sessions match that search.</section>
+  } @else {
+    <section class="legend">
+      <span><i class="public"></i>Public</span><span><i class="revealed"></i>Party</span>
+      @if (auth.user()?.canEdit) {
+        <span><i class="secret"></i>Chronicler only</span>
+      }
+    </section>
+    <section class="records session-records">
+      @for (session of visibleSessions(); track session.id) {
+        <article [class.open]="selectedSession() === session.id">
+          <div class="record-mark">{{ session.sessionNumber }}</div>
+          <div>
+            <span class="visibility" [class.chronicler-only]="session.visibility === 'dm_only'">
+              {{ visibilityLabel(session.visibility) }}
+            </span>
+            <h2>Session {{ session.sessionNumber }}: {{ session.sessionName }}</h2>
+            <small>
+              {{ dateLabel(session) }}
+              @if (session.isMultiDay) {
+                · Multi-day session
+              }
+            </small>
+            @if (selectedSession() === session.id) {
+              @if (editingSession() === session.id && draft; as edit) {
+                <form
+                  class="session-editor"
+                  (submit)="$event.preventDefault(); saveSession(session.id)"
+                >
+                  <label
+                    ><span>Session number</span
+                    ><input
+                      type="number"
+                      min="1"
+                      [(ngModel)]="edit.sessionNumber"
+                      name="sessionNumber"
+                  /></label>
+                  <label
+                    ><span>Visibility</span
+                    ><select [(ngModel)]="edit.visibility" name="visibility">
+                      <option value="public">Public</option>
+                      <option value="party">Party</option>
+                      <option value="dm_only">Chronicler only</option>
+                    </select></label
+                  >
+                  <label class="wide"
+                    ><span>Session name</span
+                    ><input [(ngModel)]="edit.sessionName" name="sessionName"
+                  /></label>
+                  <label
+                    ><span>Started on</span
+                    ><input type="date" [(ngModel)]="edit.startedOn" name="startedOn"
+                  /></label>
+                  <label
+                    ><span>Ended on</span
+                    ><input type="date" [(ngModel)]="edit.endedOn" name="endedOn"
+                  /></label>
+                  <label class="wide checkbox"
+                    ><input type="checkbox" [(ngModel)]="edit.isMultiDay" name="isMultiDay" /><span
+                      >This session spans multiple days</span
+                    ></label
+                  >
+                  <label class="wide"
+                    ><span>Description</span
+                    ><textarea
+                      rows="6"
+                      [(ngModel)]="edit.description"
+                      name="description"
+                    ></textarea>
+                  </label>
+
+                  @if (mutationError()) {
+                    <p class="mutation-error">{{ mutationError() }}</p>
+                  }
+                  @if (confirmingDelete()) {
+                    <div class="delete-confirmation wide">
+                      <p>
+                        This permanently deletes the session log and its relationship links. Type
+                        <strong>delete</strong> to confirm.
+                      </p>
+                      <input
+                        [(ngModel)]="deleteConfirmation"
+                        name="deleteConfirmation"
+                        autocomplete="off"
+                        placeholder="delete"
+                      />
+                      <button
+                        type="button"
+                        class="danger"
+                        (click)="deleteSession(session.id)"
+                        [disabled]="deleteConfirmation !== 'delete' || deleting()"
+                      >
+                        {{ deleting() ? 'Deleting...' : 'Delete permanently' }}
+                      </button>
+                    </div>
+                  }
+                  <footer class="editor-actions wide">
+                    <button
+                      type="button"
+                      class="danger-link"
+                      (click)="beginDelete()"
+                      [disabled]="saving() || deleting()"
+                    >
+                      Delete session
+                    </button>
+                    <span></span>
+                    <button
+                      type="button"
+                      (click)="cancelEditing()"
+                      [disabled]="saving() || deleting()"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      class="save"
+                      [disabled]="saving() || deleting() || !edit.sessionName.trim()"
+                    >
+                      {{ saving() ? 'Saving...' : 'Save changes' }}
+                    </button>
+                  </footer>
+                </form>
+              } @else {
+                <p>{{ session.description || 'No session description has been recorded.' }}</p>
+                <div class="relationships">
+                  <section>
+                    <h3>Locations</h3>
+                    @if (session.locations.length) {
+                      <ul>
+                        @for (location of session.locations; track location.id) {
+                          <li>
+                            <strong>{{ location.name }}</strong
+                            ><span>{{ location.description }}</span>
+                          </li>
+                        }
+                      </ul>
+                    } @else {
+                      <p>No locations are linked to this session.</p>
+                    }
+                  </section>
+                  <section>
+                    <h3>NPCs and Notable Figures</h3>
+                    @if (session.entities.length) {
+                      <ul class="entities">
+                        @for (entity of session.entities; track entity.id) {
+                          <li>
+                            @if (entity.imageUrl) {
+                              <img [src]="entity.imageUrl" [alt]="entity.name" />
+                            }
+                            <strong>{{ entity.name }}</strong
+                            ><span>{{ entity.entityType.replaceAll('_', ' ') }}</span>
+                          </li>
+                        }
+                      </ul>
+                    } @else {
+                      <p>No notable figures are linked to this session.</p>
+                    }
+                  </section>
+                </div>
+                @if (auth.user()?.canEdit) {
+                  <div class="record-actions">
+                    <button type="button" (click)="startEditing(session)">Edit session</button>
+                  </div>
+                }
+              }
+            }
+          </div>
+          <button
+            type="button"
+            (click)="toggleSession(session.id)"
+            [attr.aria-expanded]="selectedSession() === session.id"
+            [attr.aria-label]="'Toggle details for ' + session.sessionName"
+          >
+            {{ selectedSession() === session.id ? '−' : '→' }}
+          </button>
+        </article>
+      }
+    </section>
+    <footer>{{ visibleSessions().length }} of {{ sessions().length }} sessions shown.</footer>
+  }
+</main>

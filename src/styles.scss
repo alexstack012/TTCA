@@ -1,1 +1,33 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500;600&display=swap');
+
+:root {
+  --ink: #0b0c11;
+  --cream: #e5dfe2;
+  --gold: #a58ba5;
+  --rust: #671e2a;
+  --blood: #8f2639;
+  --blood-bright: #c14b5f;
+  --purple-smoke: 0 14px 42px rgba(65, 38, 82, 0.28), 0 4px 16px rgba(0, 0, 0, 0.42);
+  --purple-haze: 0 0 22px rgba(116, 76, 130, 0.28);
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+}
+body {
+  background: #10110f;
+  color: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+}
+button,
+input {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}

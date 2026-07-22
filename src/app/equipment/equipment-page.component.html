@@ -1,0 +1,168 @@
+<main>
+  <header class="page-header">
+    <div>
+      <p>The quartermaster's ledger</p>
+      <h1>Items &amp; Equipment</h1>
+      <span
+        >Weapons, armor, ammunition, and the practical tools carried into the darkness between
+        worlds.</span
+      >
+    </div>
+    <div class="count">
+      <strong>{{ items().length }}</strong
+      ><span>catalogued items</span>
+    </div>
+  </header>
+
+  @if (data(); as equipment) {
+    <section class="enhancements">
+      <div><small>Magic weapon reference</small><strong>Enhancement tiers</strong></div>
+      @for (tier of equipment.magicWeaponEnhancements; track tier.id) {
+        <span
+          ><b>{{ tier.name }}</b
+          ><small>+{{ tier.attackBonus }} attack &amp; damage</small
+          ><em>{{ label(tier.typicalRarity) }}</em></span
+        >
+      }
+    </section>
+  }
+
+  <section class="toolbar" aria-label="Equipment filters">
+    <label class="search"
+      ><span aria-hidden="true">&#8981;</span
+      ><input
+        type="search"
+        placeholder="Search names, properties, damage, and cost"
+        [value]="search()"
+        (input)="setSearch($event)"
+    /></label>
+    <label
+      ><span>Catalogue</span
+      ><select [value]="kindFilter()" (change)="setKind($event)">
+        <option value="all">All equipment</option>
+        <option value="weapon">Weapons</option>
+        <option value="armor">Armor &amp; shields</option>
+        <option value="ammunition">Ammunition</option>
+      </select></label
+    >
+    <label
+      ><span>Category</span
+      ><select
+        [value]="categoryFilter()"
+        (change)="setCategory($event)"
+        [disabled]="!categoryOptions().length"
+      >
+        <option value="all">All categories</option>
+        @for (category of categoryOptions(); track category) {
+          <option [value]="category">{{ label(category) }}</option>
+        }
+      </select></label
+    >
+  </section>
+
+  @if (loading()) {
+    <section class="state">
+      <span class="loader"></span>
+      <p>Taking inventory...</p>
+    </section>
+  } @else if (error()) {
+    <section class="state error">
+      <p>{{ error() }}</p>
+    </section>
+  } @else if (!visibleItems().length) {
+    <section class="state">
+      <p>No item in the ledger matches that description.</p>
+      <button type="button" (click)="clearFilters()">Clear all filters</button>
+    </section>
+  } @else {
+    <div class="results">
+      <span>{{ visibleItems().length }} items shown</span><i></i
+      ><span>{{ groups().length }} collections</span>
+    </div>
+    @for (group of groups(); track group.id) {
+      <section class="item-group">
+        <header>
+          <span>{{ $index + 1 }}</span>
+          <div>
+            <p>{{ group.eyebrow }}</p>
+            <h2>{{ group.title }}</h2>
+          </div>
+          <small>{{ group.items.length }} entries</small>
+        </header>
+        <div class="item-grid">
+          @for (record of group.items; track record.item.id) {
+            <article>
+              <div class="item-art">
+                @if (record.item.image) {
+                  <img [src]="record.item.image" [alt]="record.item.name" />
+                } @else {
+                  <span>{{
+                    record.kind === 'weapon' ? 'W' : record.kind === 'armor' ? 'A' : 'Q'
+                  }}</span>
+                }
+              </div>
+              <div class="card-body">
+                <div class="classification">
+                  <span>{{ label(record.kind) }}</span
+                  ><small
+                    >{{ record.item.cost.display }} &nbsp;&bull;&nbsp;
+                    {{ record.item.weight.display }}</small
+                  >
+                </div>
+                <h3>{{ record.item.name }}</h3>
+                @if (record.kind === 'weapon') {
+                  <p class="summary">
+                    {{ label(record.item.proficiency) }} {{ label(record.item.category) }} weapon
+                  </p>
+                  <div class="stats">
+                    <span><b>Damage</b>{{ record.item.damage?.display ?? '—' }}</span
+                    ><span
+                      ><b>Range</b
+                      >{{
+                        record.item.range?.display ??
+                          (record.item.category === 'melee' ? 'Melee' : '—')
+                      }}</span
+                    >
+                  </div>
+                  <div class="tags">
+                    @for (property of record.item.properties; track property) {
+                      <span [title]="label(property)">{{ label(property) }}</span>
+                    }
+                  </div>
+                  @if (record.item.versatileDamage || record.item.specialRule) {
+                    <p class="notes">
+                      {{ record.item.specialRule ?? 'Versatile: ' + record.item.versatileDamage }}
+                    </p>
+                  }
+                } @else if (record.kind === 'armor') {
+                  <p class="summary">{{ label(record.item.category) }} protection</p>
+                  <div class="stats">
+                    <span><b>Armor class</b>{{ record.item.armorClass.display }}</span
+                    ><span><b>Strength</b>{{ record.item.strengthRequirement ?? 'None' }}</span
+                    ><span
+                      ><b>Don / doff</b>{{ record.item.donTime }} / {{ record.item.doffTime }}</span
+                    ><span
+                      ><b>Stealth</b
+                      >{{ record.item.stealthDisadvantage ? 'Disadvantage' : 'Unaffected' }}</span
+                    >
+                  </div>
+                } @else {
+                  <p class="summary">{{ record.item.summary }}</p>
+                  <div class="stats">
+                    <span><b>Quantity</b>{{ record.item.quantity }}</span
+                    ><span><b>Rules</b>{{ label(record.item.rulesStatus) }}</span>
+                  </div>
+                  <div class="tags">
+                    @for (weapon of record.item.compatibleWeapons; track weapon) {
+                      <span>{{ label(weapon) }}</span>
+                    }
+                  </div>
+                }
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+    }
+  }
+</main>

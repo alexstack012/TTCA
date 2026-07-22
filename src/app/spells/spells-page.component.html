@@ -1,0 +1,143 @@
+<main>
+  <header class="page-header">
+    <div>
+      <p>The black grimoire</p>
+      <h1>Spells</h1>
+      <span
+        >Arcane formulae, divine invocations, and forbidden workings catalogued by circle and
+        purpose.</span
+      >
+    </div>
+    <div class="count">
+      <strong>{{ data()?.spells?.length ?? 0 }}</strong
+      ><span>recorded spells</span>
+    </div>
+  </header>
+
+  @if (data(); as spellData) {
+    <section class="rules">
+      <span class="rule-mark" aria-hidden="true">&#9671;</span>
+      <div>
+        <small>Reference rule</small><strong>Power follows the caster</strong>
+        <p>
+          {{ spellData.referenceRules.damageScaling.summary }}
+          {{ spellData.referenceRules.damageScaling.caveat }}
+        </p>
+      </div>
+      <div>
+        <small>Cantrip advancement</small
+        ><strong
+          >Levels {{ spellData.referenceRules.cantripScaling.characterLevels.join(', ') }}</strong
+        >
+        <p>{{ spellData.referenceRules.cantripScaling.summary }}</p>
+      </div>
+    </section>
+  }
+
+  <section class="toolbar" aria-label="Spell filters">
+    <label class="search"
+      ><span aria-hidden="true">&#8981;</span
+      ><input
+        type="search"
+        placeholder="Search names, effects, damage, and saves"
+        [value]="search()"
+        (input)="setSearch($event)"
+    /></label>
+    <label
+      ><span>Purpose</span
+      ><select [value]="categoryFilter()" (change)="setCategory($event)">
+        <option value="all">All categories</option>
+        @for (category of data()?.categories ?? []; track category.id) {
+          <option [value]="category.id">{{ category.name }}</option>
+        }
+      </select></label
+    >
+    <label
+      ><span>Circle</span
+      ><select [value]="levelFilter()" (change)="setLevel($event)">
+        <option value="all">All levels</option>
+        @for (level of availableLevels(); track level) {
+          <option [value]="level">{{ levelLabel(level) }}</option>
+        }
+      </select></label
+    >
+  </section>
+
+  @if (loading()) {
+    <section class="state">
+      <span class="loader"></span>
+      <p>Turning the sealed pages...</p>
+    </section>
+  } @else if (error()) {
+    <section class="state error">
+      <p>{{ error() }}</p>
+    </section>
+  } @else if (!visibleSpells().length) {
+    <section class="state">
+      <p>No working in the grimoire matches those signs.</p>
+      <button type="button" (click)="clearFilters()">Clear all filters</button>
+    </section>
+  } @else {
+    <div class="results">
+      <span>{{ visibleSpells().length }} spells revealed</span><i></i
+      ><span>{{ groupedSpells().length }} circles represented</span>
+    </div>
+    @for (group of groupedSpells(); track group.level) {
+      <section class="spell-group">
+        <header>
+          <span>{{ group.level === 0 ? 'C' : group.level.toString().padStart(2, '0') }}</span>
+          <div>
+            <p>Circle of power</p>
+            <h2>{{ group.label }}</h2>
+          </div>
+          <small
+            >{{ group.spells.length }} {{ group.spells.length === 1 ? 'spell' : 'spells' }}</small
+          >
+        </header>
+        <div class="spell-grid">
+          @for (spell of group.spells; track spell.id) {
+            <article>
+              <div class="spell-art">
+                @if (spell.image) {
+                  <img [src]="spell.image" [alt]="spell.name" />
+                } @else {
+                  <span>{{ spell.level === 0 ? 'C' : spell.level }}</span>
+                }
+              </div>
+              <div class="card-body">
+                <div class="classification">
+                  <span>{{ spell.isCantrip ? 'Cantrip' : levelLabel(spell.level) }}</span
+                  ><small>{{ spell.range }}</small>
+                </div>
+                <h3>{{ spell.name }}</h3>
+                <p class="summary">{{ spell.summary }}</p>
+                <div class="properties">
+                  @if (spell.damage) {
+                    <span><b>Damage</b>{{ spell.damage }}</span>
+                  }
+                  @if (spell.healing) {
+                    <span><b>Healing</b>{{ spell.healing }}</span>
+                  }
+                  @if (spell.saveOrAttack) {
+                    <span><b>Resolution</b>{{ spell.saveOrAttack }}</span>
+                  }
+                  @if (spell.scaling) {
+                    <span><b>Scaling</b>{{ spell.scaling }}</span>
+                  }
+                </div>
+                <div class="categories">
+                  @for (category of spell.categories; track category) {
+                    <span>{{ categoryName(category) }}</span>
+                  }
+                </div>
+                @if (spell.notes?.length) {
+                  <p class="notes"><b>Marginalia</b>{{ spell.notes?.join(' ') }}</p>
+                }
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+    }
+  }
+</main>

@@ -1,59 +1,30 @@
-# TTCA
+# The war of shadow and secrets dnd/ttrpg achive
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.0.
+Angular and Express foundation for a tabletop campaign archive. Visitors may enter a read-only demonstration, while keepers authenticate for editing privileges.
 
-## Development server
+## Local development
 
-To start a local development server, run:
+1. Copy `.env.example` to `.env` and replace both secrets. If no `.env` exists, local development uses password `keeper`; production deliberately refuses to start without secrets.
+2. Run `npm install`.
+3. Run `npm run dev` from this directory.
+4. Open `http://localhost:4200`.
 
-```bash
-ng serve
+`npm run dev` starts the Express API on port 3000 and Angular on port 4200. Angular proxies `/api` requests through `proxy.conf.json`.
+
+`Start-Service postgresql-x64-18` and `Stop-Service postgresql-x64-18` and `Restart-Service postgresql-x64-18` are for the database.
+
+## Authorization model
+
+- `POST /api/auth/login` issues an eight-hour `editor` session after a valid password.
+- `POST /api/auth/demo` issues an eight-hour `demo` session.
+- `authenticate` validates signed sessions on protected API routes.
+- `requireEditor` returns HTTP 403 for demo sessions. Apply it to every future POST, PUT, PATCH, and DELETE route.
+
+The example write endpoint demonstrates the permission boundary and returns 501 for an authorized editor until PostgreSQL is connected. Session tokens are stored in browser session storage, so closing the tab ends the local browser session.
+
+## Checks
+
+```sh
+npm run build
+npm test -- --watch=false
 ```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

@@ -8,8 +8,27 @@
 
 # Node
 /node_modules
-npm-debug.log
-yarn-error.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+*.pid
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+!.env.*.example
+.pgpass
+pgpass.conf
+
+# Local database exports (migration .sql files remain trackable)
+*.dump
+*.backup
+*.sqlite
+*.sqlite3
+*.db-journal
 
 # IDEs and editors
 .idea/

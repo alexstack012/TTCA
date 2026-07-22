@@ -1,0 +1,78 @@
+<main class="splash">
+  <div class="grain"></div>
+  <section class="intro" aria-labelledby="campaign-title">
+    <p class="eyebrow">A chronicle between dying worlds</p>
+    <div class="sigil" aria-hidden="true"><span>&#9671;</span></div>
+    <p class="series">The Ravenloft Continuum</p>
+    <h1 id="campaign-title">The War of<br /><em>Shadow &amp; Secrets</em></h1>
+    <p class="lede">
+      Barovia was only the first prison. Beyond the Mists, a war without banners consumes the
+      Shadowfell&mdash;and its final secret may unravel every world.
+    </p>
+    <div class="archive-directory" aria-label="Archive contents">
+      <section>
+        <header>
+          <span>I</span>
+          <div><small>Reference collections</small><strong>The Compendium</strong></div>
+        </header>
+        <ul>
+          <li><span>Characters</span><small>Allies, adversaries &amp; powers</small></li>
+          <li><span>Items &amp; Equipment</span><small>Weapons, armor &amp; provisions</small></li>
+          <li><span>Spells</span><small>Arcana, invocations &amp; rites</small></li>
+        </ul>
+      </section>
+      <section>
+        <header>
+          <span>II</span>
+          <div><small>The living record</small><strong>Campaign Chronicle</strong></div>
+        </header>
+        <ul>
+          <li><span>Campaign</span><small>Active chapter &amp; objectives</small></li>
+          <li><span>Campaign Log</span><small>Sessions, choices &amp; consequences</small></li>
+          <li>
+            <span>Lore &amp; Plot Points</span><small>Revelations &amp; unresolved threads</small>
+          </li>
+          <li><span>Locations</span><small>Domains, ruins &amp; battlefields</small></li>
+        </ul>
+      </section>
+    </div>
+  </section>
+
+  <section class="entry-card" aria-labelledby="entry-title">
+    <div class="corner corner-a"></div>
+    <div class="corner corner-b"></div>
+    <p class="folio">Seven collections &nbsp;&bull;&nbsp; One living chronicle</p>
+    <h2 id="entry-title">Open the sealed archive</h2>
+    <p class="muted">
+      Enter the campaign archive to follow its people, relics, magic, sessions, secrets, and the
+      worlds touched by the Shadow War.
+    </p>
+    <form (ngSubmit)="signIn()">
+      <label for="password">Chronicler's cipher</label>
+      <div class="input-wrap">
+        <span aria-hidden="true">&#9671;</span
+        ><input
+          id="password"
+          name="password"
+          type="password"
+          autocomplete="current-password"
+          [(ngModel)]="password"
+          placeholder="Speak the secret"
+        />
+      </div>
+      @if (error()) {
+        <p class="error" role="alert">{{ error() }}</p>
+      }
+      <button class="primary" type="submit" [disabled]="loading() || !password">
+        <span>{{ loading() ? 'Breaking the seal...' : 'Enter the campaign' }}</span
+        ><b aria-hidden="true">&#8594;</b>
+      </button>
+    </form>
+    <div class="divider"><span>or</span></div>
+    <button class="demo" type="button" (click)="tryDemo()" [disabled]="loading()">
+      <strong>Explore the demonstration</strong
+      ><small>Tour the archive and its collections in read-only mode</small
+      ><b aria-hidden="true">&#8594;</b>
+    </button>
+  </section>
+</main>

@@ -1,0 +1,328 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+.splash {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: clamp(3rem, 8vw, 9rem);
+  padding: 7vh 9vw;
+  isolation: isolate;
+  background: #0b0c11;
+}
+.splash::before {
+  content: '';
+  position: absolute;
+  inset: 22px;
+  border: 1px solid rgba(165, 139, 165, 0.24);
+  pointer-events: none;
+}
+.grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.14;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.15'/%3E%3C/svg%3E");
+}
+.intro,
+.entry-card {
+  position: relative;
+  z-index: 1;
+}
+.eyebrow,
+.folio {
+  color: var(--gold);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+}
+.series {
+  margin: 0 0 0.75rem;
+  color: #9b2839;
+  font-size: 0.64rem;
+  letter-spacing: 0.09em;
+}
+.sigil {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  margin: 2rem 0;
+  color: var(--gold);
+  border: 1px solid rgba(165, 139, 165, 0.55);
+  transform: rotate(45deg);
+  box-shadow: var(--purple-haze);
+}
+.sigil span {
+  transform: rotate(-45deg);
+  font-size: 1.25rem;
+}
+h1,
+h2 {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+}
+h1 {
+  margin: 0;
+  font-size: clamp(3.2rem, 5.8vw, 6.4rem);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  color: #e9e3e7;
+  text-shadow: 0 5px 30px #000;
+}
+h1 em {
+  color: var(--gold);
+  font-size: 0.62em;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+.lede {
+  max-width: 550px;
+  margin: 2rem 0;
+  color: #99929d;
+  font-family: 'Cormorant Garamond', serif;
+  line-height: 1.75;
+  font-size: 1.23rem;
+}
+.archive-directory {
+  max-width: 680px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  border: 1px solid #35303a;
+  background: #35303a;
+  box-shadow: var(--purple-smoke);
+}
+.archive-directory section {
+  padding: 1.15rem;
+  background: #15151b;
+}
+.archive-directory header {
+  padding-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  border-bottom: 1px solid #332f37;
+}
+.archive-directory header > span {
+  width: 27px;
+  height: 27px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #5d4d60;
+  color: #917b93;
+  font-family: 'Cinzel', serif;
+  font-size: 0.56rem;
+  box-shadow: var(--purple-haze);
+}
+.archive-directory header div {
+  display: grid;
+}
+.archive-directory header small {
+  color: #625b66;
+  font-size: 0.48rem;
+  letter-spacing: 0.04em;
+}
+.archive-directory header strong {
+  margin-top: 0.2rem;
+  color: #a99da7;
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  font-weight: 500;
+}
+.archive-directory ul {
+  margin: 0.7rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.archive-directory li {
+  padding: 0.35rem 0;
+  display: grid;
+  grid-template-columns: minmax(100px, 0.75fr) 1.25fr;
+  gap: 0.6rem;
+}
+.archive-directory li span {
+  color: #968a95;
+  font-size: 0.63rem;
+}
+.archive-directory li small {
+  color: #5e5962;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.72rem;
+}
+.entry-card {
+  max-width: 490px;
+  width: 100%;
+  justify-self: end;
+  padding: clamp(2rem, 4vw, 3.8rem);
+  border: 1px solid #443b46;
+  border-left: 3px solid #755667;
+  background: #121217;
+  box-shadow: var(--purple-smoke);
+}
+.corner {
+  display: none;
+}
+h2 {
+  margin: 0.6rem 0 0.7rem;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  color: #e4dde2;
+}
+.muted,
+.privacy {
+  color: #888577;
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+form {
+  margin-top: 2rem;
+}
+label {
+  display: block;
+  margin-bottom: 0.55rem;
+  color: #c4baa7;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+}
+.input-wrap {
+  display: flex;
+  align-items: center;
+  border: 1px solid #504c40;
+  background: rgba(3, 3, 6, 0.35);
+  transition: 0.2s;
+}
+.input-wrap:focus-within {
+  border-color: var(--blood-bright);
+  box-shadow:
+    0 0 0 2px rgba(143, 38, 57, 0.18),
+    var(--purple-haze);
+}
+.input-wrap span {
+  padding-left: 1rem;
+  color: #766d5d;
+}
+.input-wrap input {
+  width: 100%;
+  padding: 1rem 0.85rem;
+  border: 0;
+  outline: 0;
+  color: #e5dce3;
+  background: transparent;
+}
+button {
+  width: 100%;
+  border: 0;
+  color: #eee5d2;
+  transition:
+    transform 0.2s,
+    background 0.2s;
+}
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+.primary {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1.2rem;
+  background: var(--blood);
+  letter-spacing: 0.03em;
+  font-size: 0.76rem;
+}
+.primary:hover:not(:disabled) {
+  background: #a43145;
+}
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.6rem 0;
+  color: #706d62;
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+}
+.divider::before,
+.divider::after {
+  content: '';
+  height: 1px;
+  flex: 1;
+  background: #454238;
+}
+.demo {
+  position: relative;
+  text-align: left;
+  padding: 1rem 3rem 1rem 1rem;
+  border: 1px solid #5d5747;
+  background: transparent;
+}
+.demo strong,
+.demo small {
+  display: block;
+}
+.demo strong {
+  color: var(--gold);
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.04em;
+}
+.demo small {
+  margin-top: 0.3rem;
+  color: #8d897d;
+}
+.demo b {
+  position: absolute;
+  right: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gold);
+  font-size: 1.25rem;
+}
+.demo:hover:not(:disabled) {
+  background: rgba(165, 139, 165, 0.08);
+}
+.privacy {
+  text-align: center;
+  margin: 1.25rem 0 0;
+  font-size: 0.68rem;
+}
+.error {
+  color: #e49a7e;
+  font-size: 0.8rem;
+  margin: 0.6rem 0 0;
+}
+@media (max-width: 850px) {
+  .splash {
+    grid-template-columns: 1fr;
+    padding: 5rem 8vw;
+    gap: 4rem;
+  }
+  .entry-card {
+    justify-self: start;
+  }
+}
+@media (max-width: 480px) {
+  .splash {
+    padding: 4rem 1.8rem;
+  }
+  .splash::before {
+    inset: 10px;
+  }
+  .entry-card {
+    padding: 2rem 1.4rem;
+  }
+  h1 {
+    font-size: 3rem;
+  }
+  .archive-directory {
+    grid-template-columns: 1fr;
+  }
+  .archive-directory li {
+    grid-template-columns: minmax(115px, 0.8fr) 1.2fr;
+  }
+}

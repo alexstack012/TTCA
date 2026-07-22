@@ -1,0 +1,67 @@
+<main [class.player-dashboard]="isPlayer()">
+  <section class="hero">
+    @if (isPlayer()) {
+      <p>WELCOME BACK, WAYWARD SOUL &nbsp;&bull;&nbsp; THE WAR CONTINUES</p>
+      <h1>Still alive?<br /><em>Excellent.</em></h1>
+      <span
+        >The Mists have been busy, {{ user()?.name }}. Best see what changed while nobody was
+        looking.</span
+      >
+    } @else {
+      <p>APPLICATION OVERVIEW &nbsp;&bull;&nbsp; READ-ONLY DEMONSTRATION</p>
+      <h1>A living archive<br /><em>for imagined worlds.</em></h1>
+      <span
+        >Explore a structured campaign workspace designed to keep complex lore clear, searchable,
+        and connected.</span
+      >
+    }
+    <div class="mode-banner" [class.player]="isPlayer()">
+      <i></i>
+      <div>
+        <small>{{ isPlayer() ? 'Campaign passage' : 'Demonstration access' }}</small
+        ><strong>{{
+          isPlayer() ? 'The full chronicle is open' : 'Read-only mode is active'
+        }}</strong>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-heading">
+    <span>{{ isPlayer() ? 'Choose your trouble' : 'Explore the application' }}</span
+    ><i></i><small>Seven connected collections</small>
+  </div>
+  <section class="grid">
+    @for (section of sections; track section.name) {
+      <article>
+        <div class="card-top">
+          <i>{{ section.glyph }}</i
+          ><small>{{ section.meta }}</small>
+        </div>
+        <h2>{{ section.name }}</h2>
+        <p>{{ isPlayer() ? section.playerCopy : section.demoCopy }}</p>
+        <a [routerLink]="section.path"
+          >{{ isPlayer() ? section.playerAction : section.demoAction }}
+          <span aria-hidden="true">&#8594;</span></a
+        >
+      </article>
+    }
+  </section>
+
+  @if (isPlayer()) {
+    <aside class="player-note">
+      <span aria-hidden="true">&#9671;</span>
+      <p>
+        <strong>A friendly warning from the archive:</strong> the truth is rarely comforting, but it
+        is usually searchable.
+      </p>
+    </aside>
+  } @else {
+    <aside>
+      <span aria-hidden="true">&#9671;</span>
+      <p>
+        <strong>Portfolio demonstration.</strong> Browse the complete interface and reference
+        collections without altering application data.
+      </p>
+    </aside>
+  }
+</main>

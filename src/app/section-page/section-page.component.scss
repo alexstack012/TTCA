@@ -1,0 +1,233 @@
+:host {
+  display: block;
+}
+main {
+  width: min(1160px, calc(100% - 4rem));
+  margin: 0 auto;
+  padding: clamp(3rem, 7vw, 6rem) 0;
+}
+.page-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.page-header p {
+  margin: 0;
+  color: var(--blood-bright);
+  font-size: 0.6rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+.page-header h1 {
+  margin: 0.55rem 0 0.8rem;
+  color: #e2dbe0;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2.6rem, 5vw, 4.8rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+.page-header span {
+  display: block;
+  max-width: 660px;
+  color: #89828c;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  line-height: 1.45;
+}
+.page-header button {
+  flex: none;
+  padding: 0.85rem 1.1rem;
+  border: 1px solid #752b39;
+  color: #dfcbd0;
+  background: var(--blood);
+  box-shadow: 0 10px 28px rgba(103, 22, 39, 0.24);
+  font-size: 0.67rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.toolbar {
+  margin-top: 3.5rem;
+  padding: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 1px solid #302d35;
+  background: #111218;
+  box-shadow: var(--purple-smoke);
+}
+.toolbar label {
+  width: min(360px, 100%);
+  padding: 0 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid #38343d;
+  color: #655f68;
+  background: #0c0d12;
+}
+.toolbar input {
+  width: 100%;
+  padding: 0.7rem 0;
+  border: 0;
+  outline: 0;
+  color: #b8afb8;
+  background: none;
+}
+.toolbar > div {
+  display: flex;
+  gap: 0.35rem;
+}
+.toolbar button {
+  padding: 0 0.8rem;
+  border: 1px solid #37333b;
+  color: #77717b;
+  background: #17171d;
+  font-size: 0.65rem;
+  cursor: pointer;
+}
+.legend {
+  padding: 1.2rem 0 0.8rem;
+  display: flex;
+  justify-content: end;
+  gap: 1.2rem;
+  color: #625d65;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.legend span {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.legend i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.public {
+  background: #6d776e;
+}
+.revealed {
+  background: #927b98;
+}
+.secret {
+  background: #8e3b4a;
+}
+.records {
+  display: grid;
+  border: 1px solid #302d35;
+  box-shadow: var(--purple-smoke);
+}
+.records article {
+  min-height: 160px;
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: 45px 1fr 35px;
+  gap: 1.2rem;
+  align-items: start;
+  border-bottom: 1px solid #302d35;
+  background: linear-gradient(110deg, #15151b, #111217);
+  transition: background 0.2s;
+}
+.records article:last-child {
+  border: 0;
+}
+.records article:hover {
+  background: linear-gradient(110deg, #1b1920, #131319);
+}
+.record-mark {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #4b414d;
+  color: #716174;
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  transform: rotate(45deg);
+  box-shadow: var(--purple-haze);
+}
+.record-mark::first-letter {
+  transform: rotate(-45deg);
+}
+.visibility {
+  color: #7a737c;
+  font-size: 0.52rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.visibility.revealed {
+  color: #96819b;
+}
+.visibility.chronicler-only {
+  color: var(--blood-bright);
+}
+.records h2 {
+  margin: 0.35rem 0 0.15rem;
+  color: #cfc5cc;
+  font-family: 'Cinzel', serif;
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+.records small {
+  color: #665f68;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.records p {
+  margin: 0.65rem 0 0;
+  color: #7b7580;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+}
+.records article > button {
+  align-self: center;
+  border: 0;
+  color: #796a7c;
+  background: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+footer {
+  padding-top: 1rem;
+  color: #565159;
+  font-size: 0.62rem;
+  text-align: right;
+}
+@media (max-width: 680px) {
+  main {
+    width: calc(100% - 2.4rem);
+    padding-top: 3.5rem;
+  }
+  .page-header {
+    align-items: start;
+    flex-direction: column;
+  }
+  .toolbar {
+    flex-direction: column;
+  }
+  .toolbar label {
+    width: 100%;
+  }
+  .toolbar > div {
+    overflow-x: auto;
+  }
+  .toolbar button {
+    min-height: 38px;
+    white-space: nowrap;
+  }
+  .records article {
+    grid-template-columns: 32px 1fr;
+  }
+  .record-mark {
+    width: 28px;
+    height: 28px;
+  }
+  .records article > button {
+    display: none;
+  }
+}
