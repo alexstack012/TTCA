@@ -10,6 +10,30 @@
 .session-state.error {
   color: #cf7887;
 }
+.create-panel {
+  margin-top: 2rem;
+  padding: 1.25rem;
+  border: 1px solid #463b48;
+  background: #121218;
+  box-shadow: var(--purple-smoke);
+}
+.create-panel > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.create-panel > header p {
+  margin: 0;
+  color: #b9acb8;
+  font-family: 'Cinzel', serif;
+}
+.create-panel > header button {
+  border: 0;
+  color: #8f858f;
+  background: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
 .session-records article {
   transition:
     background 0.2s,
@@ -122,6 +146,66 @@
 .session-editor .checkbox input {
   width: auto;
 }
+.relationship-picker {
+  max-height: 210px;
+  padding: 0.85rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem 1rem;
+  overflow-y: auto;
+  border: 1px solid #3b3540;
+}
+.relationship-picker legend {
+  padding: 0 0.4rem;
+  color: #9f919f;
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+}
+.relationship-picker label {
+  display: flex;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.45rem;
+}
+.relationship-picker input {
+  width: auto;
+}
+.relationship-picker p {
+  color: #69636d;
+  font-size: 0.68rem;
+}
+.relationship-picker .relationship-search {
+  grid-column: 1 / -1;
+  position: sticky;
+  top: -0.85rem;
+  z-index: 1;
+  padding: 0.65rem 0 0.7rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  background: #121218;
+}
+.relationship-picker .relationship-search input {
+  width: 100%;
+}
+.relationship-picker .relationship-search small {
+  color: #746b77;
+  white-space: nowrap;
+}
+.relationship-picker .relationship-empty {
+  grid-column: 1 / -1;
+  margin: 0.35rem 0;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 .editor-actions {
   display: flex;
   align-items: center;
@@ -175,5 +259,8 @@
   }
   .editor-actions {
     flex-wrap: wrap;
+  }
+  .relationship-picker {
+    grid-template-columns: 1fr;
   }
 }

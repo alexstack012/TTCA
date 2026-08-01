@@ -1,6 +1,6 @@
 import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Subject } from 'rxjs';
+import { Subject, of } from 'rxjs';
 import { AuthService } from '../core/auth.service';
 import { CampaignSession } from '../types/campaign-session.types';
 import { CampaignLogComponent } from './campaign-log.component';
@@ -26,7 +26,7 @@ describe('CampaignLogComponent', () => {
         id: 'location-1',
         sourceKey: 'village-of-barovia',
         name: 'Village of Barovia',
-        description: 'A bleak village.',
+        description: 'A village beneath Castle Ravenloft.',
         visibility: 'party',
       },
     ],
@@ -48,7 +48,13 @@ describe('CampaignLogComponent', () => {
     await TestBed.configureTestingModule({
       imports: [CampaignLogComponent],
       providers: [
-        { provide: CampaignSessionsService, useValue: { getSessions: () => sessions$ } },
+        {
+          provide: CampaignSessionsService,
+          useValue: {
+            getSessions: () => sessions$,
+            getOptions: () => of({ locations: [], entities: [] }),
+          },
+        },
         { provide: AuthService, useValue: { user: signal({ canEdit: false }) } },
       ],
     }).compileComponents();
@@ -60,12 +66,12 @@ describe('CampaignLogComponent', () => {
     expect(fixture.nativeElement.textContent).toContain('Opening the campaign chronicle');
   });
 
-  it('shows an empty state without restoring placeholder sessions', () => {
+  it('shows an empty state when the campaign has no sessions', () => {
     sessions$.next([]);
     fixture.detectChanges();
-    const text = fixture.nativeElement.textContent;
-    expect(text).toContain('No campaign sessions have been added yet.');
-    expect(text).not.toContain('Through the Black Gate');
+    expect(fixture.nativeElement.textContent).toContain(
+      'No campaign sessions have been added yet.',
+    );
   });
 
   it('shows an error state', () => {
@@ -86,5 +92,20 @@ describe('CampaignLogComponent', () => {
     const text = fixture.nativeElement.textContent;
     expect(text).toContain('Village of Barovia');
     expect(text).toContain('Ireena Kolyana');
+  });
+
+  it('filters NPC relationship options by name without changing selected IDs', () => {
+    const component = fixture.componentInstance;
+    component.options.set({
+      locations: [],
+      entities: [
+        populatedSession.entities[0],
+        { ...populatedSession.entities[0], id: 'entity-2', name: 'Rudolf van Richten' },
+      ],
+    });
+    component.createDraft.entityIds = ['entity-1'];
+
+    expect(component.filteredEntities('richten').map((entity) => entity.id)).toEqual(['entity-2']);
+    expect(component.createDraft.entityIds).toEqual(['entity-1']);
   });
 });

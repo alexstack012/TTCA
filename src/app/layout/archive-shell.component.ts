@@ -18,10 +18,9 @@ export class ArchiveShellComponent {
     { path: '/characters', label: 'Characters', glyph: 'I' },
     { path: '/items', label: 'Items & Equipment', glyph: 'II' },
     { path: '/spells', label: 'Spells', glyph: 'III' },
-    { path: '/campaign', label: 'Campaign', glyph: 'IV' },
-    { path: '/campaign-log', label: 'Campaign Log', glyph: 'V' },
-    { path: '/lore', label: 'Lore & Plot Points', glyph: 'VI' },
-    { path: '/locations', label: 'Locations', glyph: 'VII' },
+    { path: '/campaign-log', label: 'Campaign Log', glyph: 'IV' },
+    { path: '/lore', label: 'Lore & Plot Points', glyph: 'V' },
+    { path: '/locations', label: 'Locations', glyph: 'VI' },
   ];
 
   closeMenu(): void {

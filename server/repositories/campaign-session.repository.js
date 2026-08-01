@@ -66,9 +66,121 @@ export async function findCampaignSessions(campaignKey, role) {
   return result.rows[0] ?? null;
 }
 
-export async function updateCampaignSession(campaignKey, sessionId, session) {
+export async function findCampaignSessionOptions(campaignKey, role) {
   const result = await pool.query(
-    `UPDATE campaign_sessions AS target
+    `SELECT
+       campaign.id AS "campaignId",
+       COALESCE((
+         SELECT jsonb_agg(jsonb_build_object(
+           'id', location.id,
+           'sourceKey', location.source_key,
+           'name', location.name,
+           'description', location.description,
+           'visibility', location.visibility
+         ) ORDER BY location.name)
+         FROM campaign_locations AS location
+         WHERE location.campaign_id = campaign.id
+           AND ($2 = 'editor' OR location.visibility <> 'dm_only')
+       ), '[]'::jsonb) AS locations,
+       COALESCE((
+         SELECT jsonb_agg(jsonb_build_object(
+           'id', entity.id,
+           'sourceKey', entity.source_key,
+           'name', entity.name,
+           'entityType', entity.entity_type,
+           'visibility', entity.visibility,
+           'description', entity.description,
+           'imageUrl', entity.image_url
+         ) ORDER BY entity.name)
+         FROM campaign_entities AS entity
+         WHERE entity.campaign_id = campaign.id
+           AND ($2 = 'editor' OR entity.visibility <> 'dm_only')
+       ), '[]'::jsonb) AS entities
+     FROM campaigns AS campaign
+     WHERE campaign.source_key = $1`,
+    [campaignKey, role],
+  );
+  return result.rows[0] ?? null;
+}
+
+async function replaceSessionRelationships(client, sessionId, campaignId, session) {
+  await client.query('DELETE FROM campaign_session_locations WHERE session_id = $1', [sessionId]);
+  await client.query('DELETE FROM campaign_session_entities WHERE session_id = $1', [sessionId]);
+
+  const locationIds = [...new Set(session.locationIds)];
+  const entityIds = [...new Set(session.entityIds)];
+  if (locationIds.length) {
+    const locations = await client.query(
+      `INSERT INTO campaign_session_locations (session_id, location_id)
+       SELECT $1, location.id
+       FROM campaign_locations AS location
+       WHERE location.campaign_id = $2 AND location.id = ANY($3::uuid[])
+       RETURNING location_id`,
+      [sessionId, campaignId, locationIds],
+    );
+    if (locations.rowCount !== locationIds.length)
+      throw Object.assign(new Error(), { code: 'INVALID_RELATIONSHIPS' });
+  }
+  if (entityIds.length) {
+    const entities = await client.query(
+      `INSERT INTO campaign_session_entities (session_id, entity_id)
+       SELECT $1, entity.id
+       FROM campaign_entities AS entity
+       WHERE entity.campaign_id = $2 AND entity.id = ANY($3::uuid[])
+       RETURNING entity_id`,
+      [sessionId, campaignId, entityIds],
+    );
+    if (entities.rowCount !== entityIds.length)
+      throw Object.assign(new Error(), { code: 'INVALID_RELATIONSHIPS' });
+  }
+}
+
+export async function createCampaignSession(campaignKey, session) {
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    const inserted = await client.query(
+      `INSERT INTO campaign_sessions (
+         campaign_id, session_number, is_multi_day, session_name, visibility,
+         description, started_on, ended_on
+       )
+       SELECT id, $2, $3, $4, $5, $6, $7, $8
+       FROM campaigns WHERE source_key = $1
+       RETURNING id, campaign_id`,
+      [
+        campaignKey,
+        session.sessionNumber,
+        session.isMultiDay,
+        session.sessionName,
+        session.visibility,
+        session.description,
+        session.startedOn,
+        session.endedOn,
+      ],
+    );
+    if (!inserted.rowCount) {
+      await client.query('ROLLBACK');
+      return null;
+    }
+    const { id, campaign_id: campaignId } = inserted.rows[0];
+    await replaceSessionRelationships(client, id, campaignId, session);
+    await client.query('COMMIT');
+    const campaign = await findCampaignSessions(campaignKey, 'editor');
+    return campaign?.sessions.find((item) => item.id === id) ?? null;
+  } catch (error) {
+    await client.query('ROLLBACK');
+    throw error;
+  } finally {
+    client.release();
+  }
+}
+
+export async function updateCampaignSession(campaignKey, sessionId, session) {
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    const result = await client.query(
+      `UPDATE campaign_sessions AS target
      SET session_number = $3,
          is_multi_day = $4,
          session_name = $5,
@@ -79,22 +191,33 @@ export async function updateCampaignSession(campaignKey, sessionId, session) {
          updated_at = NOW()
      WHERE target.id = $2
        AND target.campaign_id = (SELECT id FROM campaigns WHERE source_key = $1)
-     RETURNING target.id`,
-    [
-      campaignKey,
-      sessionId,
-      session.sessionNumber,
-      session.isMultiDay,
-      session.sessionName,
-      session.visibility,
-      session.description,
-      session.startedOn,
-      session.endedOn,
-    ],
-  );
-  if (!result.rowCount) return null;
-  const campaign = await findCampaignSessions(campaignKey, 'editor');
-  return campaign?.sessions.find((item) => item.id === sessionId) ?? null;
+     RETURNING target.id, target.campaign_id`,
+      [
+        campaignKey,
+        sessionId,
+        session.sessionNumber,
+        session.isMultiDay,
+        session.sessionName,
+        session.visibility,
+        session.description,
+        session.startedOn,
+        session.endedOn,
+      ],
+    );
+    if (!result.rowCount) {
+      await client.query('ROLLBACK');
+      return null;
+    }
+    await replaceSessionRelationships(client, sessionId, result.rows[0].campaign_id, session);
+    await client.query('COMMIT');
+    const campaign = await findCampaignSessions(campaignKey, 'editor');
+    return campaign?.sessions.find((item) => item.id === sessionId) ?? null;
+  } catch (error) {
+    await client.query('ROLLBACK');
+    throw error;
+  } finally {
+    client.release();
+  }
 }
 
 export async function deleteCampaignSession(campaignKey, sessionId) {

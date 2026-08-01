@@ -6,8 +6,9 @@ import { createCampaignSessionRouter } from './campaign-session.routes.js';
 const servers = [];
 afterEach(() => servers.splice(0).forEach((server) => server.close()));
 
-async function requestWith(findSessions) {
+async function requestWith(findSessions, request = {}) {
   const app = express();
+  app.use(express.json());
   app.use(
     '/api/campaigns',
     createCampaignSessionRouter({
@@ -17,6 +18,7 @@ async function requestWith(findSessions) {
       },
       requireEditor: (_request, _response, next) => next(),
       findSessions,
+      ...request.dependencies,
     }),
   );
   app.use((error, _request, response, _next) =>
@@ -25,7 +27,14 @@ async function requestWith(findSessions) {
   const server = app.listen(0);
   servers.push(server);
   await new Promise((resolve) => server.once('listening', resolve));
-  return fetch(`http://127.0.0.1:${server.address().port}/api/campaigns/curse-of-strahd/sessions`);
+  return fetch(
+    `http://127.0.0.1:${server.address().port}/api/campaigns/curse-of-strahd/sessions${request.path ?? ''}`,
+    {
+      method: request.method ?? 'GET',
+      headers: request.body ? { 'content-type': 'application/json' } : undefined,
+      body: request.body ? JSON.stringify(request.body) : undefined,
+    },
+  );
 }
 
 const relation = { id: 'related-1', name: 'Related record' };
@@ -37,6 +46,17 @@ const session = (sessionNumber = 1) => ({
   locations: [],
   entities: [],
 });
+const sessionInput = {
+  sessionNumber: 2,
+  isMultiDay: false,
+  sessionName: 'A Test Session',
+  visibility: 'party',
+  description: 'Test notes',
+  startedOn: '2026-07-18',
+  endedOn: '2026-07-18',
+  locationIds: [],
+  entityIds: [],
+};
 
 test('returns 404 when the campaign does not exist', async () => {
   const response = await requestWith(async () => null);
@@ -94,4 +114,56 @@ test('passes database errors to the existing error handler', async () => {
   });
   assert.equal(response.status, 500);
   assert.deepEqual(await response.json(), { message: 'handled', cause: 'database unavailable' });
+});
+
+test('creates a session with relationship identifiers', async () => {
+  let received;
+  const response = await requestWith(async () => ({ sessions: [] }), {
+    method: 'POST',
+    body: sessionInput,
+    dependencies: {
+      createSession: async (_campaignKey, input) => {
+        received = input;
+        return { ...session(2), ...input };
+      },
+    },
+  });
+  assert.equal(response.status, 201);
+  assert.deepEqual(received.locationIds, []);
+  assert.deepEqual(received.entityIds, []);
+});
+
+test('updates a session and its relationship identifiers', async () => {
+  let received;
+  const response = await requestWith(async () => ({ sessions: [] }), {
+    method: 'PUT',
+    path: '/00000000-0000-4000-8000-000000000000',
+    body: sessionInput,
+    dependencies: {
+      updateSession: async (_campaignKey, _sessionId, input) => {
+        received = input;
+        return { ...session(2), ...input };
+      },
+    },
+  });
+  assert.equal(response.status, 200);
+  assert.equal(received.sessionName, sessionInput.sessionName);
+});
+
+test('requires confirmation and deletes a confirmed session', async () => {
+  const missing = await requestWith(async () => ({ sessions: [] }), {
+    method: 'DELETE',
+    path: '/00000000-0000-4000-8000-000000000000',
+    body: {},
+    dependencies: { deleteSession: async () => true },
+  });
+  assert.equal(missing.status, 400);
+
+  const confirmed = await requestWith(async () => ({ sessions: [] }), {
+    method: 'DELETE',
+    path: '/00000000-0000-4000-8000-000000000000',
+    body: { confirmation: 'delete' },
+    dependencies: { deleteSession: async () => true },
+  });
+  assert.equal(confirmed.status, 204);
 });

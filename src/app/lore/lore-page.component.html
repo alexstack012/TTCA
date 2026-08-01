@@ -1,0 +1,319 @@
+<main>
+  <header class="page-header">
+    <div>
+      <p>Truths and unfinished business</p>
+      <h1>Lore &amp; Plot Points</h1>
+      <span>Reference knowledge and living story threads, kept distinct but connected.</span>
+    </div>
+    @if (auth.user()?.canEdit) {
+      <button type="button" (click)="openCreate()">
+        + &nbsp; Add {{ tab() === 'plot' ? 'plot point' : 'lore entry' }}
+      </button>
+    }
+  </header>
+  <nav class="story-tabs" aria-label="Story archive sections">
+    <button type="button" [class.active]="tab() === 'plot'" (click)="setTab('plot')">
+      Plot Points <span>{{ plots().length }}</span></button
+    ><button type="button" [class.active]="tab() === 'lore'" (click)="setTab('lore')">
+      Lore Archive <span>{{ lore().length }}</span>
+    </button>
+  </nav>
+  <section class="toolbar">
+    <label
+      ><span>&#8981;</span
+      ><input
+        type="search"
+        [placeholder]="tab() === 'plot' ? 'Search plot threads' : 'Search lore articles'"
+        [value]="search()"
+        (input)="setSearch($event)"
+    /></label>
+  </section>
+
+  @if (formOpen()) {
+    <section class="story-form-panel">
+      <header>
+        <strong
+          >{{ editingId() ? 'Edit' : 'Create' }}
+          {{ tab() === 'plot' ? 'plot point' : 'lore entry' }}</strong
+        ><button type="button" (click)="closeForm()">&times;</button>
+      </header>
+      <form (submit)="$event.preventDefault(); save()">
+        @if (tab() === 'plot') {
+          <label class="wide"
+            ><span>Title</span><input [(ngModel)]="plotDraft.title" name="plotTitle" /></label
+          ><label
+            ><span>Status</span
+            ><select [(ngModel)]="plotDraft.status" name="plotStatus">
+              <option value="open">Open</option>
+              <option value="in_progress">In progress</option>
+              <option value="resolved">Resolved</option>
+              <option value="abandoned">Abandoned</option>
+            </select></label
+          ><label
+            ><span>Priority</span
+            ><select [(ngModel)]="plotDraft.priority" name="plotPriority">
+              <option value="low">Low</option>
+              <option value="normal">Normal</option>
+              <option value="high">High</option>
+              <option value="critical">Critical</option>
+            </select></label
+          ><label
+            ><span>Visibility</span
+            ><select [(ngModel)]="plotDraft.visibility" name="plotVisibility">
+              <option value="public">Public</option>
+              <option value="party">Party</option>
+              <option value="dm_only">Chronicler only</option>
+            </select></label
+          ><label class="check"
+            ><input type="checkbox" [(ngModel)]="plotDraft.isPinned" name="plotPinned" /><span
+              >Pin this thread</span
+            ></label
+          ><label class="wide"
+            ><span>Summary</span
+            ><textarea
+              rows="2"
+              [(ngModel)]="plotDraft.summary"
+              name="plotSummary"
+            ></textarea></label
+          ><label class="wide"
+            ><span>Description and progression</span
+            ><textarea
+              rows="7"
+              [(ngModel)]="plotDraft.description"
+              name="plotDescription"
+            ></textarea>
+          </label>
+          <fieldset class="wide relation-picker">
+            <legend>Linked sessions</legend>
+            @for (session of options().sessions; track session.id) {
+              <div>
+                <label class="check"
+                  ><input
+                    type="checkbox"
+                    [checked]="!!sessionLink(session.id)"
+                    (change)="toggleSession(session.id, $any($event.target).checked)"
+                  /><span
+                    >Session {{ session.sessionNumber }}: {{ session.sessionName }}</span
+                  ></label
+                >
+                @if (sessionLink(session.id); as link) {
+                  <select [(ngModel)]="link.relationshipType" [name]="'sessionType' + session.id">
+                    <option value="introduced">Introduced</option>
+                    <option value="mentioned">Mentioned</option>
+                    <option value="advanced">Advanced</option>
+                    <option value="complicated">Complicated</option>
+                    <option value="resolved">Resolved</option></select
+                  ><input
+                    [(ngModel)]="link.notes"
+                    [name]="'sessionNotes' + session.id"
+                    placeholder="Relationship notes"
+                  />
+                }
+              </div>
+            }
+          </fieldset>
+          <ng-container
+            *ngTemplateOutlet="entityPicker; context: { $implicit: plotDraft }"
+          ></ng-container>
+        } @else {
+          <label class="wide"
+            ><span>Title</span><input [(ngModel)]="loreDraft.title" name="loreTitle" /></label
+          ><label
+            ><span>Category</span
+            ><select [(ngModel)]="loreDraft.category" name="loreCategory">
+              @for (
+                value of [
+                  'character',
+                  'deity',
+                  'faction',
+                  'location',
+                  'artifact',
+                  'history',
+                  'event',
+                  'culture',
+                  'magic',
+                  'other',
+                ];
+                track value
+              ) {
+                <option [value]="value">{{ value }}</option>
+              }
+            </select></label
+          ><label
+            ><span>Visibility</span
+            ><select [(ngModel)]="loreDraft.visibility" name="loreVisibility">
+              <option value="public">Public</option>
+              <option value="party">Party</option>
+              <option value="dm_only">Chronicler only</option>
+            </select></label
+          ><label class="check wide"
+            ><input type="checkbox" [(ngModel)]="loreDraft.isPinned" name="lorePinned" /><span
+              >Pin this article</span
+            ></label
+          ><label class="wide"
+            ><span>Summary</span
+            ><textarea
+              rows="2"
+              [(ngModel)]="loreDraft.summary"
+              name="loreSummary"
+            ></textarea></label
+          ><label class="wide"
+            ><span>Article content</span
+            ><textarea rows="10" [(ngModel)]="loreDraft.content" name="loreContent"></textarea>
+          </label>
+          <ng-container
+            *ngTemplateOutlet="entityPicker; context: { $implicit: loreDraft }"
+          ></ng-container>
+        }
+        @if (formError()) {
+          <p class="form-error wide">{{ formError() }}</p>
+        }
+        @if (confirmingDelete()) {
+          <div class="delete-box wide">
+            <p>Type <strong>delete</strong> to permanently remove this record and its links.</p>
+            <input
+              [(ngModel)]="deleteConfirmation"
+              name="deleteConfirmation"
+              placeholder="delete"
+            /><button
+              type="button"
+              (click)="deleteRecord()"
+              [disabled]="deleteConfirmation !== 'delete' || saving()"
+            >
+              Delete permanently
+            </button>
+          </div>
+        }
+        <footer class="form-actions wide">
+          @if (editingId()) {
+            <button class="danger-link" type="button" (click)="beginDelete()">Delete</button>
+          }
+          <span></span><button type="button" (click)="closeForm()">Cancel</button
+          ><button
+            class="save"
+            type="submit"
+            [disabled]="
+              saving() || (tab() === 'plot' ? !plotDraft.title.trim() : !loreDraft.title.trim())
+            "
+          >
+            {{ saving() ? 'Saving...' : 'Save record' }}
+          </button>
+        </footer>
+      </form>
+    </section>
+  }
+
+  @if (loading()) {
+    <section class="story-state">Opening the archive...</section>
+  } @else if (error()) {
+    <section class="story-state error">{{ error() }}</section>
+  } @else {
+    <section class="records story-records">
+      @if (tab() === 'plot') {
+        @for (point of visiblePlots(); track point.id) {
+          <article [class.open]="selected() === point.id">
+            <div class="record-mark">{{ point.isPinned ? '◆' : '◇' }}</div>
+            <div>
+              <span class="visibility"
+                >{{ point.status.replaceAll('_', ' ') }} · {{ point.priority }}</span
+              >
+              <h2>{{ point.title }}</h2>
+              <small
+                >{{ point.sessions.length }} linked sessions ·
+                {{ point.entities.length }} figures</small
+              >
+              <p>{{ point.summary || point.description || 'No details recorded.' }}</p>
+              @if (selected() === point.id) {
+                <div class="story-detail">
+                  <p>{{ point.description }}</p>
+                  <h3>Session progression</h3>
+                  @for (link of point.sessions; track link.id) {
+                    <span class="badge"
+                      >{{ link.relationshipType }} · Session {{ link.sessionNumber }}</span
+                    >
+                  } @empty {
+                    <span>No linked sessions.</span>
+                  }
+                  <h3>Related figures</h3>
+                  @for (link of point.entities; track link.id) {
+                    <span class="badge"
+                      >{{ link.name
+                      }}{{ link.relationshipLabel ? ' · ' + link.relationshipLabel : '' }}</span
+                    >
+                  } @empty {
+                    <span>No linked figures.</span>
+                  }
+                  @if (auth.user()?.canEdit) {
+                    <button type="button" (click)="editPlot(point)">Edit plot point</button>
+                  }
+                </div>
+              }
+            </div>
+            <button type="button" (click)="toggle(point.id)">→</button>
+          </article>
+        } @empty {
+          <div class="story-state">No plot points have been added yet.</div>
+        }
+      } @else {
+        @for (entry of visibleLore(); track entry.id) {
+          <article [class.open]="selected() === entry.id">
+            <div class="record-mark">{{ entry.isPinned ? '◆' : '◇' }}</div>
+            <div>
+              <span class="visibility">{{ entry.category }}</span>
+              <h2>{{ entry.title }}</h2>
+              <small>{{ entry.entities.length }} related figures</small>
+              <p>{{ entry.summary || entry.content || 'No information recorded.' }}</p>
+              @if (selected() === entry.id) {
+                <div class="story-detail article-content">
+                  <p>{{ entry.content }}</p>
+                  <h3>Related figures</h3>
+                  @for (link of entry.entities; track link.id) {
+                    <span class="badge"
+                      >{{ link.name
+                      }}{{ link.relationshipLabel ? ' · ' + link.relationshipLabel : '' }}</span
+                    >
+                  } @empty {
+                    <span>No linked figures.</span>
+                  }
+                  @if (auth.user()?.canEdit) {
+                    <button type="button" (click)="editLore(entry)">Edit lore entry</button>
+                  }
+                </div>
+              }
+            </div>
+            <button type="button" (click)="toggle(entry.id)">→</button>
+          </article>
+        } @empty {
+          <div class="story-state">No lore entries have been added yet.</div>
+        }
+      }
+    </section>
+  }
+</main>
+
+<ng-template #entityPicker let-target
+  ><fieldset class="wide relation-picker">
+    <legend>Related NPCs and entities</legend>
+    @for (entity of options().entities; track entity.id) {
+      <div>
+        <label class="check"
+          ><input
+            type="checkbox"
+            [checked]="!!entityLink(target, entity.id)"
+            (change)="toggleEntity(target, entity.id, $any($event.target).checked)"
+          /><span>{{ entity.name }}</span></label
+        >
+        @if (entityLink(target, entity.id); as link) {
+          <input
+            [(ngModel)]="link.relationshipLabel"
+            [name]="'entityLabel' + entity.id"
+            placeholder="Relationship label"
+          /><input
+            [(ngModel)]="link.notes"
+            [name]="'entityNotes' + entity.id"
+            placeholder="Notes"
+          />
+        }
+      </div>
+    }</fieldset
+></ng-template>

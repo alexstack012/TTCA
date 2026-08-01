@@ -1,7 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CampaignSession, CampaignSessionUpdate } from '../types/campaign-session.types';
+import {
+  CampaignSession,
+  CampaignSessionInput,
+  CampaignSessionOptions,
+  CampaignSessionUpdate,
+} from '../types/campaign-session.types';
 
 @Injectable({ providedIn: 'root' })
 export class CampaignSessionsService {
@@ -10,6 +15,19 @@ export class CampaignSessionsService {
   getSessions(campaignKey: string): Observable<CampaignSession[]> {
     return this.http.get<CampaignSession[]>(
       `/api/campaigns/${encodeURIComponent(campaignKey)}/sessions`,
+    );
+  }
+
+  getOptions(campaignKey: string): Observable<CampaignSessionOptions> {
+    return this.http.get<CampaignSessionOptions>(
+      `/api/campaigns/${encodeURIComponent(campaignKey)}/session-options`,
+    );
+  }
+
+  createSession(campaignKey: string, session: CampaignSessionInput): Observable<CampaignSession> {
+    return this.http.post<CampaignSession>(
+      `/api/campaigns/${encodeURIComponent(campaignKey)}/sessions`,
+      session,
     );
   }
 

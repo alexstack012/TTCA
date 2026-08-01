@@ -8,6 +8,8 @@ import { rateLimit } from 'express-rate-limit';
 import { databaseConfiguration, pool } from './db.js';
 import { createCampaignEntityRouter } from './routes/campaign-entity.routes.js';
 import { createCampaignSessionRouter } from './routes/campaign-session.routes.js';
+import { createCampaignLocationRouter } from './routes/campaign-location.routes.js';
+import { createCampaignStoryRouter } from './routes/campaign-story.routes.js';
 
 const app = express();
 const port = Number(process.env.PORT ?? 3000);
@@ -124,6 +126,8 @@ app.get('/api/auth/me', authenticate, (req, res) =>
 
 app.use('/api/campaigns', createCampaignEntityRouter({ authenticate, requireEditor }));
 app.use('/api/campaigns', createCampaignSessionRouter({ authenticate, requireEditor }));
+app.use('/api/campaigns', createCampaignLocationRouter({ authenticate, requireEditor }));
+app.use('/api/campaigns', createCampaignStoryRouter({ authenticate, requireEditor }));
 
 app.post('/api/archive/example-write', authenticate, requireEditor, (_req, res) =>
   res.status(501).json({ message: 'Database setup is the next step.' }),

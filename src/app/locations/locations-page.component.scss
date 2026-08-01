@@ -1,0 +1,144 @@
+.location-state,
+.location-form-panel {
+  margin-top: 2rem;
+  padding: 2rem;
+  border: 1px solid #39333d;
+  color: #938a94;
+  background: #121218;
+  box-shadow: var(--purple-smoke);
+}
+.location-state {
+  text-align: center;
+}
+.location-state.error,
+.form-error {
+  color: #d47989;
+}
+.toolbar select {
+  padding: 0.7rem;
+  border: 1px solid #38343d;
+  color: #aaa1aa;
+  background: #0c0d12;
+}
+.location-form-panel > header {
+  display: flex;
+  justify-content: space-between;
+  color: #b9acb8;
+  font-family: 'Cinzel', serif;
+}
+.location-form-panel > header button {
+  border: 0;
+  color: #8f858f;
+  background: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+.location-form-panel form,
+.location-editor {
+  margin-top: 1.2rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+.location-form-panel label,
+.location-editor label {
+  display: grid;
+  gap: 0.35rem;
+  color: #8f858f;
+  font-size: 0.65rem;
+}
+.location-form-panel input,
+.location-form-panel select,
+.location-form-panel textarea,
+.location-editor input,
+.location-editor select,
+.location-editor textarea {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #423b45;
+  color: #c8bec6;
+  background: #0d0e13;
+  font: inherit;
+}
+.wide {
+  grid-column: 1 / -1;
+}
+.linked-sessions {
+  margin-top: 1rem;
+  padding-top: 0.8rem;
+  display: grid;
+  gap: 0.35rem;
+  border-top: 1px solid #342f38;
+}
+.linked-sessions h3 {
+  margin: 0 0 0.3rem;
+  color: #a99ca8;
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+}
+.linked-sessions span {
+  color: #716a73;
+  font-size: 0.7rem;
+}
+.record-actions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+.record-actions button,
+.form-actions button,
+.delete-confirmation button {
+  padding: 0.65rem 0.85rem;
+  border: 1px solid #4a414c;
+  color: #aaa0aa;
+  background: #17161c;
+  cursor: pointer;
+}
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.form-actions > span {
+  flex: 1;
+}
+.form-actions .save {
+  border-color: #7b2c3b;
+  color: #eadadd;
+  background: var(--blood);
+}
+.form-actions .danger-link {
+  border-color: transparent;
+  color: #bd6372;
+  background: transparent;
+}
+.delete-confirmation {
+  padding: 1rem;
+  border: 1px solid #6d2c39;
+  background: rgba(99, 24, 39, 0.12);
+}
+.delete-confirmation p {
+  color: #b99ca2;
+}
+.delete-confirmation .danger {
+  margin-top: 0.7rem;
+  border-color: #8f2639;
+  color: #f0dce0;
+  background: #6c1d2c;
+}
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+@media (max-width: 680px) {
+  .location-form-panel form,
+  .location-editor {
+    grid-template-columns: 1fr;
+  }
+  .wide {
+    grid-column: auto;
+  }
+  .form-actions {
+    flex-wrap: wrap;
+  }
+}

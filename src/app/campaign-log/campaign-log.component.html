@@ -6,9 +6,129 @@
       <span>A chronological record of sessions, discoveries, choices, and their cost.</span>
     </div>
     @if (auth.user()?.canEdit) {
-      <button type="button">+ &nbsp; Add session</button>
+      <button type="button" (click)="openCreate()">+ &nbsp; Add session</button>
     }
   </header>
+
+  @if (creating()) {
+    <section class="create-panel">
+      <header>
+        <p>New chronicle entry</p>
+        <button type="button" (click)="closeCreate()">&times;</button>
+      </header>
+      <form class="session-editor" (submit)="$event.preventDefault(); createSession()">
+        <label
+          ><span>Session number</span
+          ><input
+            type="number"
+            min="1"
+            [(ngModel)]="createDraft.sessionNumber"
+            name="createSessionNumber"
+        /></label>
+        <label
+          ><span>Visibility</span
+          ><select [(ngModel)]="createDraft.visibility" name="createVisibility">
+            <option value="public">Public</option>
+            <option value="party">Party</option>
+            <option value="dm_only">Chronicler only</option>
+          </select></label
+        >
+        <label class="wide"
+          ><span>Session name</span
+          ><input [(ngModel)]="createDraft.sessionName" name="createSessionName"
+        /></label>
+        <label
+          ><span>Started on</span
+          ><input type="date" [(ngModel)]="createDraft.startedOn" name="createStartedOn"
+        /></label>
+        <label
+          ><span>Ended on</span
+          ><input type="date" [(ngModel)]="createDraft.endedOn" name="createEndedOn"
+        /></label>
+        <label class="wide checkbox"
+          ><input
+            type="checkbox"
+            [(ngModel)]="createDraft.isMultiDay"
+            name="createIsMultiDay"
+          /><span>This session spans multiple days</span></label
+        >
+        <label class="wide"
+          ><span>Description</span
+          ><textarea
+            rows="6"
+            [(ngModel)]="createDraft.description"
+            name="createDescription"
+          ></textarea>
+        </label>
+        <fieldset class="relationship-picker wide">
+          <legend>Locations</legend>
+          @for (location of options().locations; track location.id) {
+            <label
+              ><input
+                type="checkbox"
+                [checked]="createDraft.locationIds.includes(location.id)"
+                (change)="
+                  toggleRelationship(
+                    createDraft,
+                    'locationIds',
+                    location.id,
+                    $any($event.target).checked
+                  )
+                "
+              /><span>{{ location.name }}</span></label
+            >
+          } @empty {
+            <p>No campaign locations are available.</p>
+          }
+        </fieldset>
+        <fieldset class="relationship-picker wide">
+          <legend>NPCs and notable figures</legend>
+          <label class="relationship-search">
+            <span class="visually-hidden">Search NPCs for this session</span>
+            <input
+              type="search"
+              placeholder="Search NPCs by name, type, or description"
+              [value]="createEntitySearch()"
+              (input)="setEntitySearch('create', $event)"
+            />
+            <small>{{ filteredEntities(createEntitySearch()).length }} matches</small>
+          </label>
+          @for (entity of filteredEntities(createEntitySearch()); track entity.id) {
+            <label
+              ><input
+                type="checkbox"
+                [checked]="createDraft.entityIds.includes(entity.id)"
+                (change)="
+                  toggleRelationship(
+                    createDraft,
+                    'entityIds',
+                    entity.id,
+                    $any($event.target).checked
+                  )
+                "
+              /><span>{{ entity.name }}</span></label
+            >
+          } @empty {
+            <p class="relationship-empty">No NPCs match that search.</p>
+          }
+        </fieldset>
+        @if (createError()) {
+          <p class="mutation-error">{{ createError() }}</p>
+        }
+        <footer class="editor-actions wide">
+          <span></span
+          ><button type="button" (click)="closeCreate()" [disabled]="createSaving()">Cancel</button
+          ><button
+            class="save"
+            type="submit"
+            [disabled]="createSaving() || !createDraft.sessionName.trim()"
+          >
+            {{ createSaving() ? 'Creating...' : 'Create session' }}
+          </button>
+        </footer>
+      </form>
+    </section>
+  }
 
   <section class="toolbar">
     <label>
@@ -100,6 +220,58 @@
                       name="description"
                     ></textarea>
                   </label>
+                  <fieldset class="relationship-picker wide">
+                    <legend>Locations</legend>
+                    @for (location of options().locations; track location.id) {
+                      <label
+                        ><input
+                          type="checkbox"
+                          [checked]="edit.locationIds.includes(location.id)"
+                          (change)="
+                            toggleRelationship(
+                              edit,
+                              'locationIds',
+                              location.id,
+                              $any($event.target).checked
+                            )
+                          "
+                        /><span>{{ location.name }}</span></label
+                      >
+                    } @empty {
+                      <p>No campaign locations are available.</p>
+                    }
+                  </fieldset>
+                  <fieldset class="relationship-picker wide">
+                    <legend>NPCs and notable figures</legend>
+                    <label class="relationship-search">
+                      <span class="visually-hidden">Search NPCs for this session</span>
+                      <input
+                        type="search"
+                        placeholder="Search NPCs by name, type, or description"
+                        [value]="editEntitySearch()"
+                        (input)="setEntitySearch('edit', $event)"
+                      />
+                      <small>{{ filteredEntities(editEntitySearch()).length }} matches</small>
+                    </label>
+                    @for (entity of filteredEntities(editEntitySearch()); track entity.id) {
+                      <label
+                        ><input
+                          type="checkbox"
+                          [checked]="edit.entityIds.includes(entity.id)"
+                          (change)="
+                            toggleRelationship(
+                              edit,
+                              'entityIds',
+                              entity.id,
+                              $any($event.target).checked
+                            )
+                          "
+                        /><span>{{ entity.name }}</span></label
+                      >
+                    } @empty {
+                      <p class="relationship-empty">No NPCs match that search.</p>
+                    }
+                  </fieldset>
 
                   @if (mutationError()) {
                     <p class="mutation-error">{{ mutationError() }}</p>

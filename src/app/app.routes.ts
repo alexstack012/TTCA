@@ -3,11 +3,12 @@ import { authGuard } from './core/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SplashComponent } from './splash/splash.component';
 import { ArchiveShellComponent } from './layout/archive-shell.component';
-import { SectionPageComponent } from './section-page/section-page.component';
 import { CharactersPageComponent } from './characters/characters-page.component';
 import { SpellsPageComponent } from './spells/spells-page.component';
 import { EquipmentPageComponent } from './equipment/equipment-page.component';
 import { CampaignLogComponent } from './campaign-log/campaign-log.component';
+import { LocationsPageComponent } from './locations/locations-page.component';
+import { LorePageComponent } from './lore/lore-page.component';
 
 export const routes: Routes = [
   { path: '', component: SplashComponent },
@@ -20,10 +21,10 @@ export const routes: Routes = [
       { path: 'characters', component: CharactersPageComponent },
       { path: 'items', component: EquipmentPageComponent },
       { path: 'spells', component: SpellsPageComponent },
-      { path: 'campaign', component: SectionPageComponent, data: { section: 'campaign' } },
+      { path: 'campaign', redirectTo: 'campaign-log', pathMatch: 'full' },
       { path: 'campaign-log', component: CampaignLogComponent },
-      { path: 'lore', component: SectionPageComponent, data: { section: 'lore' } },
-      { path: 'locations', component: SectionPageComponent, data: { section: 'locations' } },
+      { path: 'lore', component: LorePageComponent },
+      { path: 'locations', component: LocationsPageComponent },
     ],
   },
   { path: '**', redirectTo: '' },

@@ -1,0 +1,175 @@
+.story-tabs {
+  margin-top: 2.5rem;
+  display: flex;
+  border-bottom: 1px solid #3b3440;
+}
+.story-tabs button {
+  padding: 1rem 1.2rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: #756d78;
+  background: none;
+  cursor: pointer;
+}
+.story-tabs button.active {
+  border-color: var(--blood);
+  color: #c4b7c2;
+}
+.story-tabs span {
+  margin-left: 0.45rem;
+  color: #67596a;
+}
+.story-state,
+.story-form-panel {
+  margin-top: 1.5rem;
+  padding: 2rem;
+  border: 1px solid #39333d;
+  color: #938a94;
+  background: #121218;
+  box-shadow: var(--purple-smoke);
+}
+.story-state {
+  text-align: center;
+}
+.story-state.error,
+.form-error {
+  color: #d47989;
+}
+.story-form-panel > header {
+  display: flex;
+  justify-content: space-between;
+  color: #b9acb8;
+  font-family: 'Cinzel', serif;
+}
+.story-form-panel > header button {
+  border: 0;
+  color: #8f858f;
+  background: none;
+  font-size: 1.4rem;
+}
+.story-form-panel form {
+  margin-top: 1.2rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+.story-form-panel label {
+  display: grid;
+  gap: 0.35rem;
+  color: #8f858f;
+  font-size: 0.65rem;
+}
+.story-form-panel input,
+.story-form-panel select,
+.story-form-panel textarea {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #423b45;
+  color: #c8bec6;
+  background: #0d0e13;
+  font: inherit;
+}
+.wide {
+  grid-column: 1/-1;
+}
+.check {
+  display: flex !important;
+  align-items: center;
+  gap: 0.45rem;
+}
+.check input {
+  width: auto;
+}
+.relation-picker {
+  max-height: 290px;
+  padding: 0.8rem;
+  overflow-y: auto;
+  border: 1px solid #3b3540;
+}
+.relation-picker legend {
+  color: #9f919f;
+}
+.relation-picker > div {
+  padding: 0.45rem;
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) 150px 1fr;
+  gap: 0.5rem;
+  border-bottom: 1px solid #29262e;
+}
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.form-actions > span {
+  flex: 1;
+}
+.form-actions button,
+.story-detail button,
+.delete-box button {
+  padding: 0.65rem 0.85rem;
+  border: 1px solid #4a414c;
+  color: #aaa0aa;
+  background: #17161c;
+}
+.form-actions .save {
+  background: var(--blood);
+  color: #eadadd;
+}
+.form-actions .danger-link {
+  border-color: transparent;
+  color: #bd6372;
+  background: none;
+}
+.delete-box {
+  padding: 1rem;
+  border: 1px solid #6d2c39;
+  background: rgba(99, 24, 39, 0.12);
+}
+.story-detail {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #342f38;
+}
+.story-detail h3 {
+  margin: 1rem 0 0.5rem;
+  color: #a99ca8;
+  font:
+    500 0.72rem 'Cinzel',
+    serif;
+}
+.badge {
+  margin: 0 0.4rem 0.4rem 0;
+  padding: 0.3rem 0.5rem;
+  display: inline-block;
+  border: 1px solid #4a3e4c;
+  color: #958796;
+  font-size: 0.62rem;
+}
+.story-detail button {
+  margin-top: 1rem;
+  display: block;
+}
+.article-content > p {
+  white-space: pre-wrap;
+}
+.record-mark {
+  transform: none !important;
+}
+.story-records article.open {
+  background: #19171d;
+}
+@media (max-width: 680px) {
+  .story-form-panel form {
+    grid-template-columns: 1fr;
+  }
+  .wide {
+    grid-column: auto;
+  }
+  .relation-picker > div {
+    grid-template-columns: 1fr;
+  }
+  .form-actions {
+    flex-wrap: wrap;
+  }
+}

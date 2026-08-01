@@ -1,0 +1,195 @@
+<main>
+  <header class="page-header">
+    <div>
+      <p>Atlas of the lost</p>
+      <h1>Locations</h1>
+      <span
+        >Domains, settlements, ruins, and battlefields recorded across the fractured worlds.</span
+      >
+    </div>
+    @if (auth.user()?.canEdit) {
+      <button type="button" (click)="openCreate()">+ &nbsp; Add location</button>
+    }
+  </header>
+
+  @if (creating()) {
+    <section class="location-form-panel">
+      <header>
+        <strong>New atlas entry</strong
+        ><button type="button" (click)="closeCreate()">&times;</button>
+      </header>
+      <form (submit)="$event.preventDefault(); createLocation()">
+        <label><span>Name</span><input [(ngModel)]="createDraft.name" name="createName" /></label>
+        <label
+          ><span>Visibility</span
+          ><select [(ngModel)]="createDraft.visibility" name="createVisibility">
+            <option value="public">Public</option>
+            <option value="party">Party</option>
+            <option value="dm_only">Chronicler only</option>
+          </select></label
+        >
+        <label class="wide"
+          ><span>Description</span
+          ><textarea
+            rows="6"
+            [(ngModel)]="createDraft.description"
+            name="createDescription"
+          ></textarea>
+        </label>
+        @if (createError()) {
+          <p class="form-error wide">{{ createError() }}</p>
+        }
+        <footer class="form-actions wide">
+          <span></span><button type="button" (click)="closeCreate()">Cancel</button
+          ><button
+            class="save"
+            type="submit"
+            [disabled]="createSaving() || !createDraft.name.trim()"
+          >
+            {{ createSaving() ? 'Creating...' : 'Create location' }}
+          </button>
+        </footer>
+      </form>
+    </section>
+  }
+
+  <section class="toolbar" aria-label="Location filters">
+    <label
+      ><span aria-hidden="true">&#8981;</span
+      ><input
+        type="search"
+        placeholder="Search locations and linked sessions"
+        [value]="search()"
+        (input)="setSearch($event)"
+    /></label>
+    <div>
+      <select [value]="visibility()" (change)="setVisibility($event)">
+        <option value="all">All visibility</option>
+        <option value="public">Public</option>
+        <option value="party">Party</option>
+        @if (auth.user()?.canEdit) {
+          <option value="dm_only">Chronicler only</option>
+        }
+      </select>
+    </div>
+  </section>
+
+  @if (loading()) {
+    <section class="location-state">Unfolding the atlas...</section>
+  } @else if (error()) {
+    <section class="location-state error" role="alert">{{ error() }}</section>
+  } @else if (!locations().length) {
+    <section class="location-state">No campaign locations have been added yet.</section>
+  } @else if (!visibleLocations().length) {
+    <section class="location-state">No locations match those filters.</section>
+  } @else {
+    <section class="legend">
+      <span><i class="public"></i>Public</span><span><i class="revealed"></i>Party</span>
+      @if (auth.user()?.canEdit) {
+        <span><i class="secret"></i>Chronicler only</span>
+      }
+    </section>
+    <section class="records location-records">
+      @for (location of visibleLocations(); track location.id) {
+        <article [class.open]="selectedId() === location.id">
+          <div class="record-mark">{{ $index + 1 }}</div>
+          <div>
+            <span class="visibility" [class.chronicler-only]="location.visibility === 'dm_only'">{{
+              visibilityLabel(location.visibility)
+            }}</span>
+            <h2>{{ location.name }}</h2>
+            <small
+              >{{ location.sessions.length }} linked
+              {{ location.sessions.length === 1 ? 'session' : 'sessions' }}</small
+            >
+            @if (selectedId() === location.id) {
+              @if (editingId() === location.id && draft; as edit) {
+                <form
+                  class="location-editor"
+                  (submit)="$event.preventDefault(); saveLocation(location.id)"
+                >
+                  <label><span>Name</span><input [(ngModel)]="edit.name" name="editName" /></label>
+                  <label
+                    ><span>Visibility</span
+                    ><select [(ngModel)]="edit.visibility" name="editVisibility">
+                      <option value="public">Public</option>
+                      <option value="party">Party</option>
+                      <option value="dm_only">Chronicler only</option>
+                    </select></label
+                  >
+                  <label class="wide"
+                    ><span>Description</span
+                    ><textarea
+                      rows="6"
+                      [(ngModel)]="edit.description"
+                      name="editDescription"
+                    ></textarea>
+                  </label>
+                  @if (mutationError()) {
+                    <p class="form-error wide">{{ mutationError() }}</p>
+                  }
+                  @if (confirmingDelete()) {
+                    <div class="delete-confirmation wide">
+                      <p>
+                        Deleting this location also removes its links from
+                        {{ location.sessions.length }} session(s). Type <strong>delete</strong> to
+                        confirm.
+                      </p>
+                      <input
+                        [(ngModel)]="deleteConfirmation"
+                        name="deleteConfirmation"
+                        placeholder="delete"
+                        autocomplete="off"
+                      /><button
+                        type="button"
+                        class="danger"
+                        (click)="deleteLocation(location.id)"
+                        [disabled]="deleteConfirmation !== 'delete' || deleting()"
+                      >
+                        {{ deleting() ? 'Deleting...' : 'Delete permanently' }}
+                      </button>
+                    </div>
+                  }
+                  <footer class="form-actions wide">
+                    <button class="danger-link" type="button" (click)="beginDelete()">
+                      Delete location</button
+                    ><span></span><button type="button" (click)="cancelEditing()">Cancel</button
+                    ><button class="save" type="submit" [disabled]="saving() || !edit.name.trim()">
+                      {{ saving() ? 'Saving...' : 'Save changes' }}
+                    </button>
+                  </footer>
+                </form>
+              } @else {
+                <p>{{ location.description || 'No description has been recorded.' }}</p>
+                <section class="linked-sessions">
+                  <h3>Recorded appearances</h3>
+                  @for (session of location.sessions; track session.id) {
+                    <span>Session {{ session.sessionNumber }} · {{ session.sessionName }}</span>
+                  } @empty {
+                    <span>No sessions currently reference this location.</span>
+                  }
+                </section>
+                @if (auth.user()?.canEdit) {
+                  <div class="record-actions">
+                    <button type="button" (click)="startEditing(location)">Edit location</button>
+                  </div>
+                }
+              }
+            } @else {
+              <p>{{ location.description || 'No description has been recorded.' }}</p>
+            }
+          </div>
+          <button
+            type="button"
+            (click)="toggleLocation(location.id)"
+            [attr.aria-expanded]="selectedId() === location.id"
+            [attr.aria-label]="'Toggle details for ' + location.name"
+          >
+            {{ selectedId() === location.id ? '−' : '→' }}
+          </button>
+        </article>
+      }
+    </section>
+    <footer>{{ visibleLocations().length }} of {{ locations().length }} locations shown.</footer>
+  }
+</main>

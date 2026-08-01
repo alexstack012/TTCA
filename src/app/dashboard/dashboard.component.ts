@@ -61,18 +61,6 @@ export class DashboardComponent {
     },
     {
       glyph: 'IV',
-      name: 'Campaign',
-      meta: 'Current arc',
-      path: '/campaign',
-      demoCopy:
-        'A focused overview of the active campaign, its milestones, objectives, and party state.',
-      playerCopy:
-        'Where we are, what is hunting us, and why splitting the party remains a terrible idea.',
-      demoAction: 'View campaign overview',
-      playerAction: 'Remember the plan',
-    },
-    {
-      glyph: 'V',
       name: 'Campaign Log',
       meta: 'Session chronicle',
       path: '/campaign-log',
@@ -83,7 +71,7 @@ export class DashboardComponent {
       playerAction: 'Revisit our mistakes',
     },
     {
-      glyph: 'VI',
+      glyph: 'V',
       name: 'Lore & Plot Points',
       meta: 'Living knowledge base',
       path: '/lore',
@@ -95,7 +83,7 @@ export class DashboardComponent {
       playerAction: 'Follow the red string',
     },
     {
-      glyph: 'VII',
+      glyph: 'VI',
       name: 'Locations',
       meta: 'World atlas',
       path: '/locations',

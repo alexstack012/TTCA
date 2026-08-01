@@ -33,7 +33,7 @@ export interface CampaignSession {
   entities: CampaignEntitySummary[];
 }
 
-export type CampaignSessionUpdate = Pick<
+export type CampaignSessionInput = Pick<
   CampaignSession,
   | 'sessionNumber'
   | 'isMultiDay'
@@ -42,4 +42,14 @@ export type CampaignSessionUpdate = Pick<
   | 'description'
   | 'startedOn'
   | 'endedOn'
->;
+> & {
+  locationIds: string[];
+  entityIds: string[];
+};
+
+export type CampaignSessionUpdate = CampaignSessionInput;
+
+export interface CampaignSessionOptions {
+  locations: CampaignLocationSummary[];
+  entities: CampaignEntitySummary[];
+}

@@ -2,7 +2,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../core/auth.service';
-import { CampaignSession, CampaignSessionUpdate } from '../types/campaign-session.types';
+import {
+  CampaignSession,
+  CampaignEntitySummary,
+  CampaignSessionInput,
+  CampaignSessionOptions,
+  CampaignSessionUpdate,
+} from '../types/campaign-session.types';
 import { CampaignSessionsService } from './campaign-sessions.service';
 
 @Component({
@@ -25,8 +31,15 @@ export class CampaignLogComponent {
   readonly mutationError = signal('');
   readonly confirmingDelete = signal(false);
   readonly deleting = signal(false);
+  readonly options = signal<CampaignSessionOptions>({ locations: [], entities: [] });
+  readonly creating = signal(false);
+  readonly createSaving = signal(false);
+  readonly createError = signal('');
+  readonly createEntitySearch = signal('');
+  readonly editEntitySearch = signal('');
   deleteConfirmation = '';
   draft: CampaignSessionUpdate | null = null;
+  createDraft: CampaignSessionInput = this.emptyDraft();
 
   readonly visibleSessions = computed(() => {
     const query = this.search().trim().toLowerCase();
@@ -61,6 +74,11 @@ export class CampaignLogComponent {
         this.loading.set(false);
       },
     });
+    this.campaignSessions.getOptions('curse-of-strahd').subscribe({
+      next: (options) => this.options.set(options),
+      error: (error: HttpErrorResponse) =>
+        console.error('Campaign relationship options failed.', error),
+    });
   }
 
   setSearch(event: Event): void {
@@ -83,8 +101,11 @@ export class CampaignLogComponent {
       description: session.description,
       startedOn: session.startedOn,
       endedOn: session.endedOn,
+      locationIds: session.locations.map((location) => location.id),
+      entityIds: session.entities.map((entity) => entity.id),
     };
     this.editingSession.set(session.id);
+    this.editEntitySearch.set('');
     this.confirmingDelete.set(false);
     this.mutationError.set('');
   }
@@ -92,6 +113,7 @@ export class CampaignLogComponent {
   cancelEditing(): void {
     if (this.saving() || this.deleting()) return;
     this.editingSession.set(null);
+    this.editEntitySearch.set('');
     this.draft = null;
     this.confirmingDelete.set(false);
     this.deleteConfirmation = '';
@@ -123,6 +145,87 @@ export class CampaignLogComponent {
     this.confirmingDelete.set(true);
     this.deleteConfirmation = '';
     this.mutationError.set('');
+  }
+
+  openCreate(): void {
+    if (!this.auth.user()?.canEdit) return;
+    const highest = this.sessions().reduce(
+      (maximum, session) => Math.max(maximum, session.sessionNumber),
+      0,
+    );
+    this.createDraft = { ...this.emptyDraft(), sessionNumber: highest + 1 };
+    this.createEntitySearch.set('');
+    this.createError.set('');
+    this.creating.set(true);
+  }
+
+  closeCreate(): void {
+    if (!this.createSaving()) {
+      this.creating.set(false);
+      this.createEntitySearch.set('');
+    }
+  }
+
+  createSession(): void {
+    if (!this.auth.user()?.canEdit || this.createSaving()) return;
+    this.createSaving.set(true);
+    this.createError.set('');
+    this.campaignSessions.createSession('curse-of-strahd', this.createDraft).subscribe({
+      next: (created) => {
+        this.sessions.update((sessions) =>
+          [...sessions, created].sort((left, right) => left.sessionNumber - right.sessionNumber),
+        );
+        this.createSaving.set(false);
+        this.creating.set(false);
+        this.selectedSession.set(created.id);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.createError.set(error.error?.message ?? 'The campaign session could not be created.');
+        this.createSaving.set(false);
+      },
+    });
+  }
+
+  toggleRelationship(
+    target: CampaignSessionInput,
+    property: 'locationIds' | 'entityIds',
+    id: string,
+    checked: boolean,
+  ): void {
+    target[property] = checked
+      ? [...new Set([...target[property], id])]
+      : target[property].filter((value) => value !== id);
+  }
+
+  setEntitySearch(target: 'create' | 'edit', event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    (target === 'create' ? this.createEntitySearch : this.editEntitySearch).set(value);
+  }
+
+  filteredEntities(query: string): CampaignEntitySummary[] {
+    const normalizedQuery = query.trim().toLowerCase();
+    if (!normalizedQuery) return this.options().entities;
+
+    return this.options().entities.filter((entity) =>
+      [entity.name, entity.entityType, entity.description ?? '']
+        .join(' ')
+        .toLowerCase()
+        .includes(normalizedQuery),
+    );
+  }
+
+  private emptyDraft(): CampaignSessionInput {
+    return {
+      sessionNumber: 1,
+      isMultiDay: false,
+      sessionName: '',
+      visibility: 'party',
+      description: '',
+      startedOn: null,
+      endedOn: null,
+      locationIds: [],
+      entityIds: [],
+    };
   }
 
   deleteSession(sessionId: string): void {
