@@ -14,9 +14,7 @@
       ><span><small>The Ravenloft Continuum</small><strong>Shadow &amp; Secrets</strong></span></a
     >
     <div class="top-actions">
-      <button class="search" type="button" aria-label="Search the archive">
-        <span>&#8981;</span><span>Search archive</span><kbd>/</kbd></button
-      ><span class="access" [class.editor]="auth.user()?.canEdit">{{
+      <span class="access" [class.editor]="auth.user()?.canEdit">{{
         auth.user()?.canEdit ? 'Chronicler' : 'Observer'
       }}</span>
     </div>
@@ -31,7 +29,6 @@
     ></button>
   }
   <aside class="sidebar" [class.open]="menuOpen()">
-
     <nav aria-label="Archive sections">
       <p>The archive</p>
       @for (item of navigation; track item.path) {

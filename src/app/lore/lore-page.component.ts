@@ -20,7 +20,7 @@ import { CampaignStoryService } from './campaign-story.service';
   standalone: true,
   imports: [FormsModule, NgTemplateOutlet],
   templateUrl: './lore-page.component.html',
-  styleUrls: ['../section-page/section-page.component.scss', './lore-page.component.scss'],
+  styleUrls: ['../shared/archive-records.scss', './lore-page.component.scss'],
 })
 export class LorePageComponent {
   private readonly api = inject(CampaignStoryService);

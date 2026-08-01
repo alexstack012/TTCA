@@ -50,26 +50,6 @@
   align-items: center;
   gap: 1rem;
 }
-.search {
-  min-width: 205px;
-  padding: 0.55rem 0.7rem;
-  display: flex;
-  gap: 0.65rem;
-  align-items: center;
-  border: 1px solid #37333c;
-  color: #6f6973;
-  background: #121218;
-  text-align: left;
-}
-.search span:nth-child(2) {
-  flex: 1;
-}
-.search kbd {
-  padding: 0.1rem 0.35rem;
-  border: 1px solid #413b45;
-  color: #68616c;
-  background: #0b0c10;
-}
 .access {
   padding: 0.45rem 0.65rem;
   border: 1px solid #49434d;
@@ -235,13 +215,6 @@ nav i {
   .brand small {
     display: none;
   }
-  .search {
-    min-width: 0;
-    border: 0;
-    background: none;
-  }
-  .search span:nth-child(2),
-  .search kbd,
   .access {
     display: none;
   }

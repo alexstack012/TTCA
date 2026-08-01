@@ -58,6 +58,7 @@ const campaignEntitiesQuery = `
     JOIN target_campaign AS campaign ON campaign.id = entity.campaign_id
     LEFT JOIN aliases AS alias ON alias.entity_id = entity.id
     LEFT JOIN section_entries AS section_entry ON section_entry.entity_id = entity.id
+    WHERE $2 = 'editor' OR entity.visibility <> 'dm_only'
   )
   SELECT
     campaign.source_key AS "campaignKey",
@@ -83,8 +84,8 @@ const campaignEntitiesQuery = `
   GROUP BY campaign.id, campaign.source_key
 `;
 
-export async function findCampaignEntities(campaignKey) {
-  const result = await pool.query(campaignEntitiesQuery, [campaignKey]);
+export async function findCampaignEntities(campaignKey, role) {
+  const result = await pool.query(campaignEntitiesQuery, [campaignKey, role]);
   return result.rows[0] ?? null;
 }
 
@@ -154,7 +155,7 @@ export async function createCampaignEntity(campaignKey, entity) {
       ],
     );
     await client.query('COMMIT');
-    const campaign = await findCampaignEntities(campaignKey);
+    const campaign = await findCampaignEntities(campaignKey, 'editor');
     return campaign?.entities.find((item) => item.id === entityId) ?? null;
   } catch (error) {
     await client.query('ROLLBACK');
@@ -238,7 +239,7 @@ export async function updateCampaignEntity(campaignKey, entityId, entity) {
     }
 
     await client.query('COMMIT');
-    const campaign = await findCampaignEntities(campaignKey);
+    const campaign = await findCampaignEntities(campaignKey, 'editor');
     return campaign?.entities.find((item) => item.id === entityId) ?? null;
   } catch (error) {
     await client.query('ROLLBACK');

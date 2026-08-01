@@ -6,6 +6,7 @@ import {
   findCampaignSessions,
   updateCampaignSession,
 } from '../repositories/campaign-session.repository.js';
+import { isUniqueArray, isUuid, requireUuidParameter } from '../validation.js';
 
 function uniqueById(values) {
   return [
@@ -27,7 +28,6 @@ function normalizeSessions(sessions) {
 
 const visibilities = new Set(['public', 'party', 'dm_only']);
 const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function validSession(body) {
   return (
@@ -44,10 +44,10 @@ function validSession(body) {
     (body.startedOn == null || datePattern.test(body.startedOn)) &&
     (body.endedOn == null || datePattern.test(body.endedOn)) &&
     (!body.startedOn || !body.endedOn || body.endedOn >= body.startedOn) &&
-    Array.isArray(body.locationIds) &&
-    body.locationIds.every((id) => typeof id === 'string' && uuidPattern.test(id)) &&
-    Array.isArray(body.entityIds) &&
-    body.entityIds.every((id) => typeof id === 'string' && uuidPattern.test(id))
+    isUniqueArray(body.locationIds, 100) &&
+    body.locationIds.every(isUuid) &&
+    isUniqueArray(body.entityIds, 250) &&
+    body.entityIds.every(isUuid)
   );
 }
 
@@ -114,6 +114,7 @@ export function createCampaignSessionRouter({
     '/:campaignKey/sessions/:sessionId',
     authenticate,
     requireEditor,
+    requireUuidParameter('sessionId'),
     async (request, response, next) => {
       try {
         if (!validSession(request.body))
@@ -134,6 +135,7 @@ export function createCampaignSessionRouter({
     '/:campaignKey/sessions/:sessionId',
     authenticate,
     requireEditor,
+    requireUuidParameter('sessionId'),
     async (request, response, next) => {
       try {
         if (request.body?.confirmation !== 'delete')

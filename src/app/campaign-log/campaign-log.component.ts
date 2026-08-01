@@ -16,7 +16,7 @@ import { CampaignSessionsService } from './campaign-sessions.service';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './campaign-log.component.html',
-  styleUrls: ['../section-page/section-page.component.scss', './campaign-log.component.scss'],
+  styleUrls: ['../shared/archive-records.scss', './campaign-log.component.scss'],
 })
 export class CampaignLogComponent {
   private readonly campaignSessions = inject(CampaignSessionsService);
@@ -25,6 +25,7 @@ export class CampaignLogComponent {
   readonly loading = signal(true);
   readonly error = signal('');
   readonly search = signal('');
+  readonly sessionOrder = signal<'ascending' | 'descending'>('ascending');
   readonly selectedSession = signal<string | null>(null);
   readonly editingSession = signal<string | null>(null);
   readonly saving = signal(false);
@@ -43,17 +44,23 @@ export class CampaignLogComponent {
 
   readonly visibleSessions = computed(() => {
     const query = this.search().trim().toLowerCase();
-    return this.sessions().filter((session) => {
-      const searchable = [
-        session.sessionName,
-        session.description,
-        ...session.locations.map((location) => location.name),
-        ...session.entities.map((entity) => entity.name),
-      ]
-        .join(' ')
-        .toLowerCase();
-      return !query || searchable.includes(query);
-    });
+    return this.sessions()
+      .filter((session) => {
+        const searchable = [
+          session.sessionName,
+          session.description,
+          ...session.locations.map((location) => location.name),
+          ...session.entities.map((entity) => entity.name),
+        ]
+          .join(' ')
+          .toLowerCase();
+        return !query || searchable.includes(query);
+      })
+      .sort((left, right) =>
+        this.sessionOrder() === 'ascending'
+          ? left.sessionNumber - right.sessionNumber
+          : right.sessionNumber - left.sessionNumber,
+      );
   });
 
   constructor() {
@@ -83,6 +90,10 @@ export class CampaignLogComponent {
 
   setSearch(event: Event): void {
     this.search.set((event.target as HTMLInputElement).value);
+  }
+
+  toggleSessionOrder(): void {
+    this.sessionOrder.update((order) => (order === 'ascending' ? 'descending' : 'ascending'));
   }
 
   toggleSession(sessionId: string): void {

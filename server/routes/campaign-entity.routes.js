@@ -5,6 +5,7 @@ import {
   findCampaignEntities,
   updateCampaignEntity,
 } from '../repositories/campaign-entity.repository.js';
+import { isOptionalString, isUniqueArray, isUuid, requireUuidParameter } from '../validation.js';
 
 const entityTypes = new Set([
   'npc',
@@ -26,12 +27,13 @@ function validProfile(body) {
     body.name.length <= 200 &&
     entityTypes.has(body.entityType) &&
     visibilities.has(body.visibility) &&
-    Array.isArray(body.aliases) &&
+    isUniqueArray(body.aliases, 50, (alias) =>
+      typeof alias === 'string' ? alias.trim().toLowerCase() : alias,
+    ) &&
     body.aliases.every((alias) => typeof alias === 'string' && alias.length <= 200) &&
     (body.imageUrl == null ||
       (typeof body.imageUrl === 'string' && body.imageUrl.length <= 2048)) &&
-    (body.description == null ||
-      (typeof body.description === 'string' && body.description.length <= 5000))
+    isOptionalString(body.description, 5000)
   );
 }
 
@@ -40,20 +42,24 @@ function validContext(context) {
     !context ||
     (contextTypes.has(context.type) &&
       typeof context.value === 'string' &&
-      context.value.trim().length > 0)
+      context.value.trim().length > 0 &&
+      context.value.length <= 2000)
   );
 }
 
 function validUpdate(body) {
   return (
     validProfile(body) &&
-    Array.isArray(body.sectionEntries) &&
+    isUniqueArray(body.sectionEntries, 25, (entry) => entry?.id) &&
     body.sectionEntries.every(
       (entry) =>
-        typeof entry.id === 'string' &&
+        isUuid(entry?.id) &&
         detailsTypes.has(entry.details?.type) &&
         typeof entry.details?.value === 'string' &&
+        entry.details.value.length <= 20000 &&
         typeof entry.status === 'string' &&
+        entry.status.trim().length > 0 &&
+        entry.status.length <= 200 &&
         validContext(entry.context),
     )
   );
@@ -63,11 +69,14 @@ function validCreate(body) {
   return (
     validProfile(body) &&
     typeof body.sectionId === 'string' &&
+    body.sectionId.length <= 200 &&
     detailsTypes.has(body.details?.type) &&
     typeof body.details?.value === 'string' &&
     body.details.value.trim().length > 0 &&
+    body.details.value.length <= 20000 &&
     typeof body.status === 'string' &&
     body.status.trim().length > 0 &&
+    body.status.length <= 200 &&
     validContext(body.context)
   );
 }
@@ -87,11 +96,18 @@ function aliases(values) {
   return [...new Set(values.map((alias) => alias.trim()).filter(Boolean))];
 }
 
-export function createCampaignEntityRouter({ authenticate, requireEditor }) {
+export function createCampaignEntityRouter({
+  authenticate,
+  requireEditor,
+  findEntities = findCampaignEntities,
+  createEntity = createCampaignEntity,
+  updateEntity = updateCampaignEntity,
+  deleteEntity = deleteCampaignEntity,
+}) {
   const router = Router();
-  router.get('/:campaignKey/entities', async (request, response, next) => {
+  router.get('/:campaignKey/entities', authenticate, async (request, response, next) => {
     try {
-      const campaign = await findCampaignEntities(request.params.campaignKey);
+      const campaign = await findEntities(request.params.campaignKey, request.user.role);
       if (!campaign) return response.status(404).json({ message: 'Campaign not found.' });
       response.json(campaign.entities);
     } catch (error) {
@@ -107,7 +123,7 @@ export function createCampaignEntityRouter({ authenticate, requireEditor }) {
       try {
         if (!validCreate(request.body))
           return response.status(400).json({ message: 'The new character record is invalid.' });
-        const entity = await createCampaignEntity(request.params.campaignKey, {
+        const entity = await createEntity(request.params.campaignKey, {
           ...request.body,
           sourceKey: sourceKey(request.body.name),
           name: request.body.name.trim(),
@@ -127,19 +143,16 @@ export function createCampaignEntityRouter({ authenticate, requireEditor }) {
     '/:campaignKey/entities/:entityId',
     authenticate,
     requireEditor,
+    requireUuidParameter('entityId'),
     async (request, response, next) => {
       try {
         if (!validUpdate(request.body))
           return response.status(400).json({ message: 'The character update is invalid.' });
-        const entity = await updateCampaignEntity(
-          request.params.campaignKey,
-          request.params.entityId,
-          {
-            ...request.body,
-            name: request.body.name.trim(),
-            aliases: aliases(request.body.aliases),
-          },
-        );
+        const entity = await updateEntity(request.params.campaignKey, request.params.entityId, {
+          ...request.body,
+          name: request.body.name.trim(),
+          aliases: aliases(request.body.aliases),
+        });
         if (!entity) return response.status(404).json({ message: 'Character not found.' });
         response.json(entity);
       } catch (error) {
@@ -151,15 +164,13 @@ export function createCampaignEntityRouter({ authenticate, requireEditor }) {
     '/:campaignKey/entities/:entityId',
     authenticate,
     requireEditor,
+    requireUuidParameter('entityId'),
     async (request, response, next) => {
       try {
         if (request.body?.confirmation !== 'delete') {
           return response.status(400).json({ message: 'Delete confirmation is required.' });
         }
-        const deleted = await deleteCampaignEntity(
-          request.params.campaignKey,
-          request.params.entityId,
-        );
+        const deleted = await deleteEntity(request.params.campaignKey, request.params.entityId);
         if (!deleted) return response.status(404).json({ message: 'Character not found.' });
         response.status(204).send();
       } catch (error) {

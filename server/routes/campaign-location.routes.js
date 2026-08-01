@@ -5,6 +5,7 @@ import {
   findCampaignLocations,
   updateCampaignLocation,
 } from '../repositories/campaign-location.repository.js';
+import { requireUuidParameter } from '../validation.js';
 
 const visibilities = new Set(['public', 'party', 'dm_only']);
 
@@ -77,6 +78,7 @@ export function createCampaignLocationRouter({
     '/:campaignKey/locations/:locationId',
     authenticate,
     requireEditor,
+    requireUuidParameter('locationId'),
     async (request, response, next) => {
       try {
         if (!validLocation(request.body))
@@ -102,6 +104,7 @@ export function createCampaignLocationRouter({
     '/:campaignKey/locations/:locationId',
     authenticate,
     requireEditor,
+    requireUuidParameter('locationId'),
     async (request, response, next) => {
       try {
         if (request.body?.confirmation !== 'delete')

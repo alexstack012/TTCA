@@ -10,7 +10,7 @@ import { CampaignLocationsService } from './campaign-locations.service';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './locations-page.component.html',
-  styleUrls: ['../section-page/section-page.component.scss', './locations-page.component.scss'],
+  styleUrls: ['../shared/archive-records.scss', './locations-page.component.scss'],
 })
 export class LocationsPageComponent {
   private readonly campaignLocations = inject(CampaignLocationsService);

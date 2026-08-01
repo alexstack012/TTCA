@@ -9,6 +9,7 @@ import {
   updateLoreEntry,
   updatePlotPoint,
 } from '../repositories/campaign-story.repository.js';
+import { isOptionalString, isUniqueArray, isUuid, requireUuidParameter } from '../validation.js';
 
 const visibilities = new Set(['public', 'party', 'dm_only']);
 const categories = new Set([
@@ -32,15 +33,13 @@ const relationshipTypes = new Set([
   'complicated',
   'resolved',
 ]);
-const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-
 const validEntityLinks = (links) =>
-  Array.isArray(links) &&
+  isUniqueArray(links, 250, (link) => link?.entityId) &&
   links.every(
     (link) =>
-      uuid.test(link.entityId) &&
-      (!link.relationshipLabel || typeof link.relationshipLabel === 'string') &&
-      (!link.notes || typeof link.notes === 'string'),
+      isUuid(link?.entityId) &&
+      isOptionalString(link.relationshipLabel, 200) &&
+      isOptionalString(link.notes, 2000),
   );
 const validBase = (body) =>
   body &&
@@ -63,12 +62,12 @@ const validPlot = (body) =>
   body.description.length <= 50000 &&
   statuses.has(body.status) &&
   priorities.has(body.priority) &&
-  Array.isArray(body.sessionLinks) &&
+  isUniqueArray(body.sessionLinks, 250, (link) => link?.sessionId) &&
   body.sessionLinks.every(
     (link) =>
-      uuid.test(link.sessionId) &&
+      isUuid(link?.sessionId) &&
       relationshipTypes.has(link.relationshipType) &&
-      (!link.notes || typeof link.notes === 'string'),
+      isOptionalString(link.notes, 2000),
   );
 const sourceKey = (title) =>
   title
@@ -143,6 +142,7 @@ export function createCampaignStoryRouter({ authenticate, requireEditor }) {
     '/:campaignKey/lore/:id',
     authenticate,
     requireEditor,
+    requireUuidParameter('id'),
     async (request, response, next) => {
       try {
         if (!validLore(request.body))
@@ -179,6 +179,7 @@ export function createCampaignStoryRouter({ authenticate, requireEditor }) {
     '/:campaignKey/plot-points/:id',
     authenticate,
     requireEditor,
+    requireUuidParameter('id'),
     async (request, response, next) => {
       try {
         if (!validPlot(request.body))
@@ -203,6 +204,7 @@ export function createCampaignStoryRouter({ authenticate, requireEditor }) {
       `/:campaignKey/${path}/:id`,
       authenticate,
       requireEditor,
+      requireUuidParameter('id'),
       async (request, response, next) => {
         try {
           if (request.body?.confirmation !== 'delete')

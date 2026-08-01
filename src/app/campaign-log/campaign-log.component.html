@@ -140,7 +140,19 @@
         (input)="setSearch($event)"
       />
     </label>
-    <div><button type="button">Session order</button></div>
+    <div>
+      <button
+        type="button"
+        (click)="toggleSessionOrder()"
+        [attr.aria-label]="
+          sessionOrder() === 'ascending'
+            ? 'Show newest sessions first'
+            : 'Show oldest sessions first'
+        "
+      >
+        {{ sessionOrder() === 'ascending' ? 'Oldest first' : 'Newest first' }}
+      </button>
+    </div>
   </section>
 
   @if (loading()) {
