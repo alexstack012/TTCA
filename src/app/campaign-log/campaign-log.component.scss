@@ -80,9 +80,14 @@
   justify-content: space-between;
   gap: 0.6rem;
 }
+.location-reference-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+}
 .location-reference-summary > div {
-  justify-content: flex-end;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
 }
 .location-reference button,
 .location-reference a {
@@ -93,6 +98,8 @@
   font: inherit;
   font-size: 0.62rem;
   text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
   cursor: pointer;
 }
 .location-reference a {
@@ -325,5 +332,12 @@
   }
   .relationship-picker {
     grid-template-columns: 1fr;
+  }
+  .location-reference-summary {
+    grid-template-columns: 1fr;
+  }
+  .location-reference-summary > div {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
