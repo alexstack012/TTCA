@@ -17,6 +17,8 @@ function validLocation(body) {
     body.name.length <= 200 &&
     (body.description == null ||
       (typeof body.description === 'string' && body.description.length <= 10000)) &&
+    (body.imageUrl == null ||
+      (typeof body.imageUrl === 'string' && body.imageUrl.length <= 2048)) &&
     visibilities.has(body.visibility)
   );
 }
@@ -65,6 +67,7 @@ export function createCampaignLocationRouter({
           sourceKey: sourceKey(request.body.name),
           name: request.body.name.trim(),
           description: request.body.description?.trim() ?? '',
+          imageUrl: request.body.imageUrl?.trim() ?? '',
         });
         if (!location) return response.status(404).json({ message: 'Campaign not found.' });
         response.status(201).json(location);
@@ -90,6 +93,7 @@ export function createCampaignLocationRouter({
             ...request.body,
             name: request.body.name.trim(),
             description: request.body.description?.trim() ?? '',
+            imageUrl: request.body.imageUrl?.trim() ?? '',
           },
         );
         if (!location) return response.status(404).json({ message: 'Location not found.' });

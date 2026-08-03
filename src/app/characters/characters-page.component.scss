@@ -185,6 +185,7 @@ main {
   cursor: pointer;
 }
 .character-grid article:hover {
+  z-index: 5;
   background: #1a181e;
 }
 .character-grid article:focus-visible {
@@ -211,7 +212,7 @@ main {
   min-height: 100%;
   display: grid;
   place-items: center;
-  overflow: hidden;
+  overflow: visible;
   border-right: 1px solid #302d35;
   color: #8d788e;
   background: #17151b;
@@ -223,6 +224,41 @@ main {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.portrait .expandable-image,
+.dialog-portrait .expandable-image {
+  cursor: zoom-in;
+}
+.portrait .expandable-image:focus-visible,
+.dialog-portrait .expandable-image:focus-visible {
+  outline: 2px solid #b497b6;
+  outline-offset: -3px;
+}
+.portrait-hover {
+  width: 280px !important;
+  height: 330px !important;
+  position: absolute;
+  z-index: 20;
+  top: 50%;
+  left: 100px;
+  display: block !important;
+  overflow: hidden;
+  border: 1px solid #715e73 !important;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-50%) scale(0.96) !important;
+  transition:
+    opacity 0.16s ease,
+    transform 0.16s ease !important;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.72) !important;
+}
+.portrait-hover img {
+  object-fit: cover;
+}
+.portrait:hover .portrait-hover,
+.portrait:focus-within .portrait-hover {
+  opacity: 1;
+  transform: translateY(-50%) scale(1) !important;
 }
 .portrait span {
   width: 52px;
@@ -349,6 +385,48 @@ main {
   place-items: center;
   background: rgba(3, 3, 7, 0.82);
   backdrop-filter: blur(3px);
+}
+.image-lightbox {
+  position: fixed;
+  z-index: 200;
+  inset: 0;
+  padding: 2rem;
+  display: grid;
+  place-items: center;
+  background: rgba(3, 3, 7, 0.9);
+  backdrop-filter: blur(6px);
+}
+.image-lightbox figure {
+  max-width: min(1000px, 94vw);
+  max-height: 92vh;
+  margin: 0;
+  position: relative;
+}
+.image-lightbox img {
+  max-width: 100%;
+  max-height: 82vh;
+  display: block;
+  border: 1px solid #715e73;
+  object-fit: contain;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.78);
+}
+.image-lightbox button {
+  width: 38px;
+  height: 38px;
+  position: absolute;
+  z-index: 1;
+  top: 0.6rem;
+  right: 0.6rem;
+  border: 1px solid #715e73;
+  color: #ded5dc;
+  background: rgba(10, 9, 13, 0.82);
+  font-size: 1.4rem;
+}
+.image-lightbox figcaption {
+  padding-top: 0.6rem;
+  color: #aaa0aa;
+  font-family: 'Cinzel', serif;
+  text-align: center;
 }
 .character-dialog {
   width: min(880px, 100%);
@@ -762,6 +840,9 @@ main {
   .dialog-portrait {
     width: 32px;
     height: 32px;
+  }
+  .portrait-hover {
+    display: none !important;
   }
   .form-grid {
     grid-template-columns: 1fr;

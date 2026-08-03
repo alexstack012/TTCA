@@ -24,6 +24,7 @@ const campaignLocationsQuery = `
       'sourceKey', location.source_key,
       'name', location.name,
       'description', location.description,
+      'imageUrl', location.image_url,
       'visibility', location.visibility,
       'createdAt', location.created_at,
       'updatedAt', location.updated_at,
@@ -55,11 +56,20 @@ export async function createCampaignLocation(campaignKey, location) {
          ELSE $2
        END AS value
      )
-     INSERT INTO campaign_locations (campaign_id, source_key, name, description, visibility)
-     SELECT campaign.id, unique_key.value, $3, NULLIF($4, ''), $5
+     INSERT INTO campaign_locations (
+       campaign_id, source_key, name, description, image_url, visibility
+     )
+     SELECT campaign.id, unique_key.value, $3, NULLIF($4, ''), NULLIF($5, ''), $6
      FROM campaign CROSS JOIN unique_key
      RETURNING id`,
-    [campaignKey, location.sourceKey, location.name, location.description, location.visibility],
+    [
+      campaignKey,
+      location.sourceKey,
+      location.name,
+      location.description,
+      location.imageUrl ?? '',
+      location.visibility,
+    ],
   );
   if (!result.rowCount) return null;
   const campaign = await findCampaignLocations(campaignKey, 'editor');
@@ -71,12 +81,20 @@ export async function updateCampaignLocation(campaignKey, locationId, location) 
     `UPDATE campaign_locations
      SET name = $3,
          description = NULLIF($4, ''),
-         visibility = $5,
+         image_url = NULLIF($5, ''),
+         visibility = $6,
          updated_at = NOW()
      WHERE id = $2
        AND campaign_id = (SELECT id FROM campaigns WHERE source_key = $1)
      RETURNING id`,
-    [campaignKey, locationId, location.name, location.description, location.visibility],
+    [
+      campaignKey,
+      locationId,
+      location.name,
+      location.description,
+      location.imageUrl ?? '',
+      location.visibility,
+    ],
   );
   if (!result.rowCount) return null;
   const campaign = await findCampaignLocations(campaignKey, 'editor');

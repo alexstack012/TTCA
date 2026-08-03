@@ -1,6 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import { CampaignLocation, CampaignLocationInput } from '../types/campaign-location.types';
 import { CampaignLocationsService } from './campaign-locations.service';
@@ -14,6 +16,8 @@ import { CampaignLocationsService } from './campaign-locations.service';
 })
 export class LocationsPageComponent {
   private readonly campaignLocations = inject(CampaignLocationsService);
+  private readonly route = inject(ActivatedRoute, { optional: true });
+  private requestedLocationKey: string | null = null;
   readonly auth = inject(AuthService);
   readonly locations = signal<CampaignLocation[]>([]);
   readonly loading = signal(true);
@@ -55,6 +59,7 @@ export class LocationsPageComponent {
       next: (locations) => {
         this.locations.set(locations);
         this.loading.set(false);
+        this.focusRequestedLocation();
       },
       error: (error: HttpErrorResponse) => {
         console.error('Campaign location request failed.', error);
@@ -65,6 +70,10 @@ export class LocationsPageComponent {
         );
         this.loading.set(false);
       },
+    });
+    this.route?.queryParamMap.pipe(takeUntilDestroyed()).subscribe((parameters) => {
+      this.requestedLocationKey = parameters.get('location');
+      this.focusRequestedLocation();
     });
   }
 
@@ -86,6 +95,7 @@ export class LocationsPageComponent {
     this.draft = {
       name: location.name,
       description: location.description,
+      imageUrl: location.imageUrl,
       visibility: location.visibility,
     };
     this.editingId.set(location.id);
@@ -178,7 +188,25 @@ export class LocationsPageComponent {
     return value === 'dm_only' ? 'Chronicler only' : value === 'party' ? 'Party' : 'Public';
   }
 
+  private focusRequestedLocation(): void {
+    if (!this.requestedLocationKey || !this.locations().length) return;
+    const location = this.locations().find(
+      (candidate) => candidate.sourceKey === this.requestedLocationKey,
+    );
+    if (!location) return;
+
+    this.visibility.set('all');
+    this.search.set(location.name);
+    this.selectedId.set(location.id);
+    this.cancelEditing();
+    requestAnimationFrame(() =>
+      document
+        .getElementById(`location-${location.sourceKey}`)
+        ?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+    );
+  }
+
   private emptyDraft(): CampaignLocationInput {
-    return { name: '', description: null, visibility: 'party' };
+    return { name: '', description: null, imageUrl: null, visibility: 'party' };
   }
 }

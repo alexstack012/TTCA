@@ -42,12 +42,14 @@ const location = {
   sourceKey: 'barovia',
   name: 'Barovia',
   description: 'A land surrounded by the Mists.',
+  imageUrl: null,
   visibility: 'party',
   sessions: [],
 };
 const input = {
   name: 'Barovia',
   description: 'A land surrounded by the Mists.',
+  imageUrl: null,
   visibility: 'party',
 };
 

@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 import {
   CampaignSession,
@@ -14,7 +15,7 @@ import { CampaignSessionsService } from './campaign-sessions.service';
 @Component({
   selector: 'app-campaign-log',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './campaign-log.component.html',
   styleUrls: ['../shared/archive-records.scss', './campaign-log.component.scss'],
 })
@@ -27,6 +28,7 @@ export class CampaignLogComponent {
   readonly search = signal('');
   readonly sessionOrder = signal<'ascending' | 'descending'>('ascending');
   readonly selectedSession = signal<string | null>(null);
+  readonly expandedLocationReferences = signal<ReadonlySet<string>>(new Set());
   readonly editingSession = signal<string | null>(null);
   readonly saving = signal(false);
   readonly mutationError = signal('');
@@ -99,7 +101,22 @@ export class CampaignLogComponent {
   toggleSession(sessionId: string): void {
     if (this.saving() || this.deleting()) return;
     this.selectedSession.update((selected) => (selected === sessionId ? null : sessionId));
+    this.expandedLocationReferences.set(new Set());
     this.cancelEditing();
+  }
+
+  isLocationReferenceExpanded(sessionId: string, locationId: string): boolean {
+    return this.expandedLocationReferences().has(`${sessionId}:${locationId}`);
+  }
+
+  toggleLocationReference(sessionId: string, locationId: string): void {
+    const key = `${sessionId}:${locationId}`;
+    this.expandedLocationReferences.update((expanded) => {
+      const next = new Set(expanded);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      return next;
+    });
   }
 
   startEditing(session: CampaignSession): void {

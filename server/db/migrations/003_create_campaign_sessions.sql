@@ -51,6 +51,7 @@ CREATE TABLE IF NOT EXISTS campaign_locations (
     name TEXT NOT NULL,
 
     description TEXT,
+    image_url TEXT,
 
     visibility TEXT NOT NULL DEFAULT 'dm_only'
         CHECK (

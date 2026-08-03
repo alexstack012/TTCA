@@ -68,6 +68,69 @@
   gap: 0.15rem;
   border-bottom: 1px solid #2c2931;
 }
+.relationships .location-reference {
+  padding: 0.65rem 0;
+}
+.location-reference-summary,
+.location-reference-summary > div,
+.location-reference-details header,
+.location-reference-details footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+.location-reference-summary > div {
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+.location-reference button,
+.location-reference a {
+  padding: 0.4rem 0.55rem;
+  border: 1px solid #463d49;
+  color: #9c909d;
+  background: #15141a;
+  font: inherit;
+  font-size: 0.62rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+.location-reference a {
+  border-color: #642c39;
+  color: #c18e98;
+}
+.location-reference-details {
+  max-height: min(430px, 55vh);
+  margin-top: 0.65rem;
+  overflow-y: auto;
+  border: 1px solid #3b3440;
+  background: #101116;
+}
+.location-reference-details header {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  padding: 0.55rem 0.7rem;
+  border-bottom: 1px solid #3b3440;
+  background: #15141a;
+}
+.location-reference-details header span {
+  color: #88798b;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.relationships .location-reference-details p {
+  padding: 0.8rem;
+  color: #918893;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+.location-reference-details footer {
+  padding: 0.65rem 0.7rem;
+  border-top: 1px solid #312c35;
+}
 .relationships strong {
   color: #a9a0aa;
   font-size: 0.72rem;

@@ -12,6 +12,7 @@ export interface CampaignLocation {
   sourceKey: string;
   name: string;
   description: string | null;
+  imageUrl: string | null;
   visibility: CampaignEntityVisibility;
   createdAt: string;
   updatedAt: string;
@@ -21,5 +22,6 @@ export interface CampaignLocation {
 export interface CampaignLocationInput {
   name: string;
   description: string | null;
+  imageUrl: string | null;
   visibility: CampaignEntityVisibility;
 }

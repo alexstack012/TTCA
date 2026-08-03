@@ -1,5 +1,6 @@
 import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { Subject, of } from 'rxjs';
 import { AuthService } from '../core/auth.service';
 import { CampaignSession } from '../types/campaign-session.types';
@@ -48,6 +49,7 @@ describe('CampaignLogComponent', () => {
     await TestBed.configureTestingModule({
       imports: [CampaignLogComponent],
       providers: [
+        provideRouter([]),
         {
           provide: CampaignSessionsService,
           useValue: {
@@ -107,5 +109,21 @@ describe('CampaignLogComponent', () => {
 
     expect(component.filteredEntities('richten').map((entity) => entity.id)).toEqual(['entity-2']);
     expect(component.createDraft.entityIds).toEqual(['entity-1']);
+  });
+
+  it('keeps location references closed until requested and provides a close control', () => {
+    sessions$.next([populatedSession]);
+    fixture.componentInstance.toggleSession('session-1');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).not.toContain('A village beneath Castle Ravenloft.');
+    fixture.componentInstance.toggleLocationReference('session-1', 'location-1');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).toContain('A village beneath Castle Ravenloft.');
+    expect(fixture.nativeElement.textContent).toContain('Close details');
+    expect(
+      fixture.nativeElement.querySelector('a[href="/locations?location=village-of-barovia"]'),
+    ).toBeTruthy();
   });
 });

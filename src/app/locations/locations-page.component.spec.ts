@@ -39,6 +39,7 @@ describe('LocationsPageComponent', () => {
         sourceKey: 'barovia',
         name: 'Barovia',
         description: 'A land in the Mists.',
+        imageUrl: null,
         visibility: 'party',
         createdAt: '',
         updatedAt: '',

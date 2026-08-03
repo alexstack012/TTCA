@@ -344,9 +344,61 @@
                     @if (session.locations.length) {
                       <ul>
                         @for (location of session.locations; track location.id) {
-                          <li>
-                            <strong>{{ location.name }}</strong
-                            ><span>{{ location.description }}</span>
+                          <li class="location-reference">
+                            <div class="location-reference-summary">
+                              <strong>{{ location.name }}</strong>
+                              <div>
+                                <button
+                                  type="button"
+                                  (click)="toggleLocationReference(session.id, location.id)"
+                                  [attr.aria-expanded]="
+                                    isLocationReferenceExpanded(session.id, location.id)
+                                  "
+                                >
+                                  {{
+                                    isLocationReferenceExpanded(session.id, location.id)
+                                      ? 'Hide details'
+                                      : 'Show details'
+                                  }}
+                                </button>
+                                <a
+                                  routerLink="/locations"
+                                  [queryParams]="{ location: location.sourceKey }"
+                                  >Go to location</a
+                                >
+                              </div>
+                            </div>
+                            @if (isLocationReferenceExpanded(session.id, location.id)) {
+                              <div class="location-reference-details">
+                                <header>
+                                  <span>Quick reference</span>
+                                  <button
+                                    type="button"
+                                    (click)="toggleLocationReference(session.id, location.id)"
+                                  >
+                                    Close details
+                                  </button>
+                                </header>
+                                <p>
+                                  {{
+                                    location.description || 'No location description is available.'
+                                  }}
+                                </p>
+                                <footer>
+                                  <a
+                                    routerLink="/locations"
+                                    [queryParams]="{ location: location.sourceKey }"
+                                    >Open the full location record</a
+                                  >
+                                  <button
+                                    type="button"
+                                    (click)="toggleLocationReference(session.id, location.id)"
+                                  >
+                                    Close details
+                                  </button>
+                                </footer>
+                              </div>
+                            }
                           </li>
                         }
                       </ul>

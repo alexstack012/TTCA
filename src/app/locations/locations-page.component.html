@@ -29,6 +29,13 @@
           </select></label
         >
         <label class="wide"
+          ><span>Image URL <small>optional</small></span
+          ><input
+            [(ngModel)]="createDraft.imageUrl"
+            name="createImageUrl"
+            placeholder="/images/locations/location-name.webp"
+        /></label>
+        <label class="wide"
           ><span>Description</span
           ><textarea
             rows="6"
@@ -91,7 +98,10 @@
     </section>
     <section class="records location-records">
       @for (location of visibleLocations(); track location.id) {
-        <article [class.open]="selectedId() === location.id">
+        <article
+          [id]="'location-' + location.sourceKey"
+          [class.open]="selectedId() === location.id"
+        >
           <div class="record-mark">{{ $index + 1 }}</div>
           <div>
             <span class="visibility" [class.chronicler-only]="location.visibility === 'dm_only'">{{
@@ -117,6 +127,13 @@
                       <option value="dm_only">Chronicler only</option>
                     </select></label
                   >
+                  <label class="wide"
+                    ><span>Image URL <small>optional</small></span
+                    ><input
+                      [(ngModel)]="edit.imageUrl"
+                      name="editImageUrl"
+                      placeholder="/images/locations/location-name.webp"
+                  /></label>
                   <label class="wide"
                     ><span>Description</span
                     ><textarea
@@ -160,7 +177,16 @@
                   </footer>
                 </form>
               } @else {
-                <p>{{ location.description || 'No description has been recorded.' }}</p>
+                <p class="full-description">
+                  {{ location.description || 'No description has been recorded.' }}
+                </p>
+                @if (location.imageUrl) {
+                  <img
+                    class="location-expanded-image"
+                    [src]="location.imageUrl"
+                    [alt]="location.name"
+                  />
+                }
                 <section class="linked-sessions">
                   <h3>Recorded appearances</h3>
                   @for (session of location.sessions; track session.id) {
@@ -176,7 +202,12 @@
                 }
               }
             } @else {
-              <p>{{ location.description || 'No description has been recorded.' }}</p>
+              <div class="location-preview" [class.has-image]="location.imageUrl">
+                <p>{{ location.description || 'No description has been recorded.' }}</p>
+                @if (location.imageUrl) {
+                  <img [src]="location.imageUrl" [alt]="''" />
+                }
+              </div>
             }
           </div>
           <button

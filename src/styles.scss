@@ -11,6 +11,10 @@
   --purple-haze: 0 0 22px rgba(116, 76, 130, 0.28);
 }
 
+html {
+  font-size: 20px;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -23,11 +27,22 @@ body {
   background: #10110f;
   color: var(--cream);
   font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  line-height: 1.55;
 }
 button,
-input {
+input,
+select,
+textarea {
   font: inherit;
+  line-height: 1.4;
 }
 button {
   cursor: pointer;
+}
+
+@media (max-width: 680px) {
+  html {
+    font-size: 18px;
+  }
 }

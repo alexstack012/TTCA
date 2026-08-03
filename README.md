@@ -30,4 +30,11 @@ Session tokens are stored in browser session storage and are removed by the clie
 ```sh
 npm run build
 npm test -- --watch=false
+npm run test:backend
+npm run test:e2e
 ```
+
+The Playwright suite runs against Chromium in desktop and mobile layouts. Its default scenarios are
+read-only. Set `E2E_ADMIN_PASSWORD` to the same value as `ADMIN_PASSWORD` to enable the editor CRUD
+scenario; that test creates a uniquely named location and removes it during cleanup. Use
+`npm run test:all` to run backend, Angular, and end-to-end suites together.

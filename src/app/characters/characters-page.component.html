@@ -92,7 +92,17 @@
             >
               <div class="portrait">
                 @if (record.entity.imageUrl) {
-                  <img [src]="record.entity.imageUrl" [alt]="record.entity.name" />
+                  <img
+                    class="expandable-image"
+                    [src]="record.entity.imageUrl"
+                    [alt]="record.entity.name"
+                    tabindex="0"
+                    (click)="openImage(record.entity.imageUrl, record.entity.name, $event)"
+                    (keydown.enter)="openImage(record.entity.imageUrl, record.entity.name, $event)"
+                  />
+                  <span class="portrait-hover" aria-hidden="true">
+                    <img [src]="record.entity.imageUrl" alt="" />
+                  </span>
                 } @else {
                   <span>{{ initials(record.entity.name) }}</span>
                 }
@@ -138,7 +148,14 @@
       <header class="dialog-header">
         <div class="dialog-portrait">
           @if (selected.imageUrl) {
-            <img [src]="selected.imageUrl" [alt]="selected.name" />
+            <img
+              class="expandable-image"
+              [src]="selected.imageUrl"
+              [alt]="selected.name"
+              tabindex="0"
+              (click)="openImage(selected.imageUrl, selected.name, $event)"
+              (keydown.enter)="openImage(selected.imageUrl, selected.name, $event)"
+            />
           } @else {
             <span>{{ initials(selected.name) }}</span>
           }
@@ -181,9 +198,7 @@
             /></label>
             <label class="wide"
               ><span>Image URL <small>for example /images/npcs/name.webp</small></span
-              ><input
-                [(ngModel)]="draftEntity.imageUrl"
-                placeholder="/images/npcs/name.webp"
+              ><input [(ngModel)]="draftEntity.imageUrl" placeholder="/images/npcs/name.webp"
             /></label>
             <label class="wide"
               ><span>Character description</span
@@ -318,6 +333,18 @@
         </footer>
       }
     </section>
+  </div>
+}
+
+@if (expandedImage(); as image) {
+  <div class="image-lightbox" role="presentation" (click)="closeImage()">
+    <figure role="dialog" aria-modal="true" [attr.aria-label]="image.alt">
+      <button type="button" (click)="closeImage()" aria-label="Close expanded image">
+        &times;
+      </button>
+      <img [src]="image.url" [alt]="image.alt" (click)="$event.stopPropagation()" />
+      <figcaption>{{ image.alt }}</figcaption>
+    </figure>
   </div>
 }
 

@@ -40,6 +40,7 @@ export class CharactersPageComponent {
   readonly sectionFilter = signal('all');
   readonly typeFilter = signal('all');
   readonly selectedEntity = signal<CampaignEntity | null>(null);
+  readonly expandedImage = signal<{ url: string; alt: string } | null>(null);
   readonly draft = signal<CampaignEntity | null>(null);
   readonly editing = signal(false);
   readonly saving = signal(false);
@@ -160,6 +161,15 @@ export class CharactersPageComponent {
     this.editing.set(false);
     this.dialogError.set('');
     this.resetDeleteConfirmation();
+  }
+
+  openImage(url: string, alt: string, event: Event): void {
+    event.stopPropagation();
+    this.expandedImage.set({ url, alt });
+  }
+
+  closeImage(): void {
+    this.expandedImage.set(null);
   }
 
   closeDialog(): void {

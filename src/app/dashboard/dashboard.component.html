@@ -32,16 +32,16 @@
   </div>
   <section class="grid">
     @for (section of sections; track section.name) {
-      <article>
+      <article [routerLink]="section.path" [attr.aria-label]="'Open ' + section.name">
         <div class="card-top">
           <i>{{ section.glyph }}</i
           ><small>{{ section.meta }}</small>
         </div>
         <h2>{{ section.name }}</h2>
         <p>{{ isPlayer() ? section.playerCopy : section.demoCopy }}</p>
-        <a [routerLink]="section.path"
+        <span class="card-link"
           >{{ isPlayer() ? section.playerAction : section.demoAction }}
-          <span aria-hidden="true">&#8594;</span></a
+          <span aria-hidden="true">&#8594;</span></span
         >
       </article>
     }
