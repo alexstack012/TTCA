@@ -17,6 +17,9 @@
   },
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
   "packageManager": "npm@11.8.0",
   "dependencies": {
     "@angular/common": "21.2.19",

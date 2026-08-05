@@ -1,6 +1,35 @@
 # The war of shadow and secrets dnd/ttrpg achive
 
+<!--
+Quick development reference
+
+Application:
+  npm run dev will Start Angular and Express
+
+Angular / Vitest unit tests:
+  npm test -- --watch=false           Run unit tests once
+  npm test                            Run unit tests in watch mode
+
+Backend tests:
+  npm run test:backend                Run Node API tests
+
+Playwright:
+  npm run test:e2e                    Run desktop and mobile E2E tests
+  npm run test:e2e:ui                 Open Playwright UI mode
+  npx playwright test --headed        Run E2E tests in visible browsers
+  npx playwright test --debug         Run with the Playwright debugger
+  npx playwright show-report          Open the latest HTML report
+
+Everything:
+  npm run test:all                    Run backend, unit, and E2E suites
+-->
+
 Angular and Express foundation for a tabletop campaign archive. Visitors may enter a read-only demonstration, while keepers authenticate for editing privileges.
+
+Production architecture, environment, migration, proxy, backup, and rollback guidance is in
+[docs/PRODUCTION.md](docs/PRODUCTION.md). Pull requests and pushes to `main` run backend tests,
+Angular tests, the production build, a production dependency audit, and Playwright against a
+disposable PostgreSQL database.
 
 ## Local development
 

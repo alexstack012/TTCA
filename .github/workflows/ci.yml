@@ -1,0 +1,118 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Unit tests and production build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Run backend tests
+        run: npm run test:backend
+
+      - name: Run Angular tests
+        run: npm test -- --watch=false
+
+      - name: Build production application
+        run: npm run build
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+
+  e2e:
+    name: Playwright with PostgreSQL
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_DB: dnd_campaign_log
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d dnd_campaign_log"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      NODE_ENV: test
+      PORT: 3100
+      CLIENT_ORIGIN: http://127.0.0.1:4201
+      ADMIN_PASSWORD: ci-editor-password
+      E2E_ADMIN_PASSWORD: ci-editor-password
+      SESSION_SECRET: ci-session-secret-at-least-32-characters-long
+      DATABASE_URL: postgresql://dnd_app:ci_app_password@127.0.0.1:5432/dnd_campaign_log
+      MIGRATION_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/dnd_campaign_log
+      DATABASE_SSL: 'false'
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Create application database role
+        run: >-
+          docker exec ${{ job.services.postgres.id }}
+          psql -U postgres -d dnd_campaign_log -v ON_ERROR_STOP=1
+          -c "CREATE ROLE dnd_app LOGIN PASSWORD 'ci_app_password';"
+
+      - name: Apply database migrations
+        run: npm run db:migrate
+
+      - name: Add deterministic E2E campaign
+        run: >-
+          docker exec -i ${{ job.services.postgres.id }}
+          psql -U postgres -d dnd_campaign_log -v ON_ERROR_STOP=1
+          < server/seeds/e2e.sql
+
+      - name: Run Playwright tests
+        run: npm run test:e2e
+
+      - name: Upload Playwright failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore
+          retention-days: 7
