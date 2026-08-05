@@ -2,8 +2,7 @@
 
 [![CI](https://github.com/alexstack012/TTCA/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/alexstack012/TTCA/actions/workflows/ci.yml)
 
-A full-stack Angular campaign-management application for organizing characters, locations, session
-logs, lore, plot points, spells, and equipment.
+A full-stack Angular campaign-management application for organizing characters, locations, session logs, lore, plot points, spells, and equipment.
 
 TTCA provides an authenticated editor experience for campaign management and a protected,
 read-only demonstration for portfolio visitors.
@@ -36,16 +35,14 @@ Browser
   └── /images/* assets               └── PostgreSQL 18
 ```
 
-| Area     | Technology                                                                        |
-| -------- | --------------------------------------------------------------------------------- |
+|--------------------------------------------------------------------------------- |
 | Frontend | Angular 21, TypeScript, signals, RxJS, SCSS                                       |
 | Backend  | Node.js 24, Express 5                                                             |
 | Database | PostgreSQL 18, normalized relational schema and SQL migrations                    |
 | Security | Signed sessions, role-aware routes, Helmet, CORS, rate limiting, input validation |
 | Quality  | Vitest, Node test runner, Playwright, Prettier, GitHub Actions                    |
 
-Angular never connects directly to PostgreSQL. The browser uses root-relative API URLs, and Express
-owns data access, visibility filtering, validation, and authorization.
+Angular never connects directly to PostgreSQL. The browser uses root-relative API URLs, and Express owns data access, visibility filtering, validation, and authorization.
 
 ## Security model
 
@@ -58,9 +55,7 @@ owns data access, visibility filtering, validation, and authorization.
 - Production startup rejects missing or unsafe secrets.
 - Database migrations and the API use separate database roles.
 
-The shared editor password is appropriate for this controlled portfolio demonstration, not a
-general-purpose multi-user identity system. See the production runbook for the remaining controls
-required before expanding access.
+The shared editor password is appropriate for this controlled portfolio demonstration, not a general-purpose multi-user identity system. See the production runbook for the remaining controls required before expanding access.
 
 ## Testing and continuous integration
 
@@ -101,14 +96,11 @@ The CI badge reflects the latest workflow result after this configuration has ru
 5. Run `npm run dev`.
 6. Open `http://localhost:4200`.
 
-`npm run dev` starts Express on port 3000 and Angular on port 4200. Angular proxies `/api` requests
-through `proxy.conf.json`. Never commit `.env` or place database credentials in Angular.
+`npm run dev` starts Express on port 3000 and Angular on port 4200. Angular proxies `/api` requests through `proxy.conf.json`. Never commit `.env` or place database credentials in Angular.
 
 ## Production deployment
 
-The [production runbook](docs/PRODUCTION.md) documents environment variables, database roles,
-migrations, reverse-proxy configuration, TLS, health checks, backups, rollback, monitoring, and the
-release checklist.
+The [production runbook](docs/PRODUCTION.md) documents environment variables, database roles, migrations, reverse-proxy configuration, TLS, health checks, backups, rollback, monitoring, and the release checklist.
 
 ## Post-deployment roadmap
 
@@ -130,13 +122,10 @@ accessibility, and scalability enhancements rather than launch blockers.
 
 ## Content and image notice
 
-TTCA is an unofficial fan-made archive and is not affiliated with or endorsed by Wizards of the
-Coast. Application source code, Dungeons & Dragons material, third-party artwork, and original
-campaign writing have distinct ownership and licensing terms.
+TTCA is an unofficial fan-made archive and is not affiliated with or endorsed by Wizards of the Coast. Application source code, Dungeons & Dragons material, third-party artwork, and original campaign writing have distinct ownership and licensing terms.
 
 See [CONTENT_NOTICE.md](CONTENT_NOTICE.md) for the content policy and
-[public/images/CREDITS.md](public/images/CREDITS.md) for asset-level provenance. Do not add an image
-to the public application until its source and permitted use have been recorded.
+[public/images/CREDITS.md](public/images/CREDITS.md) for asset-level provenance. Do not add an image to the public application until its source and permitted use have been recorded.
 
 <!--
 Quick development reference
