@@ -13,6 +13,8 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:all": "npm run test:backend && npm test -- --watch=false && npm run test:e2e",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "db:migrate": "node server/db/migrate.js"
   },
   "private": true,

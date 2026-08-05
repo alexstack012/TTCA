@@ -4,6 +4,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { AuthService } from '../core/auth.service';
+import { ACTIVE_CAMPAIGN_KEY } from '../core/campaign-context';
 import {
   LoreEntry,
   LoreInput,
@@ -49,9 +50,9 @@ export class LorePageComponent {
   );
   constructor() {
     forkJoin({
-      lore: this.api.getLore('curse-of-strahd'),
-      plots: this.api.getPlotPoints('curse-of-strahd'),
-      options: this.api.getOptions('curse-of-strahd'),
+      lore: this.api.getLore(ACTIVE_CAMPAIGN_KEY),
+      plots: this.api.getPlotPoints(ACTIVE_CAMPAIGN_KEY),
+      options: this.api.getOptions(ACTIVE_CAMPAIGN_KEY),
     }).subscribe({
       next: (value) => {
         this.lore.set(value.lore);
@@ -147,11 +148,11 @@ export class LorePageComponent {
     const request = (
       this.tab() === 'lore'
         ? id
-          ? this.api.updateLore('curse-of-strahd', id, this.loreDraft)
-          : this.api.createLore('curse-of-strahd', this.loreDraft)
+          ? this.api.updateLore(ACTIVE_CAMPAIGN_KEY, id, this.loreDraft)
+          : this.api.createLore(ACTIVE_CAMPAIGN_KEY, this.loreDraft)
         : id
-          ? this.api.updatePlotPoint('curse-of-strahd', id, this.plotDraft)
-          : this.api.createPlotPoint('curse-of-strahd', this.plotDraft)
+          ? this.api.updatePlotPoint(ACTIVE_CAMPAIGN_KEY, id, this.plotDraft)
+          : this.api.createPlotPoint(ACTIVE_CAMPAIGN_KEY, this.plotDraft)
     ) as Observable<LoreEntry | PlotPoint>;
     request.subscribe({
       next: (value) => {
@@ -176,7 +177,7 @@ export class LorePageComponent {
     if (!id || this.deleteConfirmation !== 'delete' || this.saving()) return;
     this.saving.set(true);
     const type = this.tab() === 'lore' ? 'lore' : 'plot-points';
-    this.api.deleteRecord('curse-of-strahd', type, id).subscribe({
+    this.api.deleteRecord(ACTIVE_CAMPAIGN_KEY, type, id).subscribe({
       next: () => {
         if (this.tab() === 'lore') this.lore.update((x) => x.filter((v) => v.id !== id));
         else this.plots.update((x) => x.filter((v) => v.id !== id));

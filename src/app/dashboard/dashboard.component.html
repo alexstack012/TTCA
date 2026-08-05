@@ -1,6 +1,6 @@
-<main [class.player-dashboard]="isPlayer()">
+<main [class.editor-dashboard]="isEditor()">
   <section class="hero">
-    @if (isPlayer()) {
+    @if (isEditor()) {
       <p>WELCOME BACK, WAYWARD SOUL &nbsp;&bull;&nbsp; THE WAR CONTINUES</p>
       <h1>Still alive?<br /><em>Excellent.</em></h1>
       <span
@@ -15,19 +15,19 @@
         and connected.</span
       >
     }
-    <div class="mode-banner" [class.player]="isPlayer()">
+    <div class="mode-banner" [class.editor]="isEditor()">
       <i></i>
       <div>
-        <small>{{ isPlayer() ? 'Campaign passage' : 'Demonstration access' }}</small
+        <small>{{ isEditor() ? 'Campaign passage' : 'Demonstration access' }}</small
         ><strong>{{
-          isPlayer() ? 'The full chronicle is open' : 'Read-only mode is active'
+          isEditor() ? 'The full chronicle is open' : 'Read-only mode is active'
         }}</strong>
       </div>
     </div>
   </section>
 
   <div class="section-heading">
-    <span>{{ isPlayer() ? 'Choose your trouble' : 'Explore the application' }}</span
+    <span>{{ isEditor() ? 'Choose your trouble' : 'Explore the application' }}</span
     ><i></i><small>Six connected collections</small>
   </div>
   <section class="grid">
@@ -38,17 +38,17 @@
           ><small>{{ section.meta }}</small>
         </div>
         <h2>{{ section.name }}</h2>
-        <p>{{ isPlayer() ? section.playerCopy : section.demoCopy }}</p>
+        <p>{{ isEditor() ? section.editorCopy : section.demoCopy }}</p>
         <span class="card-link"
-          >{{ isPlayer() ? section.playerAction : section.demoAction }}
+          >{{ isEditor() ? section.editorAction : section.demoAction }}
           <span aria-hidden="true">&#8594;</span></span
         >
       </article>
     }
   </section>
 
-  @if (isPlayer()) {
-    <aside class="player-note">
+  @if (isEditor()) {
+    <aside class="editor-note">
       <span aria-hidden="true">&#9671;</span>
       <p>
         <strong>A friendly warning from the archive:</strong> the truth is rarely comforting, but it

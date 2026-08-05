@@ -29,8 +29,7 @@ export default defineConfig({
       stderr: 'pipe',
     },
     {
-      command:
-        'ng serve --proxy-config proxy.e2e.conf.json --host 127.0.0.1 --port 4201 --no-open',
+      command: 'ng serve --proxy-config proxy.e2e.conf.json --host 127.0.0.1 --port 4201 --no-open',
       url: 'http://127.0.0.1:4201',
       reuseExistingServer: !process.env.CI,
       timeout: 120_000,

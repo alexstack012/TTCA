@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../core/auth.service';
+import { ACTIVE_CAMPAIGN_KEY } from '../core/campaign-context';
 import { CampaignLocation, CampaignLocationInput } from '../types/campaign-location.types';
 import { CampaignLocationsService } from './campaign-locations.service';
 
@@ -55,7 +56,7 @@ export class LocationsPageComponent {
   });
 
   constructor() {
-    this.campaignLocations.getLocations('curse-of-strahd').subscribe({
+    this.campaignLocations.getLocations(ACTIVE_CAMPAIGN_KEY).subscribe({
       next: (locations) => {
         this.locations.set(locations);
         this.loading.set(false);
@@ -115,7 +116,7 @@ export class LocationsPageComponent {
     if (!this.draft || !this.auth.user()?.canEdit || this.saving()) return;
     this.saving.set(true);
     this.mutationError.set('');
-    this.campaignLocations.updateLocation('curse-of-strahd', id, this.draft).subscribe({
+    this.campaignLocations.updateLocation(ACTIVE_CAMPAIGN_KEY, id, this.draft).subscribe({
       next: (updated) => {
         this.locations.update((locations) =>
           locations.map((location) => (location.id === updated.id ? updated : location)),
@@ -144,7 +145,7 @@ export class LocationsPageComponent {
     if (!this.auth.user()?.canEdit || this.createSaving()) return;
     this.createSaving.set(true);
     this.createError.set('');
-    this.campaignLocations.createLocation('curse-of-strahd', this.createDraft).subscribe({
+    this.campaignLocations.createLocation(ACTIVE_CAMPAIGN_KEY, this.createDraft).subscribe({
       next: (created) => {
         this.locations.update((locations) =>
           [...locations, created].sort((left, right) => left.name.localeCompare(right.name)),
@@ -170,7 +171,7 @@ export class LocationsPageComponent {
     if (!this.auth.user()?.canEdit || this.deleteConfirmation !== 'delete' || this.deleting())
       return;
     this.deleting.set(true);
-    this.campaignLocations.deleteLocation('curse-of-strahd', id).subscribe({
+    this.campaignLocations.deleteLocation(ACTIVE_CAMPAIGN_KEY, id).subscribe({
       next: () => {
         this.locations.update((locations) => locations.filter((location) => location.id !== id));
         this.deleting.set(false);

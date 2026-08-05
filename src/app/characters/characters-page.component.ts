@@ -1,7 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, HostListener, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../core/auth.service';
+import { ACTIVE_CAMPAIGN_KEY } from '../core/campaign-context';
 import {
   CampaignEntity,
   CampaignEntityType,
@@ -32,6 +33,8 @@ interface CharacterRecord {
 })
 export class CharactersPageComponent {
   private readonly campaignEntities = inject(CampaignEntitiesService);
+  private dialogTrigger: HTMLElement | null = null;
+  private imageTrigger: HTMLElement | null = null;
   readonly auth = inject(AuthService);
   readonly entities = signal<CampaignEntity[]>([]);
   readonly loading = signal(true);
@@ -120,7 +123,7 @@ export class CharactersPageComponent {
   );
 
   constructor() {
-    this.campaignEntities.getEntities('curse-of-strahd').subscribe({
+    this.campaignEntities.getEntities(ACTIVE_CAMPAIGN_KEY).subscribe({
       next: (entities) => {
         this.entities.set(entities);
         this.loading.set(false);
@@ -155,21 +158,29 @@ export class CharactersPageComponent {
   }
 
   openEntity(entity: CampaignEntity): void {
+    this.dialogTrigger =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null;
     this.selectedEntity.set(entity);
     this.draft.set(structuredClone(entity));
     this.aliasesText = entity.aliases.join(', ');
     this.editing.set(false);
     this.dialogError.set('');
     this.resetDeleteConfirmation();
+    this.focusOpenDialog('.character-dialog');
   }
 
   openImage(url: string, alt: string, event: Event): void {
     event.stopPropagation();
+    this.imageTrigger =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null;
     this.expandedImage.set({ url, alt });
+    this.focusOpenDialog('.image-lightbox [role="dialog"]');
   }
 
   closeImage(): void {
     this.expandedImage.set(null);
+    this.restoreFocus(this.imageTrigger);
+    this.imageTrigger = null;
   }
 
   closeDialog(): void {
@@ -177,6 +188,8 @@ export class CharactersPageComponent {
     this.selectedEntity.set(null);
     this.draft.set(null);
     this.editing.set(false);
+    this.restoreFocus(this.dialogTrigger);
+    this.dialogTrigger = null;
   }
 
   beginDelete(): void {
@@ -201,7 +214,7 @@ export class CharactersPageComponent {
       return;
     this.deleting.set(true);
     this.deleteError.set('');
-    this.campaignEntities.deleteEntity('curse-of-strahd', entity.id).subscribe({
+    this.campaignEntities.deleteEntity(ACTIVE_CAMPAIGN_KEY, entity.id).subscribe({
       next: () => {
         this.entities.update((entities) => entities.filter((item) => item.id !== entity.id));
         this.deleting.set(false);
@@ -247,7 +260,7 @@ export class CharactersPageComponent {
     };
     this.saving.set(true);
     this.dialogError.set('');
-    this.campaignEntities.updateEntity('curse-of-strahd', update).subscribe({
+    this.campaignEntities.updateEntity(ACTIVE_CAMPAIGN_KEY, update).subscribe({
       next: (entity) => {
         this.entities.update((entities) =>
           entities.map((item) => (item.id === entity.id ? entity : item)),
@@ -267,6 +280,8 @@ export class CharactersPageComponent {
 
   openCreate(): void {
     if (!this.auth.user()?.canEdit || !this.sections().length) return;
+    this.dialogTrigger =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null;
     this.createDraft = this.emptyCreateDraft();
     this.createDraft.sectionId = this.sections()[0].id;
     this.createAliasesText = '';
@@ -274,10 +289,64 @@ export class CharactersPageComponent {
     this.createContextValue = '';
     this.createError.set('');
     this.creating.set(true);
+    this.focusOpenDialog('.create-dialog');
   }
 
   closeCreate(): void {
-    if (!this.createSaving()) this.creating.set(false);
+    if (!this.createSaving()) {
+      this.creating.set(false);
+      this.restoreFocus(this.dialogTrigger);
+      this.dialogTrigger = null;
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  closeTopmostOverlay(): void {
+    if (this.expandedImage()) {
+      this.closeImage();
+    } else if (this.creating()) {
+      this.closeCreate();
+    } else if (this.selectedEntity()) {
+      this.closeDialog();
+    }
+  }
+
+  trapDialogFocus(event: KeyboardEvent): void {
+    if (event.key !== 'Tab') return;
+    const dialog = event.currentTarget as HTMLElement;
+    const focusable = [
+      ...dialog.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
+      ),
+    ].filter((element) => !element.hasAttribute('hidden'));
+    if (!focusable.length) {
+      event.preventDefault();
+      dialog.focus();
+      return;
+    }
+    const first = focusable[0];
+    const last = focusable.at(-1)!;
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
+  private focusOpenDialog(selector: string): void {
+    setTimeout(() => {
+      const dialog = document.querySelector<HTMLElement>(selector);
+      const firstControl = dialog?.querySelector<HTMLElement>(
+        'input:not([disabled]), button:not([disabled]), select:not([disabled]), textarea:not([disabled])',
+      );
+      (firstControl ?? dialog)?.focus();
+    });
+  }
+
+  private restoreFocus(element: HTMLElement | null): void {
+    setTimeout(() => element?.focus());
   }
 
   saveCreatedEntity(): void {
@@ -294,7 +363,7 @@ export class CharactersPageComponent {
     };
     this.createSaving.set(true);
     this.createError.set('');
-    this.campaignEntities.createEntity('curse-of-strahd', request).subscribe({
+    this.campaignEntities.createEntity(ACTIVE_CAMPAIGN_KEY, request).subscribe({
       next: (entity) => {
         this.entities.update((entities) =>
           [...entities, entity].sort((left, right) => left.name.localeCompare(right.name)),

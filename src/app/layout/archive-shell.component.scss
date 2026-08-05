@@ -185,6 +185,36 @@ nav i {
   min-height: 100vh;
   margin-left: 260px;
   padding-top: 76px;
+  display: flex;
+  flex-direction: column;
+}
+.route-content {
+  flex: 1;
+}
+.archive-disclosure {
+  padding: 1.25rem clamp(1.25rem, 4vw, 3rem) 1.4rem;
+  border-top: 1px solid #29262e;
+  color: #68616b;
+  background: #0a0b0f;
+  text-align: center;
+}
+.archive-disclosure p {
+  max-width: 920px;
+  margin: 0 auto 0.45rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.72rem;
+  line-height: 1.55;
+}
+.archive-disclosure a {
+  color: #756c78;
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+.archive-disclosure a:hover,
+.archive-disclosure a:focus-visible {
+  color: #aaa0aa;
 }
 .menu-toggle,
 .backdrop {

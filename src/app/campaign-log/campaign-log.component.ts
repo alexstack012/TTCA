@@ -3,6 +3,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../core/auth.service';
+import { ACTIVE_CAMPAIGN_KEY } from '../core/campaign-context';
 import {
   CampaignSession,
   CampaignEntitySummary,
@@ -66,7 +67,7 @@ export class CampaignLogComponent {
   });
 
   constructor() {
-    this.campaignSessions.getSessions('curse-of-strahd').subscribe({
+    this.campaignSessions.getSessions(ACTIVE_CAMPAIGN_KEY).subscribe({
       next: (sessions) => {
         this.sessions.set(
           [...sessions].sort((left, right) => left.sessionNumber - right.sessionNumber),
@@ -83,7 +84,7 @@ export class CampaignLogComponent {
         this.loading.set(false);
       },
     });
-    this.campaignSessions.getOptions('curse-of-strahd').subscribe({
+    this.campaignSessions.getOptions(ACTIVE_CAMPAIGN_KEY).subscribe({
       next: (options) => this.options.set(options),
       error: (error: HttpErrorResponse) =>
         console.error('Campaign relationship options failed.', error),
@@ -152,7 +153,7 @@ export class CampaignLogComponent {
     if (!this.draft || !this.auth.user()?.canEdit || this.saving()) return;
     this.saving.set(true);
     this.mutationError.set('');
-    this.campaignSessions.updateSession('curse-of-strahd', sessionId, this.draft).subscribe({
+    this.campaignSessions.updateSession(ACTIVE_CAMPAIGN_KEY, sessionId, this.draft).subscribe({
       next: (updated) => {
         this.sessions.update((sessions) =>
           sessions
@@ -198,7 +199,7 @@ export class CampaignLogComponent {
     if (!this.auth.user()?.canEdit || this.createSaving()) return;
     this.createSaving.set(true);
     this.createError.set('');
-    this.campaignSessions.createSession('curse-of-strahd', this.createDraft).subscribe({
+    this.campaignSessions.createSession(ACTIVE_CAMPAIGN_KEY, this.createDraft).subscribe({
       next: (created) => {
         this.sessions.update((sessions) =>
           [...sessions, created].sort((left, right) => left.sessionNumber - right.sessionNumber),
@@ -261,7 +262,7 @@ export class CampaignLogComponent {
       return;
     this.deleting.set(true);
     this.mutationError.set('');
-    this.campaignSessions.deleteSession('curse-of-strahd', sessionId).subscribe({
+    this.campaignSessions.deleteSession(ACTIVE_CAMPAIGN_KEY, sessionId).subscribe({
       next: () => {
         this.sessions.update((sessions) => sessions.filter((session) => session.id !== sessionId));
         this.deleting.set(false);

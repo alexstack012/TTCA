@@ -142,8 +142,10 @@
       class="character-dialog"
       role="dialog"
       aria-modal="true"
+      tabindex="-1"
       [attr.aria-labelledby]="'character-title-' + selected.id"
       (click)="$event.stopPropagation()"
+      (keydown)="trapDialogFocus($event)"
     >
       <header class="dialog-header">
         <div class="dialog-portrait">
@@ -338,7 +340,13 @@
 
 @if (expandedImage(); as image) {
   <div class="image-lightbox" role="presentation" (click)="closeImage()">
-    <figure role="dialog" aria-modal="true" [attr.aria-label]="image.alt">
+    <figure
+      role="dialog"
+      aria-modal="true"
+      tabindex="-1"
+      [attr.aria-label]="image.alt"
+      (keydown)="trapDialogFocus($event)"
+    >
       <button type="button" (click)="closeImage()" aria-label="Close expanded image">
         &times;
       </button>
@@ -354,8 +362,10 @@
       class="character-dialog create-dialog"
       role="dialog"
       aria-modal="true"
+      tabindex="-1"
       aria-labelledby="create-character-title"
       (click)="$event.stopPropagation()"
+      (keydown)="trapDialogFocus($event)"
     >
       <header class="dialog-header">
         <div class="dialog-portrait"><span>+</span></div>

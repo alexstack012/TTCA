@@ -55,5 +55,19 @@
       <button type="button" (click)="logout()">Logout</button>
     </div>
   </aside>
-  <section class="content"><router-outlet /></section>
+  <div class="content">
+    <section class="route-content"><router-outlet /></section>
+    <footer class="archive-disclosure">
+      <p>
+        The Archive is unofficial fan content permitted under Wizards of the Coast's Fan Content
+        Policy. It is not approved or endorsed by Wizards. Dungeons &amp; Dragons-related materials
+        remain the property of Wizards of the Coast LLC. This Archive is not monetized and is
+        intended primarily as a private game log and personal reference guide, and secondarily as a
+        portfolio project showcasing engineering and development skills.
+      </p>
+      <a href="https://alexstackcodes.com" target="_blank" rel="noopener noreferrer"
+        >alexstackcodes.com</a
+      >
+    </footer>
+  </div>
 </div>
