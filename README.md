@@ -110,6 +110,24 @@ The [production runbook](docs/PRODUCTION.md) documents environment variables, da
 migrations, reverse-proxy configuration, TLS, health checks, backups, rollback, monitoring, and the
 release checklist.
 
+## Post-deployment roadmap
+
+The following improvements are planned after the initial stable deployment; they are maintainability,
+accessibility, and scalability enhancements rather than launch blockers.
+
+- [] **Refactor the characters feature:** Split filtering, cards, details, forms, deletion, and image presentation into focused components with clear responsibilities.
+- [] **Adopt typed reactive character forms:** Replace mutable template-driven drafts with typed controls, structured validation, predictable resets, and testable request mapping.
+- [] **Decompose the campaign log:** Extract session cards, session forms, relationship selectors, and location references from the current page component.
+- [] **Separate lore and plot-point presentation:** Preserve the combined route while giving each domain its own list, details, form, and CRUD components.
+- [] **Standardize dialog infrastructure:** Use Angular CDK or a tested native dialog wrapper for focus management, Escape handling, background isolation, and unsaved-change protection.
+- [] **Create reusable relationship selectors:** Share searchable entity and location selection behavior across sessions, lore, and plot points without hiding domain-specific rules.
+- [] **Standardize asynchronous UI state:** Replace repeated loading, saving, deletion, and error signals with a small, consistent request-state convention.
+- [] **Separate API and form models:** Introduce explicit mapping functions so backend response shapes are not mutated directly as user-editable drafts.
+- [] **Consolidate shared SCSS primitives:** Centralize design tokens, focus rings, forms, dialogs, record cards, and responsive breakpoints while retaining feature-specific styling.
+- [] **Lazy-load feature routes:** Load archive sections on demand to reduce the initial bundle and reinforce clear feature boundaries.
+- [] **Standardize backend repositories and routes:** Align validation, not-found behavior, transactions, filtering, error mapping, and fixture conventions across API features.
+- [] **Separate Express construction from process startup:** Introduce an application factory so API and authentication tests can run without starting the production server lifecycle.
+
 ## Content and image notice
 
 TTCA is an unofficial fan-made archive and is not affiliated with or endorsed by Wizards of the

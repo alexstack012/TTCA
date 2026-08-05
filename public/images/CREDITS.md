@@ -4,12 +4,27 @@ Record every image here before it is included in a public deployment. Replace ea
 the actual creator/source and permission basis; an incomplete entry means the asset is **not cleared
 for public use**.
 
-| File or directory | Creator / source | License or permission | Required attribution | Public-use status |
+| Relative path | Creator / source | License or permission | Required attribution | Public-use status |
 | --- | --- | --- | --- | --- |
-| `npcs/` existing portraits | TODO | TODO | TODO | Not yet cleared |
-| `locations/Ravenloft.webp` | TODO | TODO | TODO | Not yet cleared |
+| `locations/Ravenloft.webp` | Dnd | Public | cleared |
 | `locations/Vallaki.webp` | TODO | TODO | TODO | Not yet cleared |
-| `equipment/` future artwork | Add per asset | Add per asset | Add per asset | Pending |
+| `npcs/avernos.webp` | Alex Stack | Self | Mine | cleared |
+| `npcs/Baba Lysaga.webp` | Dnd | Public | cleared |
+| `npcs/Baba Lysaga's Creeping Hut icon.webp` | TODO | TODO | TODO | Not yet cleared |------------------
+| `npcs/ez.webp` | Dnd | Public | cleared |
+| `npcs/Ireena Kolyana.webp` | Dnd | Public | cleared |
+| `npcs/Jonathan Harker.webp` | TODO | TODO | TODO | Not yet cleared |------------------
+| `npcs/lady_silverhand.webp` | Dnd | Public | cleared |
+| `npcs/Martikov.webp` | Dnd | Public | cleared |
+| `npcs/Miska_the_Wolf_Spider.webp` | Dnd | Public | cleared |
+| `npcs/Mithis.webp` | TODO | TODO | TODO | Not yet cleared |-------------
+| `npcs/mordenkainen.webp` | Dnd | Public | cleared |
+| `npcs/mumdahkis.webp` | Dnd | Public | cleared |
+| `npcs/Rictavio.webp` | Dnd | Public | cleared |
+| `npcs/strahd.webp` | Dnd | Public | cleared |
+| `npcs/tasha.webp` | Dnd | Public | cleared |
+| `npcs/vecna.webp` | Dnd | Public | cleared |
+| `npcs/WillCorr.webp` | TODO | TODO | TODO | Not yet cleared |
 
 ## Adding an asset
 
