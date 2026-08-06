@@ -178,6 +178,12 @@ button:disabled {
   cursor: not-allowed;
 }
 @media (max-width: 680px) {
+  .location-records article {
+    grid-template-columns: 32px minmax(0, 1fr) 32px;
+  }
+  .location-records article > button {
+    display: block;
+  }
   .location-form-panel form,
   .location-editor {
     grid-template-columns: 1fr;
