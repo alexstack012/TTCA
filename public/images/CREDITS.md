@@ -6,25 +6,22 @@ for public use**.
 
 | Relative path | Creator / source | License or permission | Required attribution | Public-use status |
 | --- | --- | --- | --- | --- |
-| `locations/Ravenloft.webp` | Dnd | Public | cleared |
-| `locations/Vallaki.webp` | TODO | TODO | TODO | Not yet cleared |
+| `locations/Ravenloft.webp` | Wizards of the Coast LLC | Public | cleared |
+| `locations/Vallaki.webp` | Wizards of the Coast LLC | Public | cleared |
 | `npcs/avernos.webp` | Alex Stack | Self | Mine | cleared |
-| `npcs/Baba Lysaga.webp` | Dnd | Public | cleared |
-| `npcs/Baba Lysaga's Creeping Hut icon.webp` | TODO | TODO | TODO | Not yet cleared |------------------
-| `npcs/ez.webp` | Dnd | Public | cleared |
-| `npcs/Ireena Kolyana.webp` | Dnd | Public | cleared |
-| `npcs/Jonathan Harker.webp` | TODO | TODO | TODO | Not yet cleared |------------------
-| `npcs/lady_silverhand.webp` | Dnd | Public | cleared |
-| `npcs/Martikov.webp` | Dnd | Public | cleared |
-| `npcs/Miska_the_Wolf_Spider.webp` | Dnd | Public | cleared |
-| `npcs/Mithis.webp` | TODO | TODO | TODO | Not yet cleared |-------------
-| `npcs/mordenkainen.webp` | Dnd | Public | cleared |
-| `npcs/mumdahkis.webp` | Dnd | Public | cleared |
-| `npcs/Rictavio.webp` | Dnd | Public | cleared |
-| `npcs/strahd.webp` | Dnd | Public | cleared |
-| `npcs/tasha.webp` | Dnd | Public | cleared |
-| `npcs/vecna.webp` | Dnd | Public | cleared |
-| `npcs/WillCorr.webp` | TODO | TODO | TODO | Not yet cleared |
+| `npcs/Baba Lysaga.webp` | Wizards of the Coast LLC | Public | cleared |
+| `npcs/ez.webp` | Wizards of the Coast LLC | Public | cleared |
+| `npcs/Ireena Kolyana.webp` | Wizards of the Coast LLC | Public | cleared |
+| `npcs/lady_silverhand.webp` | Wizards of the Coast LLC | Public | cleared |
+| `npcs/Martikov.webp` | Wizards of the Coast LLC | Public | cleared |
+| `npcs/Miska_the_Wolf_Spider.webp` | Wizards of the Coast LLC | Public | cleared |
+| `npcs/mordenkainen.webp` | Wizards of the Coast LLC | Public | cleared |
+| `npcs/mumdahkis.webp` | Wizards of the Coast LLC | Public | cleared |
+| `npcs/Rictavio.webp` | Wizards of the Coast LLC | Public | cleared |
+| `npcs/strahd.webp` | Wizards of the Coast LLC | Public | cleared |
+| `npcs/tasha.webp` | Wizards of the Coast LLC | Public | cleared |
+| `npcs/vecna.webp` | Wizards of the Coast LLC | Public | cleared |
+| `npcs/WillCorr.webp` | Alex Stack | Self | Mine | cleared |
 
 ## Adding an asset
 
