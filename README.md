@@ -35,7 +35,8 @@ Browser
   └── /images/* assets               └── PostgreSQL 18
 ```
 
-|--------------------------------------------------------------------------------- |
+| Area     | Technology                                                                        |
+| -------- | --------------------------------------------------------------------------------- |
 | Frontend | Angular 21, TypeScript, signals, RxJS, SCSS                                       |
 | Backend  | Node.js 24, Express 5                                                             |
 | Database | PostgreSQL 18, normalized relational schema and SQL migrations                    |
