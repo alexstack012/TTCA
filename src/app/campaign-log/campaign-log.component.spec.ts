@@ -94,6 +94,12 @@ describe('CampaignLogComponent', () => {
     const text = fixture.nativeElement.textContent;
     expect(text).toContain('Village of Barovia');
     expect(text).toContain('Ireena Kolyana');
+    const collapse = fixture.nativeElement.querySelector(
+      'button.record-toggle[aria-expanded="true"]',
+    );
+    expect(collapse).toBeTruthy();
+    expect(collapse.getAttribute('aria-label')).toContain('Collapse details');
+    expect(collapse.querySelector('.eye-icon.eye-open')).toBeTruthy();
   });
 
   it('filters NPC relationship options by name without changing selected IDs', () => {

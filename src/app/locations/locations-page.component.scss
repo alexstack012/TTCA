@@ -67,6 +67,23 @@
   min-height: 120px;
   padding-block: 1.1rem;
 }
+.location-records article.open > .record-toggle {
+  position: sticky;
+  z-index: 2;
+  top: 92px;
+  align-self: start;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #5b465c;
+  color: #c5b5c4;
+  background: rgba(20, 18, 25, 0.94);
+  box-shadow: var(--purple-haze);
+}
+.record-toggle span {
+  line-height: 1;
+}
 .location-preview {
   min-height: 3.2rem;
   position: relative;
@@ -181,8 +198,8 @@ button:disabled {
   .location-records article {
     grid-template-columns: 32px minmax(0, 1fr) 32px;
   }
-  .location-records article > button {
-    display: block;
+  .location-records article > .record-toggle {
+    display: grid;
   }
   .location-form-panel form,
   .location-editor {

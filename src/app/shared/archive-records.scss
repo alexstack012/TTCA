@@ -197,6 +197,33 @@ main {
   font-size: 1.1rem;
   cursor: pointer;
 }
+.eye-icon {
+  width: 24px;
+  height: 16px;
+  display: block;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+.eye-open {
+  filter: drop-shadow(0 0 4px rgba(157, 96, 170, 0.72));
+}
+.eye-open circle:not(.eye-glint) {
+  fill: rgba(137, 77, 151, 0.42);
+}
+.eye-open .eye-glint {
+  fill: #d7bfdc;
+  stroke: none;
+}
+.eye-closed {
+  opacity: 0.8;
+}
+.eye-lashes {
+  stroke-width: 1.2;
+}
 footer {
   padding-top: 1rem;
   color: #565159;

@@ -21,6 +21,7 @@ export class SplashComponent {
     private readonly auth: AuthService,
     private readonly router: Router,
   ) {
+    auth.warmApi();
     if (auth.authenticated()) void router.navigate(['/dashboard']);
   }
 

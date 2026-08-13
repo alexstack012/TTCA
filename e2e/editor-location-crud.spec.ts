@@ -56,7 +56,7 @@ test('editor can create, update, render, and delete an illustrated location', as
     await expect(card.locator('.location-preview p')).toHaveCSS('-webkit-line-clamp', '2');
 
     await card
-      .getByRole('button', { name: new RegExp(`toggle details for ${uniqueName}`, 'i') })
+      .getByRole('button', { name: new RegExp(`expand details for ${uniqueName}`, 'i') })
       .click();
     await expect(card.locator('.full-description')).toContainText('Updated final line.');
     await expect(card.locator('.location-expanded-image')).toBeVisible();

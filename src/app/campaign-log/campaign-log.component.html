@@ -434,12 +434,27 @@
             }
           </div>
           <button
+            class="record-toggle"
             type="button"
             (click)="toggleSession(session.id)"
             [attr.aria-expanded]="selectedSession() === session.id"
-            [attr.aria-label]="'Toggle details for ' + session.sessionName"
+            [attr.aria-label]="
+              (selectedSession() === session.id ? 'Collapse details for ' : 'Expand details for ') +
+              session.sessionName
+            "
           >
-            {{ selectedSession() === session.id ? '−' : '→' }}
+            @if (selectedSession() === session.id) {
+              <svg class="eye-icon eye-open" viewBox="0 0 24 16" aria-hidden="true">
+                <path d="M1.5 8S5.2 2 12 2s10.5 6 10.5 6-3.7 6-10.5 6S1.5 8 1.5 8Z" />
+                <circle cx="12" cy="8" r="3" />
+                <circle class="eye-glint" cx="13" cy="7" r="0.8" />
+              </svg>
+            } @else {
+              <svg class="eye-icon eye-closed" viewBox="0 0 24 16" aria-hidden="true">
+                <path d="M2 4c2.8 4.2 6.2 6.3 10 6.3S19.2 8.2 22 4" />
+                <path class="eye-lashes" d="m5 8-1.5 2M9 10l-.5 2.5M15 10l.5 2.5M19 8l1.5 2" />
+              </svg>
+            }
           </button>
         </article>
       }
