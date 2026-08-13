@@ -1,9 +1,11 @@
 .story-tabs {
+  max-width: 100%;
   margin-top: 2.5rem;
   display: flex;
   border-bottom: 1px solid #3b3440;
 }
 .story-tabs button {
+  min-width: 0;
   padding: 1rem 1.2rem;
   border: 0;
   border-bottom: 2px solid transparent;
@@ -68,6 +70,14 @@
   color: #c8bec6;
   background: #0d0e13;
   font: inherit;
+}
+.story-records article > div,
+.story-form-panel,
+.story-form-panel form,
+.relation-picker,
+.relation-picker > div {
+  min-width: 0;
+  max-width: 100%;
 }
 .wide {
   grid-column: 1/-1;
@@ -160,6 +170,15 @@
   background: #19171d;
 }
 @media (max-width: 680px) {
+  .story-tabs {
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+  }
+  .story-tabs button {
+    flex: 1 1 0;
+    padding-inline: 0.65rem;
+    white-space: normal;
+  }
   .story-form-panel form {
     grid-template-columns: 1fr;
   }

@@ -22,6 +22,7 @@ html,
 body {
   min-height: 100%;
   margin: 0;
+  overflow-x: clip;
 }
 body {
   background: #10110f;
@@ -39,6 +40,80 @@ textarea {
 }
 button {
   cursor: pointer;
+}
+
+/* A slow, uneven pulse keeps the archive haze atmospheric without shifting layout. */
+.toolbar,
+.records,
+.story-state,
+.story-form-panel,
+.location-form-panel,
+.session-form-panel,
+.mode-banner {
+  animation: archive-smoke-breathe 8.6s ease-in-out infinite;
+}
+
+.record-mark,
+.brand-mark,
+.user-sigil,
+.sigil {
+  animation: archive-haze-breathe 6.9s ease-in-out infinite;
+}
+
+@keyframes archive-smoke-breathe {
+  0%,
+  100% {
+    box-shadow:
+      0 12px 42px rgba(58, 34, 75, 0.2),
+      0 4px 17px rgba(0, 0, 0, 0.4);
+  }
+  19% {
+    box-shadow:
+      -5px 16px 54px rgba(84, 48, 104, 0.3),
+      3px 5px 21px rgba(0, 0, 0, 0.44);
+  }
+  37% {
+    box-shadow:
+      3px 13px 46px rgba(66, 38, 86, 0.24),
+      -2px 4px 19px rgba(0, 0, 0, 0.42);
+  }
+  63% {
+    box-shadow:
+      -2px 18px 62px rgba(96, 53, 116, 0.34),
+      4px 6px 24px rgba(0, 0, 0, 0.46);
+  }
+}
+
+@keyframes archive-haze-breathe {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 7px rgba(113, 73, 128, 0.2));
+  }
+  24% {
+    filter: drop-shadow(-2px 1px 12px rgba(143, 89, 158, 0.36));
+  }
+  46% {
+    filter: drop-shadow(2px -1px 8px rgba(111, 68, 128, 0.26));
+  }
+  71% {
+    filter: drop-shadow(-1px 2px 14px rgba(151, 91, 169, 0.4));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toolbar,
+  .records,
+  .story-state,
+  .story-form-panel,
+  .location-form-panel,
+  .session-form-panel,
+  .mode-banner,
+  .record-mark,
+  .brand-mark,
+  .user-sigil,
+  .sigil {
+    animation: none;
+  }
 }
 
 @media (max-width: 680px) {

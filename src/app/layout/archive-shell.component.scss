@@ -4,6 +4,8 @@
 }
 .archive-shell {
   min-height: 100vh;
+  max-width: 100%;
+  overflow-x: clip;
   background: #0c0d12;
 }
 .topbar {
@@ -182,6 +184,7 @@ nav i {
   cursor: pointer;
 }
 .content {
+  min-width: 0;
   min-height: 100vh;
   margin-left: 260px;
   padding-top: 76px;
@@ -189,6 +192,7 @@ nav i {
   flex-direction: column;
 }
 .route-content {
+  min-width: 0;
   flex: 1;
 }
 .archive-disclosure {

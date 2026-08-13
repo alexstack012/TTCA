@@ -54,6 +54,48 @@ test('static spell and equipment searches expose useful empty states', async ({ 
   await expect(page.getByText(/no item in the ledger matches/i)).toBeVisible();
 });
 
+test('archive pages stay within the viewport and route navigation restores the top', async ({
+  page,
+}) => {
+  await enterDemo(page);
+
+  for (const path of [
+    '/dashboard',
+    '/characters',
+    '/items',
+    '/spells',
+    '/campaign-log',
+    '/lore',
+    '/locations',
+  ]) {
+    await page.goto(path);
+    await expect(page.locator('main')).toBeVisible();
+    await expect
+      .poll(() =>
+        page.evaluate(
+          () => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1,
+        ),
+      )
+      .toBeTruthy();
+  }
+
+  await page.goto('/lore');
+  await page.evaluate(() => window.scrollTo({ left: 120, top: document.body.scrollHeight }));
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+
+  if (await page.getByRole('button', { name: /toggle archive navigation/i }).isVisible()) {
+    await page.getByRole('button', { name: /toggle archive navigation/i }).click();
+  }
+  await page.getByRole('link', { name: /locations/i }).click();
+  await expect(page).toHaveURL(/\/locations$/);
+  await expect
+    .poll(() => page.evaluate(() => ({ x: window.scrollX, y: window.scrollY })))
+    .toEqual({
+      x: 0,
+      y: 0,
+    });
+});
+
 test('the API health response is minimal and entity visibility is server-filtered', async ({
   request,
 }) => {

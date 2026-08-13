@@ -2,6 +2,7 @@
   display: block;
 }
 main {
+  max-width: 100%;
   width: min(1160px, calc(100% - 4rem));
   margin: 0 auto;
   padding: clamp(3rem, 7vw, 6rem) 0;
@@ -117,15 +118,18 @@ main {
   background: #8e3b4a;
 }
 .records {
+  min-width: 0;
+  max-width: 100%;
   display: grid;
   border: 1px solid #302d35;
   box-shadow: var(--purple-smoke);
 }
 .records article {
+  min-width: 0;
   min-height: 160px;
   padding: 1.5rem;
   display: grid;
-  grid-template-columns: 45px 1fr 35px;
+  grid-template-columns: 45px minmax(0, 1fr) 35px;
   gap: 1.2rem;
   align-items: start;
   border-bottom: 1px solid #302d35;
@@ -166,6 +170,7 @@ main {
   color: var(--blood-bright);
 }
 .records h2 {
+  overflow-wrap: anywhere;
   margin: 0.35rem 0 0.15rem;
   color: #cfc5cc;
   font-family: 'Cinzel', serif;
@@ -221,7 +226,7 @@ footer {
     white-space: nowrap;
   }
   .records article {
-    grid-template-columns: 32px 1fr;
+    grid-template-columns: 32px minmax(0, 1fr);
   }
   .record-mark {
     width: 28px;
