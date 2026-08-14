@@ -84,9 +84,13 @@ const campaignEntitiesQuery = `
   GROUP BY campaign.id, campaign.source_key
 `;
 
-export async function findCampaignEntities(campaignKey, role) {
-  const result = await pool.query(campaignEntitiesQuery, [campaignKey, role]);
+async function queryCampaignEntities(database, campaignKey, role) {
+  const result = await database.query(campaignEntitiesQuery, [campaignKey, role]);
   return result.rows[0] ?? null;
+}
+
+export async function findCampaignEntities(campaignKey, role) {
+  return queryCampaignEntities(pool, campaignKey, role);
 }
 
 async function ensureCampaignSection(client, campaignId, sectionId, newSectionName) {
@@ -180,7 +184,9 @@ export async function createCampaignEntity(campaignKey, entity) {
       ],
     );
     await client.query('COMMIT');
-    const campaign = await findCampaignEntities(campaignKey, 'editor');
+    // Reuse the checked-out connection. Asking the pool for another connection
+    // here deadlocks until timeout when production deliberately sets PGPOOL_MAX=1.
+    const campaign = await queryCampaignEntities(client, campaignKey, 'editor');
     return campaign?.entities.find((item) => item.id === entityId) ?? null;
   } catch (error) {
     await client.query('ROLLBACK');
@@ -280,7 +286,8 @@ export async function updateCampaignEntity(campaignKey, entityId, entity) {
     }
 
     await client.query('COMMIT');
-    const campaign = await findCampaignEntities(campaignKey, 'editor');
+    // Reuse the checked-out connection so writes also work with a one-client pool.
+    const campaign = await queryCampaignEntities(client, campaignKey, 'editor');
     return campaign?.entities.find((item) => item.id === entityId) ?? null;
   } catch (error) {
     await client.query('ROLLBACK');
