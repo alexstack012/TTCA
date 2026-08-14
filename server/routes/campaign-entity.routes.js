@@ -47,6 +47,20 @@ function validContext(context) {
   );
 }
 
+function validSection(sectionId, newSectionName) {
+  return sectionId === '__new__'
+    ? typeof newSectionName === 'string' &&
+        newSectionName.trim().length > 0 &&
+        newSectionName.length <= 200
+    : typeof sectionId === 'string' && sectionId.trim().length > 0 && sectionId.length <= 200;
+}
+
+function sectionSelection(sectionId, newSectionName) {
+  if (sectionId !== '__new__') return { sectionId, newSectionName: undefined };
+  const name = newSectionName.trim();
+  return { sectionId: sourceKey(name), newSectionName: name };
+}
+
 function validUpdate(body) {
   return (
     validProfile(body) &&
@@ -54,6 +68,7 @@ function validUpdate(body) {
     body.sectionEntries.every(
       (entry) =>
         isUuid(entry?.id) &&
+        validSection(entry.sectionId, entry.newSectionName) &&
         detailsTypes.has(entry.details?.type) &&
         typeof entry.details?.value === 'string' &&
         entry.details.value.length <= 20000 &&
@@ -68,8 +83,7 @@ function validUpdate(body) {
 function validCreate(body) {
   return (
     validProfile(body) &&
-    typeof body.sectionId === 'string' &&
-    body.sectionId.length <= 200 &&
+    validSection(body.sectionId, body.newSectionName) &&
     detailsTypes.has(body.details?.type) &&
     typeof body.details?.value === 'string' &&
     body.details.value.trim().length > 0 &&
@@ -125,6 +139,7 @@ export function createCampaignEntityRouter({
           return response.status(400).json({ message: 'The new character record is invalid.' });
         const entity = await createEntity(request.params.campaignKey, {
           ...request.body,
+          ...sectionSelection(request.body.sectionId, request.body.newSectionName),
           sourceKey: sourceKey(request.body.name),
           name: request.body.name.trim(),
           status: request.body.status.trim(),
@@ -152,6 +167,10 @@ export function createCampaignEntityRouter({
           ...request.body,
           name: request.body.name.trim(),
           aliases: aliases(request.body.aliases),
+          sectionEntries: request.body.sectionEntries.map((entry) => ({
+            ...entry,
+            ...sectionSelection(entry.sectionId, entry.newSectionName),
+          })),
         });
         if (!entity) return response.status(404).json({ message: 'Character not found.' });
         response.json(entity);

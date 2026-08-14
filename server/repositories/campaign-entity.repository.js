@@ -89,19 +89,44 @@ export async function findCampaignEntities(campaignKey, role) {
   return result.rows[0] ?? null;
 }
 
+async function ensureCampaignSection(client, campaignId, sectionId, newSectionName) {
+  if (newSectionName) {
+    await client.query(
+      `INSERT INTO campaign_sections (campaign_id, source_key, name, display_order)
+       SELECT $1, $2, $3, COALESCE(MAX(display_order), -1) + 1
+       FROM campaign_sections
+       WHERE campaign_id = $1
+       ON CONFLICT (campaign_id, source_key) DO NOTHING`,
+      [campaignId, sectionId, newSectionName],
+    );
+  }
+  const section = await client.query(
+    `SELECT id FROM campaign_sections WHERE campaign_id = $1 AND source_key = $2`,
+    [campaignId, sectionId],
+  );
+  return section.rows[0]?.id ?? null;
+}
+
 export async function createCampaignEntity(campaignKey, entity) {
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
     const target = await client.query(
-      `SELECT campaign.id AS campaign_id, section.id AS section_id
-       FROM campaigns AS campaign
-       LEFT JOIN campaign_sections AS section
-         ON section.campaign_id = campaign.id AND section.source_key = $2
-       WHERE campaign.source_key = $1`,
-      [campaignKey, entity.sectionId],
+      `SELECT id AS campaign_id FROM campaigns WHERE source_key = $1`,
+      [campaignKey],
     );
-    if (!target.rows[0]?.campaign_id || !target.rows[0]?.section_id) {
+    const campaignId = target.rows[0]?.campaign_id;
+    if (!campaignId) {
+      await client.query('ROLLBACK');
+      return null;
+    }
+    const sectionId = await ensureCampaignSection(
+      client,
+      campaignId,
+      entity.sectionId,
+      entity.newSectionName,
+    );
+    if (!sectionId) {
       await client.query('ROLLBACK');
       return null;
     }
@@ -113,7 +138,7 @@ export async function createCampaignEntity(campaignKey, entity) {
          ) THEN $2 || '-' || LEFT(gen_random_uuid()::text, 8)
          ELSE $2
        END AS source_key`,
-      [target.rows[0].campaign_id, entity.sourceKey],
+      [campaignId, entity.sourceKey],
     );
     const inserted = await client.query(
       `INSERT INTO campaign_entities (
@@ -121,7 +146,7 @@ export async function createCampaignEntity(campaignKey, entity) {
        ) VALUES ($1, $2, $3, $4, $5, NULLIF($6, ''), NULLIF($7, ''))
        RETURNING id`,
       [
-        target.rows[0].campaign_id,
+        campaignId,
         sourceKeyResult.rows[0].source_key,
         entity.name,
         entity.entityType,
@@ -146,7 +171,7 @@ export async function createCampaignEntity(campaignKey, entity) {
        ) VALUES ($1, $2, $3, $4, $5, NULLIF($6, ''), NULLIF($7, ''), 0)`,
       [
         entityId,
-        target.rows[0].section_id,
+        sectionId,
         entity.details.type,
         entity.details.value,
         entity.status,
@@ -179,7 +204,7 @@ export async function updateCampaignEntity(campaignKey, entityId, entity) {
            updated_at = NOW()
        WHERE id = $2
          AND campaign_id = (SELECT id FROM campaigns WHERE source_key = $1)
-       RETURNING id`,
+       RETURNING id, campaign_id`,
       [
         campaignKey,
         entityId,
@@ -195,6 +220,15 @@ export async function updateCampaignEntity(campaignKey, entityId, entity) {
       return null;
     }
 
+    for (const entry of entity.sectionEntries) {
+      await ensureCampaignSection(
+        client,
+        updated.rows[0].campaign_id,
+        entry.sectionId,
+        entry.newSectionName,
+      );
+    }
+
     await client.query('DELETE FROM campaign_entity_aliases WHERE entity_id = $1', [entityId]);
     if (entity.aliases.length) {
       await client.query(
@@ -208,25 +242,32 @@ export async function updateCampaignEntity(campaignKey, entityId, entity) {
     if (entity.sectionEntries.length) {
       await client.query(
         `UPDATE campaign_entity_section_entries AS entry
-         SET details_type = value.details_type,
+         SET section_id = section.id,
+             details_type = value.details_type,
              details_value = value.details_value,
              status = value.status,
              context_type = NULLIF(value.context_type, ''),
              context_value = NULLIF(value.context_value, '')
          FROM jsonb_to_recordset($2::jsonb) AS value(
            id uuid,
+           section_id text,
            details_type text,
            details_value text,
            status text,
            context_type text,
            context_value text
          )
+         JOIN campaign_entities AS target_entity ON target_entity.id = $1
+         JOIN campaign_sections AS section
+           ON section.campaign_id = target_entity.campaign_id
+          AND section.source_key = value.section_id
          WHERE entry.id = value.id AND entry.entity_id = $1`,
         [
           entityId,
           JSON.stringify(
             entity.sectionEntries.map((entry) => ({
               id: entry.id,
+              section_id: entry.sectionId,
               details_type: entry.details.type,
               details_value: entry.details.value,
               status: entry.status,

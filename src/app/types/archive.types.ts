@@ -23,6 +23,7 @@ export interface EntitySectionEntry {
   details: EntityDetails;
   status: string;
   context: EntityContext | null;
+  newSectionName?: string;
 }
 
 export interface EntityContext {
@@ -47,6 +48,7 @@ export interface CreateCampaignEntityRequest {
   description?: string | null;
   aliases: string[];
   sectionId: string;
+  newSectionName?: string;
   details: EntityDetails;
   status: string;
   context: EntityContext | null;

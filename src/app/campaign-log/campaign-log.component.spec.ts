@@ -76,6 +76,17 @@ describe('CampaignLogComponent', () => {
     );
   });
 
+  it('shows the newest sessions first by default', () => {
+    sessions$.next([
+      populatedSession,
+      { ...populatedSession, id: 'session-2', sessionNumber: 2, sessionName: 'Old Bonegrinder' },
+    ]);
+
+    expect(
+      fixture.componentInstance.visibleSessions().map((session) => session.sessionNumber),
+    ).toEqual([2, 1]);
+  });
+
   it('shows an error state', () => {
     vi.spyOn(console, 'error').mockImplementation(() => undefined);
     sessions$.error({ status: 500 });

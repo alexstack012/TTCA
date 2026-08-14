@@ -27,7 +27,7 @@ export class CampaignLogComponent {
   readonly loading = signal(true);
   readonly error = signal('');
   readonly search = signal('');
-  readonly sessionOrder = signal<'ascending' | 'descending'>('ascending');
+  readonly sessionOrder = signal<'ascending' | 'descending'>('descending');
   readonly selectedSession = signal<string | null>(null);
   readonly expandedLocationReferences = signal<ReadonlySet<string>>(new Set());
   readonly editingSession = signal<string | null>(null);

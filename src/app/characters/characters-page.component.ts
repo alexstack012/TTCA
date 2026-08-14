@@ -32,6 +32,7 @@ interface CharacterRecord {
   styleUrl: './characters-page.component.scss',
 })
 export class CharactersPageComponent {
+  readonly newSectionValue = '__new__';
   private readonly campaignEntities = inject(CampaignEntitiesService);
   private dialogTrigger: HTMLElement | null = null;
   private imageTrigger: HTMLElement | null = null;
@@ -279,11 +280,11 @@ export class CharactersPageComponent {
   }
 
   openCreate(): void {
-    if (!this.auth.user()?.canEdit || !this.sections().length) return;
+    if (!this.auth.user()?.canEdit) return;
     this.dialogTrigger =
       document.activeElement instanceof HTMLElement ? document.activeElement : null;
     this.createDraft = this.emptyCreateDraft();
-    this.createDraft.sectionId = this.sections()[0].id;
+    this.createDraft.sectionId = this.sections()[0]?.id ?? this.newSectionValue;
     this.createAliasesText = '';
     this.createContextType = 'firstMeeting';
     this.createContextValue = '';
@@ -353,6 +354,10 @@ export class CharactersPageComponent {
     if (!this.auth.user()?.canEdit || this.createSaving()) return;
     const request: CreateCampaignEntityRequest = {
       ...this.createDraft,
+      newSectionName:
+        this.createDraft.sectionId === this.newSectionValue
+          ? this.createDraft.newSectionName?.trim()
+          : undefined,
       aliases: this.createAliasesText
         .split(',')
         .map((alias) => alias.trim())
@@ -388,6 +393,7 @@ export class CharactersPageComponent {
       description: null,
       aliases: [],
       sectionId: '',
+      newSectionName: '',
       details: { type: 'notableInformation', value: '' },
       status: 'Alive',
       context: null,
@@ -404,5 +410,11 @@ export class CharactersPageComponent {
 
   typeLabel(type: CampaignEntityType | string): string {
     return type.replace(/([a-z])([A-Z])/g, '$1 $2').replaceAll('_', ' ');
+  }
+
+  missingNewSectionName(entries: EntitySectionEntry[]): boolean {
+    return entries.some(
+      (entry) => entry.sectionId === this.newSectionValue && !entry.newSectionName?.trim(),
+    );
   }
 }

@@ -219,7 +219,21 @@
           }
           @for (entry of draftEntity.sectionEntries; track entry.id) {
             <section class="entry-block">
-              <p>{{ entry.sectionName }}</p>
+              <label
+                ><span>Campaign section</span
+                ><select [(ngModel)]="entry.sectionId">
+                  @for (section of sections(); track section.id) {
+                    <option [value]="section.id">{{ section.name }}</option>
+                  }
+                  <option [value]="newSectionValue">Create new section…</option>
+                </select></label
+              >
+              @if (entry.sectionId === newSectionValue) {
+                <label
+                  ><span>New section name</span
+                  ><input [(ngModel)]="entry.newSectionName" placeholder="Section name"
+                /></label>
+              }
               <label
                 ><span>{{ typeLabel(entry.details.type) }}</span
                 ><textarea rows="5" [(ngModel)]="entry.details.value"></textarea>
@@ -253,7 +267,11 @@
             type="button"
             class="primary"
             (click)="saveEntity()"
-            [disabled]="saving() || !draftEntity.name.trim()"
+            [disabled]="
+              saving() ||
+              !draftEntity.name.trim() ||
+              missingNewSectionName(draftEntity.sectionEntries)
+            "
           >
             {{ saving() ? 'Saving...' : 'Save changes' }}
           </button>
@@ -407,8 +425,15 @@
               @for (section of sections(); track section.id) {
                 <option [value]="section.id">{{ section.name }}</option>
               }
+              <option [value]="newSectionValue">Create new section…</option>
             </select></label
           >
+          @if (createDraft.sectionId === newSectionValue) {
+            <label
+              ><span>New section name</span
+              ><input [(ngModel)]="createDraft.newSectionName" placeholder="Section name"
+            /></label>
+          }
           <label class="wide"
             ><span>Aliases <small>comma separated</small></span
             ><input [(ngModel)]="createAliasesText"
@@ -483,6 +508,7 @@
           [disabled]="
             createSaving() ||
             !createDraft.name.trim() ||
+            (createDraft.sectionId === newSectionValue && !createDraft.newSectionName?.trim()) ||
             !createDraft.details.value.trim() ||
             !createDraft.status.trim()
           "
