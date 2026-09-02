@@ -1,0 +1,2530 @@
+{
+  "schemaVersion": 3,
+  "collection": {
+    "id": "dnd-spell-reference",
+    "name": "D&D Spell Quick Reference",
+    "ruleset": "D&D 5e (2014-compatible)",
+    "description": "Concise spell reference organized by spell level with role and tag filtering."
+  },
+  "display": {
+    "defaultGroupBy": "level",
+    "defaultSortWithinGroup": "name",
+    "levelGroups": [
+      {
+        "level": 0,
+        "label": "Cantrips",
+        "order": 0
+      },
+      {
+        "level": 1,
+        "label": "1st Level",
+        "order": 1
+      },
+      {
+        "level": 2,
+        "label": "2nd Level",
+        "order": 2
+      },
+      {
+        "level": 3,
+        "label": "3rd Level",
+        "order": 3
+      },
+      {
+        "level": 4,
+        "label": "4th Level",
+        "order": 4
+      },
+      {
+        "level": 5,
+        "label": "5th Level",
+        "order": 5
+      },
+      {
+        "level": 6,
+        "label": "6th Level",
+        "order": 6
+      },
+      {
+        "level": 7,
+        "label": "7th Level",
+        "order": 7
+      },
+      {
+        "level": 8,
+        "label": "8th Level",
+        "order": 8
+      },
+      {
+        "level": 9,
+        "label": "9th Level",
+        "order": 9
+      }
+    ]
+  },
+  "filters": {
+    "roles": [
+      {
+        "id": "offense",
+        "name": "Offense",
+        "description": "Damage and direct offensive pressure.",
+        "order": 1
+      },
+      {
+        "id": "defense",
+        "name": "Defense",
+        "description": "Prevents, mitigates, redirects, or avoids harm.",
+        "order": 2
+      },
+      {
+        "id": "control",
+        "name": "Control",
+        "description": "Restricts creatures or reshapes the battlefield.",
+        "order": 3
+      },
+      {
+        "id": "support",
+        "name": "Support",
+        "description": "Buffs, protects, communicates with, or otherwise assists allies.",
+        "order": 4
+      },
+      {
+        "id": "mobility",
+        "name": "Mobility",
+        "description": "Repositions creatures or enables unusual movement.",
+        "order": 5
+      },
+      {
+        "id": "healing",
+        "name": "Healing",
+        "description": "Restores hit points, removes harmful effects, or returns creatures to life.",
+        "order": 6
+      },
+      {
+        "id": "utility",
+        "name": "Utility",
+        "description": "Exploration, information, preparation, and other non-damage solutions.",
+        "order": 7
+      }
+    ],
+    "tags": [
+      {
+        "id": "damage",
+        "name": "Damage",
+        "group": "effect"
+      },
+      {
+        "id": "area-of-effect",
+        "name": "Area of Effect",
+        "group": "effect"
+      },
+      {
+        "id": "debuff",
+        "name": "Debuff / Disable",
+        "group": "effect"
+      },
+      {
+        "id": "buff",
+        "name": "Buff",
+        "group": "effect"
+      },
+      {
+        "id": "battlefield-control",
+        "name": "Battlefield Control",
+        "group": "effect"
+      },
+      {
+        "id": "forced-movement",
+        "name": "Forced Movement",
+        "group": "effect"
+      },
+      {
+        "id": "healing",
+        "name": "Healing",
+        "group": "effect"
+      },
+      {
+        "id": "restoration",
+        "name": "Restoration",
+        "group": "effect"
+      },
+      {
+        "id": "resurrection",
+        "name": "Resurrection",
+        "group": "effect"
+      },
+      {
+        "id": "summoning",
+        "name": "Summoning / Creation",
+        "group": "effect"
+      },
+      {
+        "id": "protection",
+        "name": "Protection",
+        "group": "effect"
+      },
+      {
+        "id": "ward",
+        "name": "Ward",
+        "group": "effect"
+      },
+      {
+        "id": "countermagic",
+        "name": "Countermagic",
+        "group": "effect"
+      },
+      {
+        "id": "teleportation",
+        "name": "Teleportation",
+        "group": "movement"
+      },
+      {
+        "id": "flight",
+        "name": "Flight",
+        "group": "movement"
+      },
+      {
+        "id": "planar",
+        "name": "Planar / Multiverse",
+        "group": "multiverse"
+      },
+      {
+        "id": "ethereal",
+        "name": "Ethereal",
+        "group": "multiverse"
+      },
+      {
+        "id": "extradimensional",
+        "name": "Extradimensional",
+        "group": "multiverse"
+      },
+      {
+        "id": "divination",
+        "name": "Divination / Detection",
+        "group": "utility"
+      },
+      {
+        "id": "communication",
+        "name": "Communication",
+        "group": "utility"
+      },
+      {
+        "id": "exploration",
+        "name": "Exploration",
+        "group": "utility"
+      },
+      {
+        "id": "illusion",
+        "name": "Illusion / Concealment",
+        "group": "utility"
+      },
+      {
+        "id": "light",
+        "name": "Light",
+        "group": "theme"
+      },
+      {
+        "id": "radiant",
+        "name": "Radiant",
+        "group": "theme"
+      },
+      {
+        "id": "undead",
+        "name": "Undead",
+        "group": "theme"
+      },
+      {
+        "id": "soul",
+        "name": "Soul",
+        "group": "theme"
+      },
+      {
+        "id": "acid",
+        "name": "Acid",
+        "group": "damage-type"
+      },
+      {
+        "id": "cold",
+        "name": "Cold",
+        "group": "damage-type"
+      },
+      {
+        "id": "fire",
+        "name": "Fire",
+        "group": "damage-type"
+      },
+      {
+        "id": "force",
+        "name": "Force",
+        "group": "damage-type"
+      },
+      {
+        "id": "lightning",
+        "name": "Lightning",
+        "group": "damage-type"
+      },
+      {
+        "id": "necrotic",
+        "name": "Necrotic",
+        "group": "damage-type"
+      },
+      {
+        "id": "poison",
+        "name": "Poison",
+        "group": "damage-type"
+      },
+      {
+        "id": "psychic",
+        "name": "Psychic",
+        "group": "damage-type"
+      },
+      {
+        "id": "thunder",
+        "name": "Thunder",
+        "group": "damage-type"
+      }
+    ]
+  },
+  "normalizationNotes": [
+    "Cantrips use level 0.",
+    "The primary site hierarchy is spell level; roles and tags are filters, not display categories.",
+    "primaryRole provides one stable visual classification while roles supports multi-role filtering.",
+    "Tags describe mechanics, themes, movement, planar relevance, and other secondary characteristics.",
+    "Summoning is represented as a tag rather than a primary role.",
+    "Redundant isCantrip, image:null, and the old categories array were removed.",
+    "This is a concise quick reference rather than reproduced full spell rules. Optional mechanics are included only when present in the source data."
+  ],
+  "spells": [
+    {
+      "id": "acid-splash",
+      "name": "Acid Splash",
+      "level": 0,
+      "school": "Conjuration",
+      "primaryRole": "offense",
+      "roles": [
+        "offense"
+      ],
+      "tags": [
+        "damage",
+        "acid"
+      ],
+      "range": "60 ft",
+      "summary": "Acid hits one or two creatures within 5 feet of each other.",
+      "damage": "1d6 acid",
+      "saveOrAttack": "DEX save",
+      "scaling": "+1d6 at levels 5, 11, and 17"
+    },
+    {
+      "id": "booming-blade",
+      "name": "Booming Blade",
+      "level": 0,
+      "school": "Evocation",
+      "primaryRole": "offense",
+      "roles": [
+        "offense"
+      ],
+      "tags": [
+        "damage",
+        "thunder"
+      ],
+      "range": "Melee weapon attack",
+      "summary": "Enhances a melee weapon attack with thunder damage.",
+      "damage": "+1d8 thunder when scaling applies",
+      "saveOrAttack": "Melee weapon attack",
+      "scaling": "Cantrip scaling at levels 5, 11, and 17",
+      "notes": [
+        "The source entry was incomplete and only specified '+1d8 thunder damage scaling'."
+      ]
+    },
+    {
+      "id": "fire-bolt",
+      "name": "Fire Bolt",
+      "level": 0,
+      "school": "Evocation",
+      "primaryRole": "offense",
+      "roles": [
+        "offense"
+      ],
+      "tags": [
+        "damage",
+        "fire"
+      ],
+      "range": "120 ft",
+      "summary": "Basic ranged fire attack.",
+      "damage": "1d10 fire",
+      "saveOrAttack": "Spell attack",
+      "scaling": "Cantrip scaling at levels 5, 11, and 17"
+    },
+    {
+      "id": "light",
+      "name": "Light",
+      "level": 0,
+      "school": "Evocation",
+      "primaryRole": "utility",
+      "roles": [
+        "utility"
+      ],
+      "tags": [
+        "exploration"
+      ],
+      "range": "Touch",
+      "summary": "Causes an object to emit light."
+    },
+    {
+      "id": "mage-hand",
+      "name": "Mage Hand",
+      "level": 0,
+      "school": "Conjuration",
+      "primaryRole": "utility",
+      "roles": [
+        "utility"
+      ],
+      "tags": [
+        "exploration"
+      ],
+      "range": "30 ft",
+      "summary": "Creates a telekinetic hand."
+    },
+    {
+      "id": "mending",
+      "name": "Mending",
+      "level": 0,
+      "school": "Transmutation",
+      "primaryRole": "utility",
+      "roles": [
+        "utility"
+      ],
+      "tags": [
+        "exploration"
+      ],
+      "range": "Touch",
+      "summary": "Repairs an object."
+    },
+    {
+      "id": "minor-illusion",
+      "name": "Minor Illusion",
+      "level": 0,
+      "school": "Illusion",
+      "primaryRole": "utility",
+      "roles": [
+        "utility"
+      ],
+      "tags": [
+        "exploration",
+        "illusion"
+      ],
+      "range": "30 ft",
+      "summary": "Creates an image or sound illusion."
+    },
+    {
+      "id": "prestidigitation",
+      "name": "Prestidigitation",
+      "level": 0,
+      "school": "Transmutation",
+      "primaryRole": "utility",
+      "roles": [
+        "utility"
+      ],
+      "tags": [
+        "exploration"
+      ],
+      "range": "10 ft",
+      "summary": "Performs minor magical tricks."
+    },
+    {
+      "id": "ray-of-frost",
+      "name": "Ray of Frost",
+      "level": 0,
+      "school": "Evocation",
+      "primaryRole": "offense",
+      "roles": [
+        "offense",
+        "control"
+      ],
+      "tags": [
+        "damage",
+        "debuff",
+        "cold"
+      ],
+      "range": "60 ft",
+      "summary": "Reduces the target's speed by 10 feet.",
+      "damage": "1d8 cold",
+      "saveOrAttack": "Spell attack",
+      "scaling": "Cantrip scaling at levels 5, 11, and 17"
+    },
+    {
+      "id": "sacred-flame",
+      "name": "Sacred Flame",
+      "level": 0,
+      "school": "Evocation",
+      "primaryRole": "offense",
+      "roles": [
+        "offense"
+      ],
+      "tags": [
+        "damage",
+        "radiant"
+      ],
+      "range": "60 ft",
+      "summary": "Radiant flame descends on a creature and ignores cover.",
+      "damage": "1d8 radiant",
+      "saveOrAttack": "DEX save",
+      "scaling": "+1d8 at levels 5, 11, and 17",
+      "notes": [
+        "The earlier source row listed fire damage and an attack roll. The later radiant/DEX-save entry was used as canonical."
+      ]
+    },
+    {
+      "id": "shocking-grasp",
+      "name": "Shocking Grasp",
+      "level": 0,
+      "school": "Evocation",
+      "primaryRole": "offense",
+      "roles": [
+        "offense",
+        "control"
+      ],
+      "tags": [
+        "damage",
+        "debuff"
+      ],
+      "range": "Touch",
+      "summary": "Makes a lightning attack and prevents the target from taking reactions.",
+      "saveOrAttack": "Spell attack",
+      "scaling": "Cantrip scaling at levels 5, 11, and 17",
+      "notes": [
+        "The source notes did not include the base damage formula."
+      ]
+    },
+    {
+      "id": "spare-the-dying",
+      "name": "Spare the Dying",
+      "level": 0,
+      "school": "Necromancy",
+      "primaryRole": "healing",
+      "roles": [
+        "healing"
+      ],
+      "tags": [
+        "healing"
+      ],
+      "range": "Touch",
+      "summary": "Stabilizes a dying creature."
+    },
+    {
+      "id": "toll-the-dead",
+      "name": "Toll the Dead",
+      "level": 0,
+      "school": "Necromancy",
+      "primaryRole": "offense",
+      "roles": [
+        "offense"
+      ],
+      "tags": [
+        "damage",
+        "undead",
+        "necrotic"
+      ],
+      "range": "60 ft",
+      "summary": "Deals more damage if the target is already wounded.",
+      "damage": "1d8 necrotic, or 1d12 if wounded",
+      "saveOrAttack": "WIS save",
+      "scaling": "Cantrip scaling at levels 5, 11, and 17"
+    },
+    {
+      "id": "cure-wounds",
+      "name": "Cure Wounds",
+      "level": 1,
+      "school": "Evocation",
+      "primaryRole": "healing",
+      "roles": [
+        "healing"
+      ],
+      "tags": [
+        "healing"
+      ],
+      "range": "Touch",
+      "summary": "Restores hit points.",
+      "healing": "1d8 + spellcasting modifier",
+      "scaling": "+1d8 per slot level above 1"
+    },
+    {
+      "id": "detect-magic",
+      "name": "Detect Magic",
+      "level": 1,
+      "school": "Divination",
+      "primaryRole": "utility",
+      "roles": [
+        "utility"
+      ],
+      "tags": [
+        "divination"
+      ],
+      "range": "Self (30 ft)",
+      "summary": "Detects the presence of magic and can reveal its school."
+    },
+    {
+      "id": "fog-cloud",
+      "name": "Fog Cloud",
+      "level": 1,
+      "school": "Conjuration",
+      "primaryRole": "control",
+      "roles": [
+        "control"
+      ],
+      "tags": [
+        "battlefield-control"
+      ],
+      "range": "120 ft",
+      "summary": "Creates heavy obscurement."
+    },
+    {
+      "id": "guiding-bolt",
+      "name": "Guiding Bolt",
+      "level": 1,
+      "school": "Evocation",
+      "primaryRole": "offense",
+      "roles": [
+        "offense",
+        "support"
+      ],
+      "tags": [
+        "radiant",
+        "damage"
+      ],
+      "range": "120 ft",
+      "summary": "The next attack against the target has advantage.",
+      "damage": "4d6 radiant",
+      "saveOrAttack": "Spell attack",
+      "scaling": "+1d6 per slot level above 1"
+    },
+    {
+      "id": "healing-word",
+      "name": "Healing Word",
+      "level": 1,
+      "school": "Evocation",
+      "primaryRole": "healing",
+      "roles": [
+        "healing"
+      ],
+      "tags": [
+        "healing"
+      ],
+      "range": "60 ft",
+      "summary": "Restores hit points at range.",
+      "healing": "1d4 + spellcasting modifier",
+      "scaling": "+1d4 per slot level above 1"
+    },
+    {
+      "id": "identify",
+      "name": "Identify",
+      "level": 1,
+      "school": "Divination",
+      "primaryRole": "utility",
+      "roles": [
+        "utility"
+      ],
+      "tags": [
+        "divination"
+      ],
+      "range": "Touch",
+      "summary": "Reveals a magic item's properties or the spells affecting a creature or object."
+    },
+    {
+      "id": "mage-armor",
+      "name": "Mage Armor",
+      "level": 1,
+      "school": "Abjuration",
+      "primaryRole": "defense",
+      "roles": [
+        "defense"
+      ],
+      "tags": [
+        "protection"
+      ],
+      "range": "Touch",
+      "summary": "Sets Armor Class to 13 + Dexterity modifier."
+    },
+    {
+      "id": "protection-from-evil-and-good",
+      "name": "Protection from Evil and Good",
+      "level": 1,
+      "school": "Abjuration",
+      "primaryRole": "defense",
+      "roles": [
+        "defense",
+        "support"
+      ],
+      "tags": [
+        "protection",
+        "planar"
+      ],
+      "range": "Touch",
+      "summary": "Protects a creature against several supernatural creature types and makes certain charms, fright, and possession harder to maintain."
+    },
+    {
+      "id": "ray-of-sickness",
+      "name": "Ray of Sickness",
+      "level": 1,
+      "school": "Necromancy",
+      "primaryRole": "offense",
+      "roles": [
+        "offense",
+        "control"
+      ],
+      "tags": [
+        "damage",
+        "debuff",
+        "poison"
+      ],
+      "range": "60 ft",
+      "summary": "Deals damage and may inflict the poisoned condition.",
+      "damage": "2d8 poison",
+      "saveOrAttack": "Spell attack followed by CON save",
+      "scaling": "+1d8 per slot level above 1"
+    },
+    {
+      "id": "shield",
+      "name": "Shield",
+      "level": 1,
+      "school": "Abjuration",
+      "primaryRole": "defense",
+      "roles": [
+        "defense"
+      ],
+      "tags": [
+        "protection"
+      ],
+      "range": "Self",
+      "summary": "Reaction that grants +5 Armor Class."
+    },
+    {
+      "id": "shield-of-faith",
+      "name": "Shield of Faith",
+      "level": 1,
+      "school": "Abjuration",
+      "primaryRole": "defense",
+      "roles": [
+        "defense",
+        "support"
+      ],
+      "tags": [
+        "protection",
+        "radiant"
+      ],
+      "range": "60 ft",
+      "summary": "Grants +2 Armor Class."
+    },
+    {
+      "id": "sleep",
+      "name": "Sleep",
+      "level": 1,
+      "school": "Enchantment",
+      "primaryRole": "control",
+      "roles": [
+        "control"
+      ],
+      "tags": [
+        "debuff"
+      ],
+      "range": "90 ft",
+      "summary": "Puts creatures to sleep based on an affected hit-point pool.",
+      "saveOrAttack": "No save",
+      "scaling": "+2d8 affected hit points per slot level above 1",
+      "notes": [
+        "Base affected hit-point pool: 5d8."
+      ]
+    },
+    {
+      "id": "thunderwave",
+      "name": "Thunderwave",
+      "level": 1,
+      "school": "Evocation",
+      "primaryRole": "offense",
+      "roles": [
+        "offense",
+        "control"
+      ],
+      "tags": [
+        "damage",
+        "battlefield-control",
+        "thunder",
+        "area-of-effect",
+        "forced-movement"
+      ],
+      "range": "15 ft cube",
+      "summary": "Pushes creatures away.",
+      "damage": "2d8 thunder",
+      "saveOrAttack": "CON save",
+      "scaling": "+1d8 per slot level above 1"
+    },
+    {
+      "id": "blindness-deafness",
+      "name": "Blindness/Deafness",
+      "level": 2,
+      "school": "Necromancy",
+      "primaryRole": "control",
+      "roles": [
+        "control"
+      ],
+      "tags": [
+        "debuff"
+      ],
+      "range": "30 ft",
+      "summary": "Blinds or deafens the target for up to 1 minute.",
+      "saveOrAttack": "CON save"
+    },
+    {
+      "id": "detect-thoughts",
+      "name": "Detect Thoughts",
+      "level": 2,
+      "school": "Divination",
+      "primaryRole": "control",
+      "roles": [
+        "control"
+      ],
+      "tags": [
+        "divination",
+        "debuff"
+      ],
+      "range": "Self (30 ft)",
+      "summary": "Reads surface thoughts.",
+      "saveOrAttack": "WIS save"
+    },
+    {
+      "id": "gust-of-wind",
+      "name": "Gust of Wind",
+      "level": 2,
+      "school": "Evocation",
+      "primaryRole": "control",
+      "roles": [
+        "control"
+      ],
+      "tags": [
+        "battlefield-control",
+        "area-of-effect",
+        "forced-movement"
+      ],
+      "range": "60 ft line",
+      "summary": "Pushes creatures away."
+    },
+    {
+      "id": "hold-person",
+      "name": "Hold Person",
+      "level": 2,
+      "school": "Enchantment",
+      "primaryRole": "control",
+      "roles": [
+        "control"
+      ],
+      "tags": [
+        "debuff"
+      ],
+      "range": "60 ft",
+      "summary": "Paralyzes a humanoid.",
+      "saveOrAttack": "WIS save"
+    },
+    {
+      "id": "mirror-image",
+      "name": "Mirror Image",
+      "level": 2,
+      "school": "Illusion",
+      "primaryRole": "defense",
+      "roles": [
+        "defense"
+      ],
+      "tags": [
+        "protection",
+        "illusion"
+      ],
+      "range": "Self",
+      "summary": "Creates illusory duplicates."
+    },
+    {
+      "id": "misty-step",
+      "name": "Misty Step",
+      "level": 2,
+      "school": "Conjuration",
+      "primaryRole": "mobility",
+      "roles": [
+        "mobility"
+      ],
+      "tags": [
+        "teleportation"
+      ],
+      "range": "Self",
+      "summary": "Bonus-action teleport to an unoccupied space you can see within 30 feet.",
+      "saveOrAttack": "No save"
+    },
+    {
+      "id": "prayer-of-healing",
+      "name": "Prayer of Healing",
+      "level": 2,
+      "school": "Evocation",
+      "primaryRole": "healing",
+      "roles": [
+        "healing"
+      ],
+      "tags": [
+        "healing"
+      ],
+      "range": "30 ft",
+      "summary": "Restores hit points with a 10-minute casting time.",
+      "healing": "2d8 + spellcasting modifier"
+    },
+    {
+      "id": "ray-of-enfeeblement",
+      "name": "Ray of Enfeeblement",
+      "level": 2,
+      "school": "Necromancy",
+      "primaryRole": "control",
+      "roles": [
+        "control"
+      ],
+      "tags": [
+        "undead",
+        "debuff"
+      ],
+      "range": "60 ft",
+      "summary": "Halves Strength-based weapon damage.",
+      "saveOrAttack": "CON save"
+    },
+    {
+      "id": "scorching-ray",
+      "name": "Scorching Ray",
+      "level": 2,
+      "school": "Evocation",
+      "primaryRole": "offense",
+      "roles": [
+        "offense"
+      ],
+      "tags": [
+        "damage",
+        "fire",
+        "area-of-effect"
+      ],
+      "range": "120 ft",
+      "summary": "Creates multiple fire rays.",
+      "damage": "3 rays × 2d6 fire",
+      "saveOrAttack": "Spell attack",
+      "scaling": "+1 ray per slot level above 2"
+    },
+    {
+      "id": "see-invisibility",
+      "name": "See Invisibility",
+      "level": 2,
+      "school": "Divination",
+      "primaryRole": "defense",
+      "roles": [
+        "defense",
+        "support"
+      ],
+      "tags": [
+        "divination",
+        "protection",
+        "planar",
+        "ethereal",
+        "illusion"
+      ],
+      "range": "Self",
+      "summary": "Lets the caster see invisible creatures and objects, and perceive into the Ethereal Plane."
+    },
+    {
+      "id": "vortex-warp",
+      "name": "Vortex Warp",
+      "level": 2,
+      "school": "Conjuration",
+      "primaryRole": "mobility",
+      "roles": [
+        "mobility",
+        "control",
+        "support"
+      ],
+      "tags": [
+        "teleportation",
+        "battlefield-control"
+      ],
+      "range": "90 ft",
+      "summary": "Teleports another creature to an unoccupied space within range; unwilling targets can resist.",
+      "saveOrAttack": "CON save for unwilling target"
+    },
+    {
+      "id": "animate-dead",
+      "name": "Animate Dead",
+      "level": 3,
+      "school": "Necromancy",
+      "primaryRole": "offense",
+      "roles": [
+        "offense",
+        "utility"
+      ],
+      "tags": [
+        "undead",
+        "summoning"
+      ],
+      "range": "10 ft",
+      "summary": "Raises a skeleton or zombie.",
+      "saveOrAttack": "No save",
+      "scaling": "+1 undead per slot level above 3"
+    },
+    {
+      "id": "blink",
+      "name": "Blink",
+      "level": 3,
+      "school": "Transmutation",
+      "primaryRole": "defense",
+      "roles": [
+        "defense",
+        "mobility"
+      ],
+      "tags": [
+        "ethereal",
+        "planar",
+        "protection"
+      ],
+      "range": "Self",
+      "summary": "The caster repeatedly slips into the Ethereal Plane, making them difficult to target between turns."
+    },
+    {
+      "id": "counterspell",
+      "name": "Counterspell",
+      "level": 3,
+      "school": "Abjuration",
+      "primaryRole": "defense",
+      "roles": [
+        "defense"
+      ],
+      "tags": [
+        "countermagic"
+      ],
+      "range": "60 ft",
+      "summary": "Interrupts another creature's spell."
+    },
+    {
+      "id": "dispel-magic",
+      "name": "Dispel Magic",
+      "level": 3,
+      "school": "Abjuration",
+      "primaryRole": "defense",
+      "roles": [
+        "defense"
+      ],
+      "tags": [
+        "countermagic"
+      ],
+      "range": "120 ft",
+      "summary": "Ends magical effects."
+    },
+    {
+      "id": "fireball",
+      "name": "Fireball",
+      "level": 3,
+      "school": "Evocation",
+      "primaryRole": "offense",
+      "roles": [
+        "offense"
+      ],
+      "tags": [
+        "damage",
+        "fire",
+        "area-of-effect"
+      ],
+      "range": "150 ft",
+      "summary": "Classic 20-foot-radius explosion.",
+      "damage": "8d6 fire",
+      "saveOrAttack": "DEX save",
+      "scaling": "+1d6 per slot level above 3"
+    },
+    {
+      "id": "fly",
+      "name": "Fly",
+      "level": 3,
+      "school": "Transmutation",
+      "primaryRole": "mobility",
+      "roles": [
+        "mobility",
+        "support"
+      ],
+      "tags": [
+        "teleportation"
+      ],
+      "range": "Touch",
+      "summary": "Grants a flying speed of 60 feet for the duration."
+    },
+    {
+      "id": "glyph-of-warding",
+      "name": "Glyph of Warding",
+      "level": 3,
+      "school": "Abjuration",
+      "primaryRole": "defense",
+      "roles": [
+        "defense"
+      ],
+      "tags": [
+        "protection",
+        "exploration",
+        "ward"
+      ],
+      "range": "Touch",
+      "summary": "Stores a magical ward that triggers under conditions you define."
+    },
+    {
+      "id": "lightning-bolt",
+      "name": "Lightning Bolt",
+      "level": 3,
+      "school": "Evocation",
+      "primaryRole": "offense",
+      "roles": [
+        "offense"
+      ],
+      "tags": [
+        "damage",
+        "lightning",
+        "area-of-effect"
+      ],
+      "range": "100 ft line",
+      "summary": "Creates a 5-foot-wide lightning line.",
+      "damage": "8d6 lightning",
+      "saveOrAttack": "DEX save",
+      "scaling": "+1d6 per slot level above 3"
+    },
+    {
+      "id": "magic-circle",
+      "name": "Magic Circle",
+      "level": 3,
+      "school": "Abjuration",
+      "primaryRole": "defense",
+      "roles": [
+        "defense",
+        "support"
+      ],
+      "tags": [
+        "protection",
+        "planar",
+        "ward"
+      ],
+      "range": "10 ft",
+      "summary": "Creates a ward that can protect against or contain certain extraplanar creatures."
+    },
+    {
+      "id": "mass-healing-word",
+      "name": "Mass Healing Word",
+      "level": 3,
+      "school": "Evocation",
+      "primaryRole": "healing",
+      "roles": [
+        "healing"
+      ],
+      "tags": [
+        "healing",
+        "area-of-effect"
+      ],
+      "range": "60 ft",
+      "summary": "Restores hit points to as many as six creatures.",
+      "healing": "1d4 + spellcasting modifier to up to 6 creatures"
+    },
+    {
+      "id": "nondetection",
+      "name": "Nondetection",
+      "level": 3,
+      "school": "Abjuration",
+      "primaryRole": "defense",
+      "roles": [
+        "defense",
+        "support"
+      ],
+      "tags": [
+        "protection",
+        "divination"
+      ],
+      "range": "Touch",
+      "summary": "Prevents divination magic from detecting the target."
+    },
+    {
+      "id": "protection-from-energy",
+      "name": "Protection from Energy",
+      "level": 3,
+      "school": "Abjuration",
+      "primaryRole": "defense",
+      "roles": [
+        "defense",
+        "support"
+      ],
+      "tags": [
+        "protection"
+      ],
+      "range": "Touch",
+      "summary": "Grants resistance to one chosen common energy damage type."
+    },
+    {
+      "id": "revivify",
+      "name": "Revivify",
+      "level": 3,
+      "school": "Necromancy",
+      "primaryRole": "healing",
+      "roles": [
+        "healing"
+      ],
+      "tags": [
+        "resurrection",
+        "restoration"
+      ],
+      "range": "Touch",
+      "summary": "Returns a creature that died moments ago to life."
+    },
+    {
+      "id": "sending",
+      "name": "Sending",
+      "level": 3,
+      "school": "Evocation",
+      "primaryRole": "utility",
+      "roles": [
+        "utility",
+        "support"
+      ],
+      "tags": [
+        "communication",
+        "planar"
+      ],
+      "range": "Unlimited",
+      "summary": "Sends a brief message to a known creature at any distance, with reduced reliability across planes."
+    },
+    {
+      "id": "speak-with-dead",
+      "name": "Speak with Dead",
+      "level": 3,
+      "school": "Necromancy",
+      "primaryRole": "utility",
+      "roles": [
+        "utility"
+      ],
+      "tags": [
+        "undead",
+        "divination"
+      ],
+      "range": "10 ft",
+      "summary": "Ask a corpse five questions; it answers based on what it knew in life.",
+      "saveOrAttack": "No save"
+    },
+    {
+      "id": "spirit-guardians",
+      "name": "Spirit Guardians",
+      "level": 3,
+      "school": "Conjuration",
+      "primaryRole": "offense",
+      "roles": [
+        "offense",
+        "control"
+      ],
+      "tags": [
+        "radiant",
+        "battlefield-control",
+        "damage",
+        "necrotic"
+      ],
+      "range": "Self (15 ft)",
+      "summary": "Creates a damaging aura around the caster.",
+      "damage": "3d8 radiant or necrotic",
+      "saveOrAttack": "WIS save"
+    },
+    {
+      "id": "summon-undead",
+      "name": "Summon Undead",
+      "level": 3,
+      "school": "Necromancy",
+      "primaryRole": "offense",
+      "roles": [
+        "offense",
+        "control"
+      ],
+      "tags": [
+        "undead",
+        "summoning"
+      ],
+      "range": "90 ft",
+      "summary": "Summons a ghostly, skeletal, or putrid undead spirit.",
+      "saveOrAttack": "No save"
+    },
+    {
+      "id": "thunder-step",
+      "name": "Thunder Step",
+      "level": 3,
+      "school": "Conjuration",
+      "primaryRole": "mobility",
+      "roles": [
+        "offense",
+        "mobility"
+      ],
+      "tags": [
+        "teleportation",
+        "damage",
+        "thunder"
+      ],
+      "range": "90 ft",
+      "summary": "Teleport away in a thunderous burst; nearby creatures at the departure point can take thunder damage.",
+      "damage": "3d10 thunder",
+      "saveOrAttack": "CON save",
+      "scaling": "+1d10 per slot level above 3"
+    },
+    {
+      "id": "vampiric-touch",
+      "name": "Vampiric Touch",
+      "level": 3,
+      "school": "Necromancy",
+      "primaryRole": "offense",
+      "roles": [
+        "offense"
+      ],
+      "tags": [
+        "damage",
+        "undead",
+        "necrotic"
+      ],
+      "range": "Self",
+      "summary": "The caster heals for half the damage dealt.",
+      "damage": "3d6 necrotic",
+      "saveOrAttack": "Spell attack",
+      "scaling": "+1d6 per slot level above 3"
+    },
+    {
+      "id": "arcane-eye",
+      "name": "Arcane Eye",
+      "level": 4,
+      "school": "Divination",
+      "primaryRole": "utility",
+      "roles": [
+        "utility"
+      ],
+      "tags": [
+        "divination"
+      ],
+      "range": "30 ft",
+      "summary": "Creates an invisible magical sensor that can scout ahead and relay what it sees."
+    },
+    {
+      "id": "banishment",
+      "name": "Banishment",
+      "level": 4,
+      "school": "Abjuration",
+      "primaryRole": "control",
+      "roles": [
+        "control"
+      ],
+      "tags": [
+        "debuff",
+        "planar"
+      ],
+      "range": "60 ft",
+      "summary": "Sends the target to another plane. Extraplanar targets may be banished permanently after 1 minute; native targets return when the spell ends.",
+      "saveOrAttack": "CHA save"
+    },
+    {
+      "id": "blight",
+      "name": "Blight",
+      "level": 4,
+      "school": "Necromancy",
+      "primaryRole": "offense",
+      "roles": [
+        "offense"
+      ],
+      "tags": [
+        "damage",
+        "necrotic"
+      ],
+      "range": "30 ft",
+      "summary": "Massive necrotic damage; plants take maximum damage.",
+      "damage": "8d8 necrotic",
+      "saveOrAttack": "CON save",
+      "scaling": "+1d8 per slot level above 4"
+    },
+    {
+      "id": "death-ward",
+      "name": "Death Ward",
+      "level": 4,
+      "school": "Abjuration",
+      "primaryRole": "defense",
+      "roles": [
+        "defense",
+        "support"
+      ],
+      "tags": [
+        "protection"
+      ],
+      "range": "Touch",
+      "summary": "Protects a creature from one effect that would drop it to 0 hit points or kill it outright."
+    },
+    {
+      "id": "dimension-door",
+      "name": "Dimension Door",
+      "level": 4,
+      "school": "Conjuration",
+      "primaryRole": "mobility",
+      "roles": [
+        "mobility"
+      ],
+      "tags": [
+        "teleportation"
+      ],
+      "range": "500 ft",
+      "summary": "Teleports you, and optionally one willing creature, to a location within range.",
+      "saveOrAttack": "No save"
+    },
+    {
+      "id": "divination",
+      "name": "Divination",
+      "level": 4,
+      "school": "Divination",
+      "primaryRole": "utility",
+      "roles": [
+        "utility"
+      ],
+      "tags": [
+        "divination",
+        "communication"
+      ],
+      "range": "Self",
+      "summary": "Seeks a truthful omen about a specific goal, event, or activity in the near future."
+    },
+    {
+      "id": "freedom-of-movement",
+      "name": "Freedom of Movement",
+      "level": 4,
+      "school": "Abjuration",
+      "primaryRole": "support",
+      "roles": [
+        "support",
+        "defense",
+        "mobility"
+      ],
+      "tags": [
+        "protection",
+        "exploration"
+      ],
+      "range": "Touch",
+      "summary": "Helps a creature ignore several magical restrictions on movement and escape restraints."
+    },
+    {
+      "id": "greater-invisibility",
+      "name": "Greater Invisibility",
+      "level": 4,
+      "school": "Illusion",
+      "primaryRole": "defense",
+      "roles": [
+        "defense",
+        "support"
+      ],
+      "tags": [
+        "protection",
+        "illusion"
+      ],
+      "range": "Touch",
+      "summary": "Makes a creature invisible even while attacking."
+    },
+    {
+      "id": "ice-storm",
+      "name": "Ice Storm",
+      "level": 4,
+      "school": "Evocation",
+      "primaryRole": "offense",
+      "roles": [
+        "offense",
+        "control"
+      ],
+      "tags": [
+        "battlefield-control",
+        "damage",
+        "cold"
+      ],
+      "range": "300 ft",
+      "summary": "Creates an icy storm over an area.",
+      "damage": "2d8 bludgeoning + 4d6 cold"
+    },
+    {
+      "id": "private-sanctum",
+      "name": "Mordenkainen's Private Sanctum",
+      "level": 4,
+      "school": "Abjuration",
+      "primaryRole": "defense",
+      "roles": [
+        "defense",
+        "support"
+      ],
+      "tags": [
+        "protection",
+        "countermagic",
+        "exploration",
+        "teleportation",
+        "planar",
+        "ward"
+      ],
+      "range": "120 ft",
+      "summary": "Wards an area against surveillance, teleportation, and planar intrusion."
+    },
+    {
+      "id": "otilukes-resilient-sphere",
+      "name": "Otiluke's Resilient Sphere",
+      "level": 4,
+      "school": "Evocation",
+      "primaryRole": "defense",
+      "roles": [
+        "defense",
+        "control"
+      ],
+      "tags": [
+        "protection",
+        "battlefield-control"
+      ],
+      "range": "30 ft",
+      "summary": "Encloses a creature in a force sphere that blocks effects through its boundary.",
+      "saveOrAttack": "DEX save for unwilling target"
+    },
+    {
+      "id": "phantasmal-killer",
+      "name": "Phantasmal Killer",
+      "level": 4,
+      "school": "Illusion",
+      "primaryRole": "offense",
+      "roles": [
+        "offense",
+        "control"
+      ],
+      "tags": [
+        "debuff",
+        "damage",
+        "psychic"
+      ],
+      "range": "120 ft",
+      "summary": "Creates psychic terror that can deal damage each round.",
+      "damage": "4d10 psychic per round",
+      "saveOrAttack": "WIS save"
+    },
+    {
+      "id": "stoneskin",
+      "name": "Stoneskin",
+      "level": 4,
+      "school": "Abjuration",
+      "primaryRole": "defense",
+      "roles": [
+        "defense",
+        "support"
+      ],
+      "tags": [
+        "protection"
+      ],
+      "range": "Touch",
+      "summary": "Hardens a creature's body against nonmagical weapon damage."
+    },
+    {
+      "id": "animate-objects",
+      "name": "Animate Objects",
+      "level": 5,
+      "school": "Transmutation",
+      "primaryRole": "offense",
+      "roles": [
+        "offense",
+        "control"
+      ],
+      "tags": [
+        "battlefield-control",
+        "summoning"
+      ],
+      "range": "120 ft",
+      "summary": "Animates objects so they can attack enemies."
+    },
+    {
+      "id": "cloudkill",
+      "name": "Cloudkill",
+      "level": 5,
+      "school": "Conjuration",
+      "primaryRole": "offense",
+      "roles": [
+        "offense",
+        "control"
+      ],
+      "tags": [
+        "battlefield-control",
+        "damage"
+      ],
+      "range": "120 ft",
+      "summary": "Creates a moving poison cloud."
+    },
+    {
+      "id": "commune",
+      "name": "Commune",
+      "level": 5,
+      "school": "Divination",
+      "primaryRole": "utility",
+      "roles": [
+        "utility"
+      ],
+      "tags": [
+        "divination",
+        "communication",
+        "planar"
+      ],
+      "range": "Self",
+      "summary": "Asks a deity or divine proxy a small number of questions and receives brief truthful answers."
+    },
+    {
+      "id": "contact-other-plane",
+      "name": "Contact Other Plane",
+      "level": 5,
+      "school": "Divination",
+      "primaryRole": "utility",
+      "roles": [
+        "utility"
+      ],
+      "tags": [
+        "divination",
+        "planar"
+      ],
+      "range": "Self",
+      "summary": "Contacts an extraplanar entity to ask questions, with a risk of psychic strain."
+    },
+    {
+      "id": "contagion",
+      "name": "Contagion",
+      "level": 5,
+      "school": "Necromancy",
+      "primaryRole": "control",
+      "roles": [
+        "control"
+      ],
+      "tags": [
+        "undead",
+        "debuff"
+      ],
+      "range": "Touch",
+      "summary": "Inflicts a magical disease.",
+      "saveOrAttack": "CON save"
+    },
+    {
+      "id": "danse-macabre",
+      "name": "Danse Macabre",
+      "level": 5,
+      "school": "Necromancy",
+      "primaryRole": "offense",
+      "roles": [
+        "offense",
+        "utility"
+      ],
+      "tags": [
+        "undead",
+        "summoning"
+      ],
+      "range": "60 ft",
+      "summary": "Raises five undead with attack bonuses.",
+      "saveOrAttack": "No save"
+    },
+    {
+      "id": "dawn",
+      "name": "Dawn",
+      "level": 5,
+      "school": "Evocation",
+      "primaryRole": "offense",
+      "roles": [
+        "offense",
+        "control"
+      ],
+      "tags": [
+        "radiant",
+        "damage",
+        "battlefield-control",
+        "area-of-effect"
+      ],
+      "range": "60 ft",
+      "summary": "Creates a cylinder of radiant light.",
+      "damage": "4d10 radiant",
+      "saveOrAttack": "CON save"
+    },
+    {
+      "id": "dream",
+      "name": "Dream",
+      "level": 5,
+      "school": "Illusion",
+      "primaryRole": "utility",
+      "roles": [
+        "utility",
+        "control"
+      ],
+      "tags": [
+        "communication",
+        "illusion",
+        "planar"
+      ],
+      "range": "Special",
+      "summary": "Reaches a sleeping creature through dreams for communication or, in hostile use, psychic distress."
+    },
+    {
+      "id": "far-step",
+      "name": "Far Step",
+      "level": 5,
+      "school": "Conjuration",
+      "primaryRole": "mobility",
+      "roles": [
+        "mobility"
+      ],
+      "tags": [
+        "teleportation"
+      ],
+      "range": "Self",
+      "summary": "For the duration, teleport up to 60 feet as a bonus action on each of your turns."
+    },
+    {
+      "id": "flame-strike",
+      "name": "Flame Strike",
+      "level": 5,
+      "school": "Evocation",
+      "primaryRole": "offense",
+      "roles": [
+        "offense"
+      ],
+      "tags": [
+        "radiant",
+        "damage",
+        "fire"
+      ],
+      "range": "60 ft",
+      "summary": "Creates a pillar of fire and radiant energy.",
+      "damage": "4d6 fire + 4d6 radiant",
+      "saveOrAttack": "DEX save"
+    },
+    {
+      "id": "greater-restoration",
+      "name": "Greater Restoration",
+      "level": 5,
+      "school": "Abjuration",
+      "primaryRole": "healing",
+      "roles": [
+        "healing",
+        "support"
+      ],
+      "tags": [
+        "restoration"
+      ],
+      "range": "Touch",
+      "summary": "Ends one major debilitating effect such as a curse, petrification, or certain ability or hit-point reductions."
+    },
+    {
+      "id": "hallow",
+      "name": "Hallow",
+      "level": 5,
+      "school": "Evocation",
+      "primaryRole": "defense",
+      "roles": [
+        "defense",
+        "utility",
+        "support"
+      ],
+      "tags": [
+        "ward",
+        "protection",
+        "planar"
+      ],
+      "range": "Touch",
+      "summary": "Consecrates a large area with a lasting ward and a chosen supernatural effect."
+    },
+    {
+      "id": "legend-lore",
+      "name": "Legend Lore",
+      "level": 5,
+      "school": "Divination",
+      "primaryRole": "utility",
+      "roles": [
+        "utility"
+      ],
+      "tags": [
+        "divination"
+      ],
+      "range": "Self",
+      "summary": "Reveals lore about a person, place, or object of legendary importance."
+    },
+    {
+      "id": "mass-cure-wounds",
+      "name": "Mass Cure Wounds",
+      "level": 5,
+      "school": "Evocation",
+      "primaryRole": "healing",
+      "roles": [
+        "healing"
+      ],
+      "tags": [
+        "healing",
+        "area-of-effect"
+      ],
+      "range": "60 ft",
+      "summary": "Restores hit points to as many as six creatures.",
+      "healing": "3d8 + spellcasting modifier to up to 6 creatures"
+    },
+    {
+      "id": "planar-binding",
+      "name": "Planar Binding",
+      "level": 5,
+      "school": "Abjuration",
+      "primaryRole": "control",
+      "roles": [
+        "control",
+        "utility"
+      ],
+      "tags": [
+        "planar",
+        "debuff"
+      ],
+      "range": "60 ft",
+      "summary": "Attempts to bind certain extraplanar creatures into service for an extended duration.",
+      "saveOrAttack": "CHA save"
+    },
+    {
+      "id": "raise-dead",
+      "name": "Raise Dead",
+      "level": 5,
+      "school": "Necromancy",
+      "primaryRole": "healing",
+      "roles": [
+        "healing",
+        "utility"
+      ],
+      "tags": [
+        "resurrection",
+        "restoration"
+      ],
+      "range": "Touch",
+      "summary": "Returns a creature that has been dead for a limited time to life, with recovery penalties."
+    },
+    {
+      "id": "reincarnate",
+      "name": "Reincarnate",
+      "level": 5,
+      "school": "Transmutation",
+      "primaryRole": "healing",
+      "roles": [
+        "healing",
+        "utility"
+      ],
+      "tags": [
+        "resurrection",
+        "restoration"
+      ],
+      "range": "Touch",
+      "summary": "Returns a dead humanoid to life in a newly formed body."
+    },
+    {
+      "id": "scrying",
+      "name": "Scrying",
+      "level": 5,
+      "school": "Divination",
+      "primaryRole": "utility",
+      "roles": [
+        "utility"
+      ],
+      "tags": [
+        "divination"
+      ],
+      "range": "Self",
+      "summary": "Magically observes a creature or location at great distance; the target can resist.",
+      "saveOrAttack": "WIS save"
+    },
+    {
+      "id": "synaptic-static",
+      "name": "Synaptic Static",
+      "level": 5,
+      "school": "Enchantment",
+      "primaryRole": "offense",
+      "roles": [
+        "offense",
+        "control"
+      ],
+      "tags": [
+        "damage",
+        "debuff",
+        "psychic"
+      ],
+      "range": "120 ft",
+      "summary": "Deals psychic damage and applies a mental debuff.",
+      "damage": "8d6 psychic",
+      "saveOrAttack": "INT save"
+    },
+    {
+      "id": "teleportation-circle",
+      "name": "Teleportation Circle",
+      "level": 5,
+      "school": "Conjuration",
+      "primaryRole": "mobility",
+      "roles": [
+        "mobility"
+      ],
+      "tags": [
+        "teleportation",
+        "planar"
+      ],
+      "range": "10 ft",
+      "summary": "Creates a temporary portal to a permanent teleportation circle whose sigil sequence you know."
+    },
+    {
+      "id": "wall-of-force",
+      "name": "Wall of Force",
+      "level": 5,
+      "school": "Evocation",
+      "primaryRole": "defense",
+      "roles": [
+        "defense",
+        "control"
+      ],
+      "tags": [
+        "battlefield-control",
+        "protection"
+      ],
+      "range": "120 ft",
+      "summary": "Creates an invisible, effectively indestructible barrier."
+    },
+    {
+      "id": "arcane-gate",
+      "name": "Arcane Gate",
+      "level": 6,
+      "school": "Conjuration",
+      "primaryRole": "mobility",
+      "roles": [
+        "mobility"
+      ],
+      "tags": [
+        "teleportation",
+        "planar"
+      ],
+      "range": "500 ft",
+      "summary": "Creates two linked portals that creatures can move through in either direction."
+    },
+    {
+      "id": "circle-of-death",
+      "name": "Circle of Death",
+      "level": 6,
+      "school": "Necromancy",
+      "primaryRole": "offense",
+      "roles": [
+        "offense"
+      ],
+      "tags": [
+        "damage",
+        "necrotic",
+        "area-of-effect"
+      ],
+      "range": "150 ft",
+      "summary": "Huge necrotic explosion with a 60-foot radius.",
+      "damage": "8d6 necrotic",
+      "saveOrAttack": "CON save",
+      "scaling": "+2d6 per slot level above 6"
+    },
+    {
+      "id": "contingency",
+      "name": "Contingency",
+      "level": 6,
+      "school": "Evocation",
+      "primaryRole": "defense",
+      "roles": [
+        "defense"
+      ],
+      "tags": [
+        "protection",
+        "exploration"
+      ],
+      "range": "Self",
+      "summary": "Stores a qualifying spell to trigger automatically when a chosen circumstance occurs."
+    },
+    {
+      "id": "create-undead",
+      "name": "Create Undead",
+      "level": 6,
+      "school": "Necromancy",
+      "primaryRole": "offense",
+      "roles": [
+        "offense",
+        "utility"
+      ],
+      "tags": [
+        "undead",
+        "summoning"
+      ],
+      "range": "10 ft",
+      "summary": "Creates ghouls, ghasts, or wights; higher slots can create stronger undead such as mummies.",
+      "saveOrAttack": "No save",
+      "scaling": "More or stronger undead at higher slot levels"
+    },
+    {
+      "id": "disintegrate",
+      "name": "Disintegrate",
+      "level": 6,
+      "school": "Transmutation",
+      "primaryRole": "offense",
+      "roles": [
+        "offense"
+      ],
+      "tags": [
+        "damage",
+        "force"
+      ],
+      "range": "60 ft",
+      "summary": "Reduces a creature to dust at 0 HP and can destroy objects or walls.",
+      "damage": "10d6 + 40 force",
+      "saveOrAttack": "DEX save",
+      "scaling": "+3d6 per slot level above 6"
+    },
+    {
+      "id": "eyebite",
+      "name": "Eyebite",
+      "level": 6,
+      "school": "Necromancy",
+      "primaryRole": "control",
+      "roles": [
+        "control"
+      ],
+      "tags": [
+        "debuff"
+      ],
+      "range": "Self (60 ft target)",
+      "summary": "Each round, inflicts magical sleep, panic, or sickness on a target.",
+      "saveOrAttack": "WIS save"
+    },
+    {
+      "id": "find-the-path",
+      "name": "Find the Path",
+      "level": 6,
+      "school": "Divination",
+      "primaryRole": "utility",
+      "roles": [
+        "utility"
+      ],
+      "tags": [
+        "divination",
+        "exploration"
+      ],
+      "range": "Self",
+      "summary": "Reveals the most direct physical route to a known fixed destination on the same plane."
+    },
+    {
+      "id": "forbiddance",
+      "name": "Forbiddance",
+      "level": 6,
+      "school": "Abjuration",
+      "primaryRole": "defense",
+      "roles": [
+        "defense",
+        "utility"
+      ],
+      "tags": [
+        "ward",
+        "planar",
+        "protection"
+      ],
+      "range": "Touch",
+      "summary": "Wards a large area against planar travel and can harm selected supernatural creature types."
+    },
+    {
+      "id": "globe-of-invulnerability",
+      "name": "Globe of Invulnerability",
+      "level": 6,
+      "school": "Abjuration",
+      "primaryRole": "defense",
+      "roles": [
+        "defense"
+      ],
+      "tags": [
+        "protection",
+        "countermagic"
+      ],
+      "range": "Self",
+      "summary": "Blocks spells of 5th level or lower."
+    },
+    {
+      "id": "harm",
+      "name": "Harm",
+      "level": 6,
+      "school": "Necromancy",
+      "primaryRole": "offense",
+      "roles": [
+        "offense"
+      ],
+      "tags": [
+        "damage",
+        "undead",
+        "necrotic"
+      ],
+      "range": "60 ft",
+      "summary": "Drastically reduces hit points and limits maximum HP until healed.",
+      "damage": "14d6 necrotic",
+      "saveOrAttack": "CON save"
+    },
+    {
+      "id": "heal",
+      "name": "Heal",
+      "level": 6,
+      "school": "Evocation",
+      "primaryRole": "healing",
+      "roles": [
+        "healing"
+      ],
+      "tags": [
+        "healing"
+      ],
+      "range": "60 ft",
+      "summary": "Restores a large fixed amount of hit points instantly.",
+      "healing": "70 HP"
+    },
+    {
+      "id": "heroes-feast",
+      "name": "Heroes' Feast",
+      "level": 6,
+      "school": "Conjuration",
+      "primaryRole": "support",
+      "roles": [
+        "support",
+        "healing",
+        "defense"
+      ],
+      "tags": [
+        "healing",
+        "buff",
+        "protection"
+      ],
+      "range": "30 ft",
+      "summary": "Creates a supernatural feast that strengthens a group and grants several long-duration protections."
+    },
+    {
+      "id": "scatter",
+      "name": "Scatter",
+      "level": 6,
+      "school": "Conjuration",
+      "primaryRole": "mobility",
+      "roles": [
+        "control",
+        "mobility"
+      ],
+      "tags": [
+        "teleportation",
+        "battlefield-control",
+        "area-of-effect",
+        "forced-movement"
+      ],
+      "range": "30 ft",
+      "summary": "Repositions up to five creatures to spaces you can see within 120 feet; unwilling creatures can resist.",
+      "saveOrAttack": "WIS save for unwilling targets"
+    },
+    {
+      "id": "soul-cage",
+      "name": "Soul Cage",
+      "level": 6,
+      "school": "Necromancy",
+      "primaryRole": "utility",
+      "roles": [
+        "utility"
+      ],
+      "tags": [
+        "undead",
+        "exploration",
+        "soul"
+      ],
+      "range": "60 ft",
+      "summary": "Traps a dying soul for advantages or healing.",
+      "saveOrAttack": "CHA save"
+    },
+    {
+      "id": "sunbeam",
+      "name": "Sunbeam",
+      "level": 6,
+      "school": "Evocation",
+      "primaryRole": "offense",
+      "roles": [
+        "offense",
+        "control"
+      ],
+      "tags": [
+        "radiant",
+        "damage",
+        "debuff",
+        "area-of-effect",
+        "undead"
+      ],
+      "range": "60 ft line",
+      "summary": "Creates a radiant beam that can blind undead.",
+      "damage": "6d8 radiant",
+      "saveOrAttack": "CON save"
+    },
+    {
+      "id": "true-seeing",
+      "name": "True Seeing",
+      "level": 6,
+      "school": "Divination",
+      "primaryRole": "defense",
+      "roles": [
+        "defense",
+        "support"
+      ],
+      "tags": [
+        "divination",
+        "protection",
+        "planar",
+        "ethereal"
+      ],
+      "range": "Touch",
+      "summary": "Grants truesight, reveals hidden forms, and allows sight into the Ethereal Plane."
+    },
+    {
+      "id": "word-of-recall",
+      "name": "Word of Recall",
+      "level": 6,
+      "school": "Conjuration",
+      "primaryRole": "mobility",
+      "roles": [
+        "mobility",
+        "defense"
+      ],
+      "tags": [
+        "teleportation",
+        "protection"
+      ],
+      "range": "5 ft",
+      "summary": "Instantly returns the caster and nearby willing creatures to a previously designated sanctuary."
+    },
+    {
+      "id": "etherealness",
+      "name": "Etherealness",
+      "level": 7,
+      "school": "Transmutation",
+      "primaryRole": "mobility",
+      "roles": [
+        "defense",
+        "mobility"
+      ],
+      "tags": [
+        "planar",
+        "protection",
+        "teleportation",
+        "ethereal"
+      ],
+      "range": "Self",
+      "summary": "Moves the caster into the Border Ethereal, allowing travel through many creatures and objects."
+    },
+    {
+      "id": "finger-of-death",
+      "name": "Finger of Death",
+      "level": 7,
+      "school": "Necromancy",
+      "primaryRole": "offense",
+      "roles": [
+        "offense"
+      ],
+      "tags": [
+        "damage",
+        "undead",
+        "necrotic"
+      ],
+      "range": "60 ft",
+      "summary": "A humanoid killed by the spell rises as a zombie servant.",
+      "damage": "7d8 + 30 necrotic",
+      "saveOrAttack": "CON save"
+    },
+    {
+      "id": "forcecage",
+      "name": "Forcecage",
+      "level": 7,
+      "school": "Evocation",
+      "primaryRole": "defense",
+      "roles": [
+        "defense",
+        "control"
+      ],
+      "tags": [
+        "battlefield-control",
+        "protection"
+      ],
+      "range": "100 ft",
+      "summary": "Creates a powerful invisible prison of force that is extremely difficult to escape."
+    },
+    {
+      "id": "magnificent-mansion",
+      "name": "Mordenkainen's Magnificent Mansion",
+      "level": 7,
+      "school": "Conjuration",
+      "primaryRole": "utility",
+      "roles": [
+        "utility",
+        "defense"
+      ],
+      "tags": [
+        "extradimensional",
+        "planar",
+        "protection"
+      ],
+      "range": "300 ft",
+      "summary": "Creates a secure extradimensional dwelling suitable for sheltering a large group."
+    },
+    {
+      "id": "plane-shift",
+      "name": "Plane Shift",
+      "level": 7,
+      "school": "Conjuration",
+      "primaryRole": "mobility",
+      "roles": [
+        "mobility"
+      ],
+      "tags": [
+        "teleportation",
+        "planar"
+      ],
+      "range": "Touch",
+      "summary": "Transports willing creatures to another plane, or can attempt to banish an unwilling creature there.",
+      "saveOrAttack": "CHA save for unwilling target"
+    },
+    {
+      "id": "resurrection",
+      "name": "Resurrection",
+      "level": 7,
+      "school": "Necromancy",
+      "primaryRole": "healing",
+      "roles": [
+        "healing"
+      ],
+      "tags": [
+        "healing",
+        "resurrection",
+        "restoration"
+      ],
+      "range": "Touch",
+      "summary": "Returns a dead creature to life."
+    },
+    {
+      "id": "teleport",
+      "name": "Teleport",
+      "level": 7,
+      "school": "Conjuration",
+      "primaryRole": "mobility",
+      "roles": [
+        "mobility"
+      ],
+      "tags": [
+        "teleportation",
+        "planar"
+      ],
+      "range": "10 ft",
+      "summary": "Instantly transports the caster and companions to a destination on the same plane; accuracy depends on familiarity."
+    },
+    {
+      "id": "antimagic-field",
+      "name": "Antimagic Field",
+      "level": 8,
+      "school": "Abjuration",
+      "primaryRole": "defense",
+      "roles": [
+        "defense",
+        "control"
+      ],
+      "tags": [
+        "countermagic",
+        "battlefield-control",
+        "protection"
+      ],
+      "range": "Self (10 ft radius)",
+      "summary": "Creates an area where most magic is suppressed."
+    },
+    {
+      "id": "demiplane",
+      "name": "Demiplane",
+      "level": 8,
+      "school": "Conjuration",
+      "primaryRole": "utility",
+      "roles": [
+        "utility"
+      ],
+      "tags": [
+        "planar",
+        "exploration",
+        "extradimensional"
+      ],
+      "range": "60 ft",
+      "summary": "Creates or reconnects to an extradimensional chamber through a shadowy door."
+    },
+    {
+      "id": "dominate-monster",
+      "name": "Dominate Monster",
+      "level": 8,
+      "school": "Enchantment",
+      "primaryRole": "control",
+      "roles": [
+        "control"
+      ],
+      "tags": [
+        "debuff"
+      ],
+      "range": "60 ft",
+      "summary": "Controls a creature.",
+      "saveOrAttack": "WIS save"
+    },
+    {
+      "id": "feeblemind",
+      "name": "Feeblemind",
+      "level": 8,
+      "school": "Enchantment",
+      "primaryRole": "control",
+      "roles": [
+        "control"
+      ],
+      "tags": [
+        "debuff"
+      ],
+      "range": "150 ft",
+      "summary": "Reduces Intelligence and Charisma to 1, crippling thought and spellcasting.",
+      "saveOrAttack": "INT save"
+    },
+    {
+      "id": "maze",
+      "name": "Maze",
+      "level": 8,
+      "school": "Conjuration",
+      "primaryRole": "control",
+      "roles": [
+        "control"
+      ],
+      "tags": [
+        "battlefield-control",
+        "planar",
+        "extradimensional"
+      ],
+      "range": "60 ft",
+      "summary": "Temporarily banishes a creature into a labyrinthine demiplane until it escapes."
+    },
+    {
+      "id": "mind-blank",
+      "name": "Mind Blank",
+      "level": 8,
+      "school": "Abjuration",
+      "primaryRole": "defense",
+      "roles": [
+        "defense",
+        "support"
+      ],
+      "tags": [
+        "protection",
+        "divination"
+      ],
+      "range": "Touch",
+      "summary": "Provides powerful long-duration protection from psychic harm, mind reading, divination, and mental influence."
+    },
+    {
+      "id": "sunburst",
+      "name": "Sunburst",
+      "level": 8,
+      "school": "Evocation",
+      "primaryRole": "offense",
+      "roles": [
+        "offense",
+        "control"
+      ],
+      "tags": [
+        "radiant",
+        "damage",
+        "debuff"
+      ],
+      "range": "150 ft",
+      "summary": "Creates a massive radiant explosion.",
+      "damage": "12d6 radiant",
+      "saveOrAttack": "CON save"
+    },
+    {
+      "id": "astral-projection",
+      "name": "Astral Projection",
+      "level": 9,
+      "school": "Necromancy",
+      "primaryRole": "mobility",
+      "roles": [
+        "mobility"
+      ],
+      "tags": [
+        "planar",
+        "teleportation"
+      ],
+      "range": "10 ft",
+      "summary": "Projects the party's astral forms into the Astral Plane for long-range planar travel."
+    },
+    {
+      "id": "foresight",
+      "name": "Foresight",
+      "level": 9,
+      "school": "Divination",
+      "primaryRole": "support",
+      "roles": [
+        "support",
+        "defense"
+      ],
+      "tags": [
+        "divination",
+        "buff",
+        "protection"
+      ],
+      "range": "Touch",
+      "summary": "Grants extraordinary supernatural awareness and combat advantage for an extended duration."
+    },
+    {
+      "id": "gate",
+      "name": "Gate",
+      "level": 9,
+      "school": "Conjuration",
+      "primaryRole": "mobility",
+      "roles": [
+        "mobility"
+      ],
+      "tags": [
+        "planar",
+        "teleportation"
+      ],
+      "range": "60 ft",
+      "summary": "Opens a portal to a precise location on another plane and can call a specific creature by name."
+    },
+    {
+      "id": "power-word-kill",
+      "name": "Power Word Kill",
+      "level": 9,
+      "school": "Enchantment",
+      "primaryRole": "offense",
+      "roles": [
+        "offense"
+      ],
+      "tags": [
+        "damage"
+      ],
+      "range": "60 ft",
+      "summary": "The target dies instantly if it has 100 hit points or fewer.",
+      "saveOrAttack": "No save"
+    },
+    {
+      "id": "true-resurrection",
+      "name": "True Resurrection",
+      "level": 9,
+      "school": "Necromancy",
+      "primaryRole": "healing",
+      "roles": [
+        "healing",
+        "utility"
+      ],
+      "tags": [
+        "resurrection",
+        "restoration"
+      ],
+      "range": "Touch",
+      "summary": "Returns a long-dead creature to life and can restore a missing body."
+    },
+    {
+      "id": "wish",
+      "name": "Wish",
+      "level": 9,
+      "school": "Conjuration",
+      "primaryRole": "utility",
+      "roles": [
+        "utility"
+      ],
+      "tags": [
+        "planar",
+        "exploration"
+      ],
+      "range": "Self",
+      "summary": "The most powerful general-purpose spell, capable of duplicating lower-level spells and producing extraordinary effects."
+    }
+  ]
+}

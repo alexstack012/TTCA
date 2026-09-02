@@ -1,11 +1,75 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, computed, inject, signal } from '@angular/core';
-import { Spell, SpellLevel, SpellReferenceData } from '../types/spell.types';
+import {
+  SpellLevel,
+  SpellLevelDefinition,
+  SpellReference,
+  SpellReferenceData,
+  SpellRole,
+} from '../types/spell.types';
 
-interface SpellLevelGroup {
-  level: SpellLevel;
-  label: string;
-  spells: Spell[];
+export interface SpellFilters {
+  search: string;
+  role: SpellRole | 'all';
+  level: SpellLevel | 'all';
+  tag: string | 'all';
+}
+
+export interface SpellLevelGroup extends SpellLevelDefinition {
+  spells: SpellReference[];
+}
+
+export const DEFAULT_SPELL_FILTERS: SpellFilters = {
+  search: '',
+  role: 'all',
+  level: 'all',
+  tag: 'all',
+};
+
+export function filterSpells(spells: SpellReference[], filters: SpellFilters): SpellReference[] {
+  const query = filters.search.trim().toLocaleLowerCase();
+
+  return spells.filter((spell) => {
+    const matchesRole = filters.role === 'all' || spell.roles.includes(filters.role);
+    const matchesLevel = filters.level === 'all' || spell.level === filters.level;
+    const matchesTag = filters.tag === 'all' || spell.tags.includes(filters.tag);
+    const searchable = [
+      spell.name,
+      spell.school ?? '',
+      spell.summary,
+      spell.primaryRole,
+      ...spell.roles,
+      ...spell.tags,
+    ]
+      .join(' ')
+      .toLocaleLowerCase();
+
+    return matchesRole && matchesLevel && matchesTag && (!query || searchable.includes(query));
+  });
+}
+
+export function groupSpellsByLevel(
+  spells: SpellReference[],
+  levelDefinitions: SpellLevelDefinition[],
+): SpellLevelGroup[] {
+  return [...levelDefinitions]
+    .sort((left, right) => left.order - right.order)
+    .map((definition) => ({
+      ...definition,
+      spells: spells
+        .filter((spell) => spell.level === definition.level)
+        .sort((left, right) => left.name.localeCompare(right.name)),
+    }))
+    .filter((group) => group.spells.length > 0);
+}
+
+export function filtersAreActive(filters: SpellFilters): boolean {
+  return (
+    filters.search.trim().length > 0 ||
+    filters.role !== 'all' ||
+    filters.level !== 'all' ||
+    filters.tag !== 'all'
+  );
 }
 
 @Component({
@@ -20,53 +84,37 @@ export class SpellsPageComponent {
   readonly loading = signal(true);
   readonly error = signal('');
   readonly search = signal('');
-  readonly categoryFilter = signal('all');
-  readonly levelFilter = signal('all');
+  readonly roleFilter = signal<SpellRole | 'all'>('all');
+  readonly levelFilter = signal<SpellLevel | 'all'>('all');
+  readonly tagFilter = signal<string | 'all'>('all');
 
-  readonly visibleSpells = computed(() => {
-    const query = this.search().trim().toLowerCase();
-    return (this.data()?.spells ?? []).filter((spell) => {
-      const matchesCategory =
-        this.categoryFilter() === 'all' || spell.categories.includes(this.categoryFilter());
-      const matchesLevel =
-        this.levelFilter() === 'all' || spell.level === Number(this.levelFilter());
-      const searchable = [
-        spell.name,
-        spell.summary,
-        spell.range,
-        spell.damage ?? '',
-        spell.healing ?? '',
-        spell.saveOrAttack ?? '',
-        spell.scaling ?? '',
-        ...(spell.notes ?? []),
-      ]
-        .join(' ')
-        .toLowerCase();
-      return matchesCategory && matchesLevel && (!query || searchable.includes(query));
-    });
-  });
-
-  readonly groupedSpells = computed<SpellLevelGroup[]>(() => {
-    const spells = this.visibleSpells();
-    return Array.from({ length: 10 }, (_, level) => ({
-      level: level as SpellLevel,
-      label: this.levelLabel(level as SpellLevel),
-      spells: spells.filter((spell) => spell.level === level),
-    })).filter((group) => group.spells.length > 0);
-  });
-
-  readonly availableLevels = computed(() =>
-    [...new Set((this.data()?.spells ?? []).map((spell) => spell.level))].sort((a, b) => a - b),
+  readonly currentFilters = computed<SpellFilters>(() => ({
+    search: this.search(),
+    role: this.roleFilter(),
+    level: this.levelFilter(),
+    tag: this.tagFilter(),
+  }));
+  readonly hasActiveFilters = computed(() => filtersAreActive(this.currentFilters()));
+  readonly visibleSpells = computed(() =>
+    filterSpells(this.data()?.spells ?? [], this.currentFilters()),
+  );
+  readonly groupedSpells = computed(() =>
+    groupSpellsByLevel(this.visibleSpells(), this.data()?.display.levelGroups ?? []),
+  );
+  readonly availableTags = computed(() =>
+    [...(this.data()?.filters.tags ?? [])].sort((left, right) =>
+      left.name.localeCompare(right.name),
+    ),
   );
 
   constructor() {
-    this.http.get<SpellReferenceData>('/data/dnd-spells.json').subscribe({
+    this.http.get<SpellReferenceData>('/data/dnd-spells-v2.json').subscribe({
       next: (data) => {
         this.data.set(data);
         this.loading.set(false);
       },
       error: () => {
-        this.error.set('The grimoire could not be opened.');
+        this.error.set('The grimoire could not be opened. Please try again shortly.');
         this.loading.set(false);
       },
     });
@@ -76,30 +124,31 @@ export class SpellsPageComponent {
     this.search.set((event.target as HTMLInputElement).value);
   }
 
-  setCategory(event: Event): void {
-    this.categoryFilter.set((event.target as HTMLSelectElement).value);
+  setRole(event: Event): void {
+    this.roleFilter.set((event.target as HTMLSelectElement).value as SpellRole | 'all');
   }
 
   setLevel(event: Event): void {
-    this.levelFilter.set((event.target as HTMLSelectElement).value);
+    const value = (event.target as HTMLSelectElement).value;
+    this.levelFilter.set(value === 'all' ? 'all' : (Number(value) as SpellLevel));
+  }
+
+  setTag(event: Event): void {
+    this.tagFilter.set((event.target as HTMLSelectElement).value);
   }
 
   clearFilters(): void {
-    this.search.set('');
-    this.categoryFilter.set('all');
-    this.levelFilter.set('all');
+    this.search.set(DEFAULT_SPELL_FILTERS.search);
+    this.roleFilter.set(DEFAULT_SPELL_FILTERS.role);
+    this.levelFilter.set(DEFAULT_SPELL_FILTERS.level);
+    this.tagFilter.set(DEFAULT_SPELL_FILTERS.tag);
   }
 
-  levelLabel(level: SpellLevel): string {
-    if (level === 0) return 'Cantrips';
-    const suffix = level === 1 ? 'st' : level === 2 ? 'nd' : level === 3 ? 'rd' : 'th';
-    return `${level}${suffix} Level`;
+  roleName(role: SpellRole): string {
+    return this.data()?.filters.roles.find((item) => item.id === role)?.name ?? role;
   }
 
-  categoryName(categoryId: string): string {
-    return (
-      this.data()?.categories.find((category) => category.id === categoryId)?.name ??
-      categoryId.replaceAll('-', ' ')
-    );
+  tagName(tagId: string): string {
+    return this.data()?.filters.tags.find((tag) => tag.id === tagId)?.name ?? tagId;
   }
 }

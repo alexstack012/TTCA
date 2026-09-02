@@ -2,138 +2,172 @@
   <header class="page-header">
     <div>
       <p>The black grimoire</p>
-      <h1>Spells</h1>
-      <span
-        >Arcane formulae, divine invocations, and forbidden workings catalogued by circle and
-        purpose.</span
-      >
+      <h1>Spell Archive</h1>
+      <span>Browse concise arcane and divine references by circle, purpose, and effect.</span>
     </div>
-    <div class="count">
+    <div class="count" aria-label="Spell count">
       <strong>{{ data()?.spells?.length ?? 0 }}</strong
       ><span>recorded spells</span>
     </div>
   </header>
 
-  @if (data(); as spellData) {
-    <section class="rules">
-      <span class="rule-mark" aria-hidden="true">&#9671;</span>
+  <section class="toolbar" aria-labelledby="spell-filter-heading">
+    <div class="toolbar-heading">
       <div>
-        <small>Reference rule</small><strong>Power follows the caster</strong>
-        <p>
-          {{ spellData.referenceRules.damageScaling.summary }}
-          {{ spellData.referenceRules.damageScaling.caveat }}
-        </p>
+        <p>Refine the archive</p>
+        <h2 id="spell-filter-heading">Search and filters</h2>
       </div>
-      <div>
-        <small>Cantrip advancement</small
-        ><strong
-          >Levels {{ spellData.referenceRules.cantripScaling.characterLevels.join(', ') }}</strong
-        >
-        <p>{{ spellData.referenceRules.cantripScaling.summary }}</p>
-      </div>
-    </section>
-  }
+      @if (hasActiveFilters()) {
+        <button type="button" class="reset" (click)="clearFilters()">Reset filters</button>
+      }
+    </div>
 
-  <section class="toolbar" aria-label="Spell filters">
-    <label class="search"
-      ><span aria-hidden="true">&#8981;</span
-      ><input
-        type="search"
-        placeholder="Search names, effects, damage, and saves"
-        [value]="search()"
-        (input)="setSearch($event)"
-    /></label>
-    <label
-      ><span>Purpose</span
-      ><select [value]="categoryFilter()" (change)="setCategory($event)">
-        <option value="all">All categories</option>
-        @for (category of data()?.categories ?? []; track category.id) {
-          <option [value]="category.id">{{ category.name }}</option>
-        }
-      </select></label
-    >
-    <label
-      ><span>Circle</span
-      ><select [value]="levelFilter()" (change)="setLevel($event)">
-        <option value="all">All levels</option>
-        @for (level of availableLevels(); track level) {
-          <option [value]="level">{{ levelLabel(level) }}</option>
-        }
-      </select></label
-    >
+    <div class="filter-grid">
+      <label class="search">
+        <span>Search spells</span>
+        <input
+          type="search"
+          placeholder="Name, school, summary, role, or tag"
+          autocomplete="off"
+          [value]="search()"
+          (input)="setSearch($event)"
+        />
+      </label>
+      <label>
+        <span>Role</span>
+        <select [value]="roleFilter()" (change)="setRole($event)">
+          <option value="all">All roles</option>
+          @for (role of data()?.filters?.roles ?? []; track role.id) {
+            <option [value]="role.id">{{ role.name }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        <span>Level</span>
+        <select [value]="levelFilter()" (change)="setLevel($event)">
+          <option value="all">All levels</option>
+          @for (levelGroup of data()?.display?.levelGroups ?? []; track levelGroup.level) {
+            <option [value]="levelGroup.level">{{ levelGroup.label }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        <span>Tag</span>
+        <select [value]="tagFilter()" (change)="setTag($event)">
+          <option value="all">All tags</option>
+          @for (tag of availableTags(); track tag.id) {
+            <option [value]="tag.id">{{ tag.name }}</option>
+          }
+        </select>
+      </label>
+    </div>
   </section>
 
   @if (loading()) {
-    <section class="state">
-      <span class="loader"></span>
+    <section class="state" aria-live="polite">
+      <span class="loader" aria-hidden="true"></span>
       <p>Turning the sealed pages...</p>
     </section>
   } @else if (error()) {
-    <section class="state error">
+    <section class="state error" role="alert">
       <p>{{ error() }}</p>
     </section>
   } @else if (!visibleSpells().length) {
-    <section class="state">
-      <p>No working in the grimoire matches those signs.</p>
-      <button type="button" (click)="clearFilters()">Clear all filters</button>
+    <section class="state empty-state">
+      <p>No spell in the archive matches those filters.</p>
+      <button type="button" (click)="clearFilters()">Reset filters</button>
     </section>
   } @else {
-    <div class="results">
-      <span>{{ visibleSpells().length }} spells revealed</span><i></i
-      ><span>{{ groupedSpells().length }} circles represented</span>
+    <div class="results" aria-live="polite">
+      <span>{{ visibleSpells().length }} spells revealed</span><i aria-hidden="true"></i
+      ><span>{{ groupedSpells().length }} levels represented</span>
     </div>
+
     @for (group of groupedSpells(); track group.level) {
-      <section class="spell-group">
+      <section class="spell-group" [attr.aria-labelledby]="'spell-level-' + group.level">
         <header>
-          <span>{{ group.level === 0 ? 'C' : group.level.toString().padStart(2, '0') }}</span>
+          <span aria-hidden="true">{{ group.level === 0 ? 'C' : group.level }}</span>
           <div>
-            <p>Circle of power</p>
-            <h2>{{ group.label }}</h2>
+            <p>{{ group.level === 0 ? 'Minor workings' : 'Circle of power' }}</p>
+            <h2 [id]="'spell-level-' + group.level">{{ group.label }}</h2>
           </div>
           <small
             >{{ group.spells.length }} {{ group.spells.length === 1 ? 'spell' : 'spells' }}</small
           >
         </header>
+
         <div class="spell-grid">
           @for (spell of group.spells; track spell.id) {
             <article>
-              <div class="spell-art">
-                @if (spell.image) {
-                  <img [src]="spell.image" [alt]="spell.name" />
-                } @else {
-                  <span>{{ spell.level === 0 ? 'C' : spell.level }}</span>
-                }
-              </div>
-              <div class="card-body">
-                <div class="classification">
-                  <span>{{ spell.isCantrip ? 'Cantrip' : levelLabel(spell.level) }}</span
-                  ><small>{{ spell.range }}</small>
-                </div>
-                <h3>{{ spell.name }}</h3>
-                <p class="summary">{{ spell.summary }}</p>
-                <div class="properties">
-                  @if (spell.damage) {
-                    <span><b>Damage</b>{{ spell.damage }}</span>
+              <header class="card-header">
+                <div>
+                  <h3>{{ spell.name }}</h3>
+                  @if (spell.school) {
+                    <p>{{ spell.school }}</p>
                   }
-                  @if (spell.healing) {
-                    <span><b>Healing</b>{{ spell.healing }}</span>
+                </div>
+                <span class="role-badge" [attr.data-role]="spell.primaryRole">
+                  {{ roleName(spell.primaryRole) }}
+                </span>
+              </header>
+
+              @if (spell.range || spell.saveOrAttack || spell.damage || spell.healing) {
+                <dl class="quick-reference">
+                  @if (spell.range) {
+                    <div>
+                      <dt>Range</dt>
+                      <dd>{{ spell.range }}</dd>
+                    </div>
                   }
                   @if (spell.saveOrAttack) {
-                    <span><b>Resolution</b>{{ spell.saveOrAttack }}</span>
+                    <div>
+                      <dt>Resolution</dt>
+                      <dd>{{ spell.saveOrAttack }}</dd>
+                    </div>
                   }
-                  @if (spell.scaling) {
-                    <span><b>Scaling</b>{{ spell.scaling }}</span>
+                  @if (spell.damage) {
+                    <div>
+                      <dt>Damage</dt>
+                      <dd>{{ spell.damage }}</dd>
+                    </div>
+                  } @else if (spell.healing) {
+                    <div>
+                      <dt>Healing</dt>
+                      <dd>{{ spell.healing }}</dd>
+                    </div>
                   }
-                </div>
-                <div class="categories">
-                  @for (category of spell.categories; track category) {
-                    <span>{{ categoryName(category) }}</span>
-                  }
-                </div>
-                @if (spell.notes?.length) {
-                  <p class="notes"><b>Marginalia</b>{{ spell.notes?.join(' ') }}</p>
-                }
-              </div>
+                </dl>
+              }
+
+              <p class="summary">{{ spell.summary }}</p>
+
+              @if (spell.scaling || spell.notes?.length || spell.tags.length) {
+                <details>
+                  <summary>Further details</summary>
+                  <div class="secondary-details">
+                    @if (spell.scaling) {
+                      <p><strong>Scaling</strong>{{ spell.scaling }}</p>
+                    }
+                    @if (spell.notes?.length) {
+                      <div class="notes">
+                        <strong>Notes</strong>
+                        <ul>
+                          @for (note of spell.notes ?? []; track note) {
+                            <li>{{ note }}</li>
+                          }
+                        </ul>
+                      </div>
+                    }
+                    @if (spell.tags.length) {
+                      <div class="tags" aria-label="Spell tags">
+                        @for (tag of spell.tags.slice(0, 5); track tag) {
+                          <span>{{ tagName(tag) }}</span>
+                        }
+                      </div>
+                    }
+                  </div>
+                </details>
+              }
             </article>
           }
         </div>

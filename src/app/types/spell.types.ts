@@ -1,50 +1,63 @@
+export type SpellLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+
+export type SpellRole =
+  'offense' | 'defense' | 'control' | 'support' | 'mobility' | 'healing' | 'utility';
+
 export interface SpellReferenceData {
-  schemaVersion: number;
+  schemaVersion: 3;
   collection: SpellCollectionReference;
+  display: SpellDisplayConfiguration;
+  filters: SpellFilterConfiguration;
   normalizationNotes: string[];
-  referenceRules: SpellReferenceRules;
-  categories: SpellCategory[];
-  spells: Spell[];
+  spells: SpellReference[];
 }
 
 export interface SpellCollectionReference {
   id: string;
   name: string;
+  ruleset: string;
+  description: string;
 }
 
-export interface SpellReferenceRules {
-  damageScaling: {
-    summary: string;
-    caveat: string;
-  };
-  cantripScaling: {
-    summary: string;
-    characterLevels: number[];
-  };
-  commonSavesByType: CommonSaveReference[];
+export interface SpellDisplayConfiguration {
+  defaultGroupBy: 'level';
+  defaultSortWithinGroup: 'name';
+  levelGroups: SpellLevelDefinition[];
 }
 
-export interface CommonSaveReference {
-  type: string;
-  abilities: SavingThrowAbility[];
-}
-
-export interface SpellCategory {
-  id: string;
-  name: string;
+export interface SpellLevelDefinition {
+  level: SpellLevel;
+  label: string;
   order: number;
 }
 
-export interface Spell {
+export interface SpellFilterConfiguration {
+  roles: SpellRoleDefinition[];
+  tags: SpellTagDefinition[];
+}
+
+export interface SpellRoleDefinition {
+  id: SpellRole;
+  name: string;
+  description: string;
+  order: number;
+}
+
+export interface SpellTagDefinition {
   id: string;
   name: string;
-  /** Root-relative public path, for example `/images/spells/acid-splash.webp`. */
-  image?: string | null;
-  /** Cantrips are represented as level 0. */
+  group: string;
+}
+
+export interface SpellReference {
+  id: string;
+  name: string;
   level: SpellLevel;
-  isCantrip: boolean;
-  categories: string[];
-  range: string;
+  school?: string;
+  primaryRole: SpellRole;
+  roles: SpellRole[];
+  tags: string[];
+  range?: string;
   summary: string;
   damage?: string;
   healing?: string;
@@ -52,7 +65,3 @@ export interface Spell {
   scaling?: string;
   notes?: string[];
 }
-
-export type SpellLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
-
-export type SavingThrowAbility = 'STR' | 'DEX' | 'CON' | 'INT' | 'WIS' | 'CHA';
