@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { AuthService } from '../core/auth.service';
 import { ACTIVE_CAMPAIGN_KEY } from '../core/campaign-context';
+import { CampaignEntityType } from '../types/archive.types';
 import {
   LoreEntry,
   LoreInput,
@@ -33,6 +34,8 @@ export class LorePageComponent {
   readonly loading = signal(true);
   readonly error = signal('');
   readonly search = signal('');
+  readonly entitySearch = signal('');
+  readonly entityTypeFilter = signal<CampaignEntityType | 'all'>('all');
   readonly selected = signal<string | null>(null);
   readonly formOpen = signal(false);
   readonly editingId = signal<string | null>(null);
@@ -48,6 +51,19 @@ export class LorePageComponent {
   readonly visiblePlots = computed(() =>
     this.plots().filter((x) => this.matches(x.title, x.summary ?? '', x.description)),
   );
+  readonly entityTypes = computed(() =>
+    [...new Set(this.options().entities.map((entity) => entity.entityType))].sort(),
+  );
+  readonly filteredEntityOptions = computed(() => {
+    const query = this.entitySearch().trim().toLowerCase();
+    const type = this.entityTypeFilter();
+    return this.options().entities.filter(
+      (entity) =>
+        (type === 'all' || entity.entityType === type) &&
+        (!query ||
+          `${entity.name} ${entity.entityType.replaceAll('_', ' ')}`.toLowerCase().includes(query)),
+    );
+  });
   constructor() {
     forkJoin({
       lore: this.api.getLore(ACTIVE_CAMPAIGN_KEY),
@@ -75,6 +91,14 @@ export class LorePageComponent {
   setSearch(event: Event) {
     this.search.set((event.target as HTMLInputElement).value);
   }
+  setEntitySearch(event: Event) {
+    this.entitySearch.set((event.target as HTMLInputElement).value);
+  }
+  setEntityTypeFilter(event: Event) {
+    this.entityTypeFilter.set(
+      (event.target as HTMLSelectElement).value as CampaignEntityType | 'all',
+    );
+  }
   toggle(id: string) {
     this.selected.update((value) => (value === id ? null : id));
   }
@@ -85,7 +109,9 @@ export class LorePageComponent {
     this.confirmingDelete.set(false);
     this.loreDraft = this.emptyLore();
     this.plotDraft = this.emptyPlot();
+    this.resetEntityFilters();
     this.formOpen.set(true);
+    this.revealForm();
   }
   editLore(value: LoreEntry) {
     this.loreDraft = {
@@ -129,8 +155,18 @@ export class LorePageComponent {
     if (!this.auth.user()?.canEdit) return;
     this.editingId.set(id);
     this.formError.set('');
+    this.resetEntityFilters();
     this.formOpen.set(true);
     this.confirmingDelete.set(false);
+    this.revealForm();
+  }
+
+  private revealForm() {
+    setTimeout(() => {
+      const panel = document.querySelector<HTMLElement>('.story-form-panel');
+      panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      panel?.querySelector<HTMLElement>('input, select, textarea')?.focus({ preventScroll: true });
+    });
   }
   closeForm() {
     if (this.saving()) return;
@@ -198,6 +234,9 @@ export class LorePageComponent {
   entityLink(target: { entityLinks: StoryEntityLink[] }, id: string) {
     return target.entityLinks.find((x) => x.entityId === id);
   }
+  selectedEntityCount(target: { entityLinks: StoryEntityLink[] }) {
+    return target.entityLinks.length;
+  }
   toggleSession(id: string, checked: boolean) {
     this.plotDraft.sessionLinks = checked
       ? [
@@ -212,6 +251,10 @@ export class LorePageComponent {
   private matches(...values: string[]) {
     const q = this.search().trim().toLowerCase();
     return !q || values.join(' ').toLowerCase().includes(q);
+  }
+  private resetEntityFilters() {
+    this.entitySearch.set('');
+    this.entityTypeFilter.set('all');
   }
   private upsert<T extends { id: string }>(list: T[], value: T) {
     return [...list.filter((x) => x.id !== value.id), value].sort(

@@ -61,6 +61,8 @@
       </div>
       @if (error()) {
         <p class="error" role="alert">{{ error() }}</p>
+      } @else if (auth.apiWaking()) {
+        <p class="wake-status" role="status">Waking the archive service&hellip;</p>
       }
       <button class="primary" type="submit" [disabled]="loading() || !password">
         <span>{{ loading() ? 'Breaking the seal...' : 'Enter the campaign' }}</span

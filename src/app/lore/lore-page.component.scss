@@ -30,6 +30,9 @@
   background: #121218;
   box-shadow: var(--purple-smoke);
 }
+.story-form-panel {
+  scroll-margin-top: 6rem;
+}
 .story-state {
   text-align: center;
 }
@@ -99,12 +102,35 @@
 .relation-picker legend {
   color: #9f919f;
 }
+.relation-picker > .relation-filter-bar {
+  position: sticky;
+  z-index: 1;
+  top: -0.8rem;
+  margin: -0.8rem -0.8rem 0.35rem;
+  padding: 0.8rem;
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(140px, 0.45fr) auto;
+  align-items: end;
+  gap: 0.6rem;
+  border-bottom: 1px solid #453d48;
+  background: #121218;
+}
+.relation-filter-bar small {
+  padding-bottom: 0.7rem;
+  color: #756d78;
+  white-space: nowrap;
+}
 .relation-picker > div {
   padding: 0.45rem;
   display: grid;
   grid-template-columns: minmax(180px, 1fr) 150px 1fr;
   gap: 0.5rem;
   border-bottom: 1px solid #29262e;
+}
+.relation-empty {
+  margin: 1rem 0;
+  color: #756d78;
+  text-align: center;
 }
 .form-actions {
   display: flex;
@@ -201,6 +227,13 @@
   }
   .relation-picker > div {
     grid-template-columns: 1fr;
+  }
+  .relation-picker > .relation-filter-bar {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+  .relation-filter-bar small {
+    padding-bottom: 0;
   }
   .form-actions {
     flex-wrap: wrap;

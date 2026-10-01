@@ -30,7 +30,7 @@
   </section>
 
   @if (formOpen()) {
-    <section class="story-form-panel">
+    <section class="story-form-panel" aria-live="polite">
       <header>
         <strong
           >{{ editingId() ? 'Edit' : 'Create' }}
@@ -338,7 +338,31 @@
 <ng-template #entityPicker let-target
   ><fieldset class="wide relation-picker">
     <legend>Related NPCs and entities</legend>
-    @for (entity of options().entities; track entity.id) {
+    <div class="relation-filter-bar">
+      <label>
+        <span>Search related entities</span>
+        <input
+          type="search"
+          placeholder="Search by name or type"
+          [value]="entitySearch()"
+          (input)="setEntitySearch($event)"
+        />
+      </label>
+      <label>
+        <span>Entity type</span>
+        <select [value]="entityTypeFilter()" (change)="setEntityTypeFilter($event)">
+          <option value="all">All types</option>
+          @for (type of entityTypes(); track type) {
+            <option [value]="type">{{ type.replaceAll('_', ' ') }}</option>
+          }
+        </select>
+      </label>
+      <small
+        >{{ filteredEntityOptions().length }} matches &middot;
+        {{ selectedEntityCount(target) }} selected</small
+      >
+    </div>
+    @for (entity of filteredEntityOptions(); track entity.id) {
       <div>
         <label class="check"
           ><input
@@ -359,5 +383,8 @@
           />
         }
       </div>
-    }</fieldset
-></ng-template>
+    } @empty {
+      <p class="relation-empty">No related entities match these filters.</p>
+    }
+  </fieldset></ng-template
+>

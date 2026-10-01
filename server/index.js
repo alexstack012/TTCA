@@ -134,6 +134,10 @@ app.get('/api/health', async (_request, response) => {
   }
 });
 
+// A database-independent probe lets the browser wake a suspended API process without
+// also waiting for a suspended database. Keep /health for deployment readiness checks.
+app.get('/api/ready', (_request, response) => response.status(204).end());
+
 app.post('/api/auth/login', loginLimiter, (req, res) => {
   if (!safePasswordMatch(req.body?.password))
     return res.status(401).json({ message: 'That keeper password is not recognized.' });

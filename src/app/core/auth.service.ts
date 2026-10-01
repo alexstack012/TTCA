@@ -1,6 +1,6 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, map, of, tap } from 'rxjs';
+import { Observable, catchError, finalize, map, of, tap } from 'rxjs';
 
 export type UserRole = 'editor' | 'demo';
 export interface SessionUser {
@@ -23,6 +23,8 @@ export class AuthService {
   private readonly currentUser = signal<SessionUser | null>(this.restoreUser());
   private sessionValidated = false;
   private apiWarmRequested = false;
+  readonly apiReady = signal(false);
+  readonly apiWaking = signal(false);
   readonly user = this.currentUser.asReadonly();
   readonly authenticated = computed(() => !!this.currentUser() && !!this.token);
 
@@ -47,9 +49,14 @@ export class AuthService {
   warmApi(): void {
     if (this.apiWarmRequested) return;
     this.apiWarmRequested = true;
+    this.apiWaking.set(true);
     this.http
-      .get('/api/health')
-      .pipe(catchError(() => of(null)))
+      .get('/api/ready', { observe: 'response' })
+      .pipe(
+        tap(() => this.apiReady.set(true)),
+        catchError(() => of(null)),
+        finalize(() => this.apiWaking.set(false)),
+      )
       .subscribe();
   }
 

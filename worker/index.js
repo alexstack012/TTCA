@@ -11,7 +11,11 @@ export default {
 
       const targetUrl = new URL(url.pathname + url.search, env.API_ORIGIN);
 
-      return fetch(new Request(targetUrl, request));
+      const startedAt = Date.now();
+      const upstream = await fetch(new Request(targetUrl, request));
+      const response = new Response(upstream.body, upstream);
+      response.headers.append('Server-Timing', `api;dur=${Date.now() - startedAt}`);
+      return response;
     }
 
     return env.ASSETS.fetch(request);

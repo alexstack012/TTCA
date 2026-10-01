@@ -33,10 +33,13 @@ describe('AuthService', () => {
     http.expectNone('/api/auth/me');
   });
 
-  it('warms the API at most once and ignores an unavailable backend', () => {
+  it('warms the API at most once without requiring database health', () => {
     auth.warmApi();
     auth.warmApi();
-    http.expectOne('/api/health').flush('Unavailable', { status: 503, statusText: 'Unavailable' });
-    http.expectNone('/api/health');
+    expect(auth.apiWaking()).toBe(true);
+    http.expectOne('/api/ready').flush(null, { status: 204, statusText: 'No Content' });
+    expect(auth.apiReady()).toBe(true);
+    expect(auth.apiWaking()).toBe(false);
+    http.expectNone('/api/ready');
   });
 });

@@ -18,7 +18,7 @@ export class SplashComponent {
   readonly error = signal('');
 
   constructor(
-    private readonly auth: AuthService,
+    readonly auth: AuthService,
     private readonly router: Router,
   ) {
     auth.warmApi();
